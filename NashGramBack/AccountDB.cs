@@ -50,3 +50,42 @@
             }
             return newId;
         }
+
+        /// <summary>
+        /// Получает Account по id
+        /// </summary>        
+        public static Account? GetAccountFromID(long id)
+        {
+            try
+            {
+                Account? account = null;
+                using (var connection = new SQLiteConnection(@$"Data Source={pathDB};Version=3;"))
+                {
+                    connection.Open();
+                    using (var cmd = new SQLiteCommand($"SELECT * FROM Account WHERE id_account = {id};", connection))
+                    {
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            account = new Account();
+
+                            while (reader.Read())
+                            {
+                                account.id_account = reader.GetInt64(0);
+                                account.login = reader.GetString(1);
+                                account.password = reader.GetString(2);
+                            }
+                        }
+                    }
+                }
+                return account;
+            }
+            catch (Exception ex)
+            {
+                Log.AddLog($"Account not found from ID: {id} | " + ex.Message, true);
+                return null;
+            }
+        }
+
+
+    }
+}
