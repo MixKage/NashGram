@@ -1,3 +1,41 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data.SQLite;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace NashGramBack
+{
+    /// <summary>
+    /// Класс для работы с таблицой Accaunt
+    /// </summary>
+    public static class AccountDB
+    {
+        private static string pathDB = System.Reflection.Assembly.GetExecutingAssembly().Location.ToString().Replace("NashGramBack.dll", "") + @"\sqlite\databaseNashGram.db";
+        /// <summary>
+        /// Возвращает логин Accaunt по id
+        /// </summary>
+        public static string? GetLogin(long id)
+        {
+            var accaunt = GetAccountFromID(id);
+            if (accaunt != null)
+                return accaunt.login;
+            else
+                return null;
+        }
+        /// <summary>
+        /// Возвращает пароль Account по id
+        /// </summary>
+        public static string? GetPassword(long id)
+        {
+            var accaunt = GetAccountFromID(id);
+            if (accaunt != null)
+                return accaunt.password;
+            else
+                return null;
+        }
+
         /// <summary>
         /// Создаёт аккаунт и возвращает его id (-1: login уже существует)
         /// </summary>        
