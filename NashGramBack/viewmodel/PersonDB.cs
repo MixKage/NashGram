@@ -4,8 +4,9 @@ using System.Data.SQLite;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NashGramBack.Model;
 
-namespace NashGramBack
+namespace NashGramBack.ViewModel
 {
     public static class PersonDB
     {

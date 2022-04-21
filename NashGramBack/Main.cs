@@ -1,4 +1,5 @@
 ﻿using System.Data.SQLite;
+using NashGramBack.ViewModel;
 
 namespace NashGramBack;
 
@@ -8,21 +9,10 @@ public static class MainBack
 
     public static void Main()
     {
-        //ConnectToBD();
-        //Log.AddLog("Initialization was successful", false);
+        
+        long id = AccountDB.CreateAccount("login1","password");
+        Console.WriteLine(AccountDB.GetPassword(id));
+        Console.WriteLine(PersonDB.GetNameFromId(id));
 
-        AccountDB.GetAccountFromID(1);
-        AccountDB.CreateAccount("login12","password4");
     }
-
-    //public static void ConnectToBD()
-    //{
-    //    DB = new SQLiteConnection("Data Source=database.db;Version=3;");
-    //    DB.Open();
-    //}
-
-    //public static void DisconnectToBD()
-    //{
-    //    DB.Close();
-    //}
 }
