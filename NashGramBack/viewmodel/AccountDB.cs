@@ -36,6 +36,31 @@ namespace NashGramBack.ViewModel
             }
         }
 
+        public static void UpdatePassword(long id, string password)
+        {
+            try
+            {
+                using (var connection = new SQLiteConnection(@$"Data Source={pathDB};Version=3;"))
+                {
+                    connection.Open();
+                    using (var cmd = new SQLiteCommand($@"UPDATE Account
+                        SET password = '{password}',                        
+                        WHERE id_account = '{id}'", connection))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.AddLog($"Update Failed password id: {id}| " + ex.Message, true);
+            }
+        }
+        public static void UpdatePassword()
+        {
+
+        }
+
         /// <summary>
         /// Возвращает логин Accaunt по id
         /// </summary>
@@ -151,7 +176,7 @@ namespace NashGramBack.ViewModel
                         DELETE FROM Account
                         WHERE id_account = '{id}'; ", connection))
                     {
-                        cmd.ExecuteNonQuery();                        
+                        cmd.ExecuteNonQuery();
                     }
                 }
             }
