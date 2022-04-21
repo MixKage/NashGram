@@ -45,5 +45,38 @@ namespace NashGramBack
                 return null;
             }
         }
+
+        public static Like? GetLikeFromId(long id)
+        {
+            try
+            {
+                Like? like = null;
+                using (var connection = new SQLiteConnection(@$"Data Source={pathDB};Version=3;"))
+                {
+                    connection.Open();
+                    using (var cmd = new SQLiteCommand($"SELECT * FROM Like WHERE id = {id};", connection))
+                    {
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            like = new Like();
+
+                            while (reader.Read())
+                            {
+                                like.id = reader.GetInt64(0);
+                                like.idPost = reader.GetInt64(1);
+                                like.idAccount = reader.GetInt64(2);
+                            }
+                        }
+                    }
+                }
+                return like;
+            }
+            catch (Exception ex)
+            {
+                Log.AddLog($"Like not found from ID: {id} | " + ex.Message, true);
+                return null;
+            }
+        }
+
     }
 }
