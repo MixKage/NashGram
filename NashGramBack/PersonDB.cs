@@ -65,7 +65,7 @@ namespace NashGramBack
                 return null;
         }
         /// <summary>
-        /// Получает Account по id
+        /// Получает Person по id
         /// </summary>        
         public static Person? GetPersonFromID(long id)
         {
@@ -86,7 +86,7 @@ namespace NashGramBack
                                 person.email = reader.GetString(1);
                                 person.name = reader.GetString(2);
                                 person.status = reader.GetString(3);
-                                person.country = reader.GetString(4);
+                                person.country = reader.GetInt64(4);
                                 person.age = reader.GetInt64(5);
                                 person.number = reader.GetString(6);
                             }
