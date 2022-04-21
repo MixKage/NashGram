@@ -38,6 +38,14 @@ namespace NashGramBack
                 return null;
         }
 
+        public static long GetCountryFromId(long id)
+        {
+            var person = GetPersonFromID(id);
+            if (person != null)
+                return person.country;
+            else
+                return -1;
+        }
 
         /// <summary>
         /// Получает Account по id
