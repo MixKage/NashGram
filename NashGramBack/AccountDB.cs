@@ -113,6 +113,29 @@ namespace NashGramBack
         }
 
         /// <summary>
+        /// Удаляет аккаунт и профиль по id
+        /// </summary>        
+        public static void DeleteAccountFromID(long id)
+        {
+            try
+            {
+                using (var connection = new SQLiteConnection(@$"Data Source={pathDB};Version=3;"))
+                {
+                    connection.Open();
+                    using (var cmd = new SQLiteCommand(@$"DELETE FROM Account
+                        WHERE id_account = '{id}'; ", connection))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+                }                
+            }
+            catch (Exception ex)
+            {
+                Log.AddLog($"Account not found from ID: {id} | " + ex.Message, true);                
+            }
+        }
+
+        /// <summary>
         /// Получает Account по id
         /// </summary>        
         public static Account? GetAccountFromID(long id)
