@@ -47,7 +47,7 @@ namespace NashGramBack
                 return null;
         }
         /// <summary>
-        /// Получает Account по id
+        /// Получает Post по id
         /// </summary>        
         public static Post? GetPostFromIdPost(long id)
         {

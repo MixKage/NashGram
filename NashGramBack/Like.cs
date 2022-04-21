@@ -8,6 +8,7 @@ namespace NashGramBack
 {
     public class Like
     {
+        public long id { get; set; }
         public long idPost { get; set; }
         public long idAccount { get; set; }
     }
