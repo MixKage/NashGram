@@ -1,3 +1,14 @@
+INFO: GetAccountFromId: id: 1, login: login666, password: password666
+INFO: GetAccountFromId: id: 0, login: , password: 
+INFO: GetAccountFromId: id: 3, login: login3, password: password3
+INFO: GetAccountFromId: id: 4, login: string, password: string
+INFO: GetAccountFromId: id: 5, login: string2, password: string2
+INFO: GetAccountFromId: id: 5, login: string2, password: string2
+INFO: GetAccountFromId: id: 0, login: , password: 
+ERROR: Account delete id: 5
+ERROR: Account delete id: 5
+ERROR: Account delete id: 5
+INFO: GetAccountFromId: id: 0, login: , password: 
 INFO: GetAccountFromId: id: 3, login: login3, password: password3
 INFO: GetAccountFromId: id: 0, login: , password: 
-INFO: GetAccountFromId: id: 0, login: , password: 
+INFO: GetAccountFromId: id: 3, login: login3, password: password3

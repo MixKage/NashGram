@@ -15,8 +15,10 @@ public static class AccountRepository
 {
     private static string pathDB = System.Reflection.Assembly.GetExecutingAssembly().Location.ToString().Replace("NashGramAPI.dll", "") + @"\sqlite\databaseNashGram.db";
 
-    public static void UpdateLogin(long id, string login)
+    public static bool UpdateLogin(ModelClass.AccountUpdateInput input)
     {
+        long id = input.id;
+        string login = input.text;
         try
         {
             using (var connection = new SQLiteConnection(@$"Data Source={pathDB};Version=3;"))
@@ -30,15 +32,19 @@ public static class AccountRepository
                     Log.AddLog($"UpdateLogin id: {id}, newLogin: {login}", false);
                 }
             }
+            return true;
         }
         catch (Exception ex)
         {
             Log.AddLog($"Update Failed login id: {id}| " + ex.Message, true);
+            return false;
         }
     }
 
-    public static void UpdatePassword(long id, string password)
+    public static bool UpdatePassword(ModelClass.AccountUpdateInput input)
     {
+        long id = input.id;
+        string password = input.text;
         try
         {
             using (var connection = new SQLiteConnection(@$"Data Source={pathDB};Version=3;"))
@@ -52,10 +58,12 @@ public static class AccountRepository
                     Log.AddLog($"UpdateLogin id: {id}, newLogin: {password}", false);
                 }
             }
+            return true;
         }
         catch (Exception ex)
         {
             Log.AddLog($"Update Failed password id: {id}| " + ex.Message, true);
+            return false;
         }
     }
 
@@ -85,7 +93,7 @@ public static class AccountRepository
     /// <summary>
     /// Создаёт аккаунт с профилем и возвращает его id
     /// </summary>        
-    public static long? CreateAccount(ModelClass.AccountInput input)
+    public static long? CreateAccount(ModelClass.AccountCreateInput input)
     {
         string login = input.login;
         string password = input.password;
@@ -115,25 +123,6 @@ public static class AccountRepository
                     }
                 }
             }
-
-            ////Получение самого большого id
-            //using (var connection = new SQLiteConnection(@$"Data Source={pathDB};Version=3;"))
-            //{
-            //    connection.Open();
-            //    using (var cmd = new SQLiteCommand(@$"SELECT *
-            //            FROM Account
-            //            ORDER BY id_account DESC
-            //            LIMIT 1", connection))
-            //    {
-            //        using (var reader = cmd.ExecuteReader())
-            //        {
-            //            while (reader.Read())
-            //            {
-            //                newId = reader.GetInt64(0);
-            //            }
-            //        }
-            //    }
-            //}
 
             if (newId == 0) { return null; }
             Log.AddLog($"Create account id: {newId}", false);
@@ -172,7 +161,7 @@ public static class AccountRepository
     /// <summary>
     /// Удаляет аккаунт и профиль по id
     /// </summary>        
-    public static void DeleteAccountFromID(long id)
+    public static bool DeleteAccountFromID(long id)
     {
         try
         {
@@ -184,12 +173,15 @@ public static class AccountRepository
                         WHERE id_account = '{id}'; ", connection))
                 {
                     cmd.ExecuteNonQuery();
+                    Log.AddLog($"Account delete id: {id}", true);
                 }
             }
+            return true;
         }
         catch (Exception ex)
         {
             Log.AddLog($"Account not found from ID: {id} | " + ex.Message, true);
+            return false;
         }
     }
 
