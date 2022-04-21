@@ -47,6 +47,15 @@ namespace NashGramBack
                 return -1;
         }
 
+        public static long GetAgeFromId(long id)
+        {
+            var person = GetPersonFromID(id);
+            if (person != null)
+                return person.age;
+            else
+                return -1;
+        }
+
         /// <summary>
         /// Получает Account по id
         /// </summary>        
