@@ -56,6 +56,14 @@ namespace NashGramBack
                 return -1;
         }
 
+        public static string? GetNumberFromId(long id)
+        {
+            var person = GetPersonFromID(id);
+            if (person != null)
+                return person.number;
+            else
+                return null;
+        }
         /// <summary>
         /// Получает Account по id
         /// </summary>        
