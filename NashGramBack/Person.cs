@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace NashGramBack
 {
-    internal class Person
+    public class Person
     {
         public long id { get; set; }
         public string email { get; set; }
         public string name { get; set; }
         public string status { get; set; }
         public string country { get; set; }
-        public string age { get; set; }
+        public long age { get; set; }
         public string number { get; set; }
     }
 }
