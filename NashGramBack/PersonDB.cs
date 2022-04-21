@@ -29,6 +29,15 @@ namespace NashGramBack
                 return null;
         }
 
+        public static string? GetStatusFromId(long id)
+        {
+            var person = GetPersonFromID(id);
+            if (person != null)
+                return person.status;
+            else
+                return null;
+        }
+
 
         /// <summary>
         /// Получает Account по id
