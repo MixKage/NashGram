@@ -29,6 +29,15 @@ namespace NashGramBack
                 return null;
         }
 
+        public static string? GetDescryption(long id)
+        {
+            var post = GetPostFromIdPost(id);
+            if (post != null)
+                return post.descryption;
+            else
+                return null;
+        }
+
         /// <summary>
         /// Получает Account по id
         /// </summary>        
