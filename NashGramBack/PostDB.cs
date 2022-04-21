@@ -11,6 +11,15 @@ namespace NashGramBack
     {
         private static string pathDB = System.Reflection.Assembly.GetExecutingAssembly().Location.ToString().Replace("NashGramBack.dll", "") + @"\sqlite\databaseNashGram.db";
 
+        public static long GetAuthor(long id)
+        {
+            var post = GetPostFromIdPost(id);
+            if (post != null)
+                return post.author;
+            else
+                return -1;
+        }
+
         /// <summary>
         /// Получает Account по id
         /// </summary>        
