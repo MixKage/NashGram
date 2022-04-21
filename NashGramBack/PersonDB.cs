@@ -20,6 +20,15 @@ namespace NashGramBack
                 return null;
         }
 
+        public static string? GetNameFromId(long id)
+        {
+            var person = GetPersonFromID(id);
+            if (person != null)
+                return person.name;
+            else
+                return null;
+        }
+
 
         /// <summary>
         /// Получает Account по id
