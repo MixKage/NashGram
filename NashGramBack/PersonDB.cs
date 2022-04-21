@@ -10,6 +10,16 @@ namespace NashGramBack
     public static class PersonDB
     {
         private static string pathDB = System.Reflection.Assembly.GetExecutingAssembly().Location.ToString().Replace("NashGramBack.dll", "") + @"\sqlite\databaseNashGram.db";
+        
+        public static string? GetEmailFromId(long id)
+        {
+            var person = GetPersonFromID(id);
+            if (person != null)
+                return person.email;
+            else
+                return null;
+        }
+
 
         /// <summary>
         /// Получает Account по id
