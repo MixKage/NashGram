@@ -12,7 +12,7 @@ namespace NashGramBack
         public string email { get; set; }
         public string name { get; set; }
         public string status { get; set; }
-        public string country { get; set; }
+        public long country { get; set; }
         public long age { get; set; }
         public string number { get; set; }
     }
