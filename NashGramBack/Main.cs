@@ -13,6 +13,7 @@ public static class MainBack
         long id = AccountDB.CreateAccount("login1","password");
         Console.WriteLine(AccountDB.GetPassword(id));
         Console.WriteLine(PersonDB.GetNameFromId(id));
-
+        Log.SaveLogFile();
+        AccountDB.DeleteAccountFromID(id);
     }
 }

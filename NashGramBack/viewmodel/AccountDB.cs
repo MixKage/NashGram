@@ -107,8 +107,10 @@ namespace NashGramBack.ViewModel
             catch (Exception ex)
             {
                 if (ex.Message.Contains("UNIQUE constraint failed: Account.login"))
+                {
+                    Log.AddLog(ex.Message, true);
                     return -1;
-                Log.AddLog(ex.Message, true);
+                }
             }
             return newId;
         }
@@ -123,16 +125,17 @@ namespace NashGramBack.ViewModel
                 using (var connection = new SQLiteConnection(@$"Data Source={pathDB};Version=3;"))
                 {
                     connection.Open();
-                    using (var cmd = new SQLiteCommand(@$"DELETE FROM Account
+                    using (var cmd = new SQLiteCommand(@$"PRAGMA foreign_keys = 1;
+                        DELETE FROM Account
                         WHERE id_account = '{id}'; ", connection))
                     {
-                        cmd.ExecuteNonQuery();
+                        cmd.ExecuteNonQuery();                        
                     }
-                }                
+                }
             }
             catch (Exception ex)
             {
-                Log.AddLog($"Account not found from ID: {id} | " + ex.Message, true);                
+                Log.AddLog($"Account not found from ID: {id} | " + ex.Message, true);
             }
         }
 
