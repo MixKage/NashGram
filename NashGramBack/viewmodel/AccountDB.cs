@@ -9,7 +9,7 @@ using NashGramBack.Model;
 namespace NashGramBack.ViewModel
 {
     /// <summary>
-    /// Класс для работы с таблицой Accaunt
+    /// Класс для работы с таблицой account
     /// </summary>
     public static class AccountDB
     {
@@ -62,13 +62,13 @@ namespace NashGramBack.ViewModel
         }
 
         /// <summary>
-        /// Возвращает логин Accaunt по id
+        /// Возвращает логин account по id
         /// </summary>
         public static string? GetLogin(long id)
         {
-            var accaunt = GetAccountFromID(id);
-            if (accaunt != null)
-                return accaunt.login;
+            var account = GetAccountFromID(id);
+            if (account != null)
+                return account.login;
             else
                 return null;
         }
@@ -77,9 +77,9 @@ namespace NashGramBack.ViewModel
         /// </summary>
         public static string? GetPassword(long id)
         {
-            var accaunt = GetAccountFromID(id);
-            if (accaunt != null)
-                return accaunt.password;
+            var account = GetAccountFromID(id);
+            if (account != null)
+                return account.password;
             else
                 return null;
         }
