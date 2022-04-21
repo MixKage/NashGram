@@ -38,6 +38,14 @@ namespace NashGramBack
                 return null;
         }
 
+        public static string? GetTag(long id)
+        {
+            var post = GetPostFromIdPost(id);
+            if (post != null)
+                return post.tag;
+            else
+                return null;
+        }
         /// <summary>
         /// Получает Account по id
         /// </summary>        
