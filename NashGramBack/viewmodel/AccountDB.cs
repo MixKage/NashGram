@@ -14,6 +14,28 @@ namespace NashGramBack.ViewModel
     public static class AccountDB
     {
         private static string pathDB = System.Reflection.Assembly.GetExecutingAssembly().Location.ToString().Replace("NashGramBack.dll", "") + @"\sqlite\databaseNashGram.db";
+
+        public static void UpdateLogin(long id, string login)
+        {
+            try
+            {
+                using (var connection = new SQLiteConnection(@$"Data Source={pathDB};Version=3;"))
+                {
+                    connection.Open();
+                    using (var cmd = new SQLiteCommand($@"UPDATE Account
+                        SET login = '{login}',                        
+                        WHERE id_account = '{id}'", connection))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.AddLog($"Update Failed login id: {id}| " + ex.Message, true);
+            }
+        }
+
         /// <summary>
         /// Возвращает логин Accaunt по id
         /// </summary>
