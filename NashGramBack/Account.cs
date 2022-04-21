@@ -8,8 +8,8 @@ namespace NashGramBack
 {
     public class Account
     {
-        public long id_account;
-        public string login;
-        public string password;
+        public long id { get; set; }
+        public string login { get; set; }
+        public string password { get; set; }
     }
 }

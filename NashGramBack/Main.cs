@@ -12,7 +12,7 @@ public static class MainBack
         //Log.AddLog("Initialization was successful", false);
 
         AccountDB.GetAccountFromID(1);
-        AccountDB.CreateAccount("login10","password4");
+        AccountDB.CreateAccount("login12","password4");
     }
 
     //public static void ConnectToBD()

@@ -37,7 +37,7 @@ namespace NashGramBack
         }
 
         /// <summary>
-        /// Создаёт аккаунт и возвращает его id (-1: login уже существует)
+        /// Создаёт аккаунт с профилем и возвращает его id (-1: login уже существует)
         /// </summary>        
         public static long CreateAccount(string login, string password)
         {
@@ -79,6 +79,29 @@ namespace NashGramBack
                         }
                     }
                 }
+                if (newId == 0)
+                {
+                    return -1;
+                }
+                //Создание Person
+                using (var connection = new SQLiteConnection(@$"Data Source={pathDB};Version=3;"))
+                {
+                    connection.Open();
+                    using (var cmd = new SQLiteCommand($@"INSERT INTO Person (
+                       id_account,
+                       email,
+                       name,
+                       status,
+                       country,
+                       age,
+                       number
+                   )
+                   VALUES (
+                       '{newId}','NULL','NULL','NULL','NULL','NULL','NULL');", connection))
+                    {
+                        cmd.ExecuteNonQuery(); //Создание аккаунта
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -108,7 +131,7 @@ namespace NashGramBack
 
                             while (reader.Read())
                             {
-                                account.id_account = reader.GetInt64(0);
+                                account.id = reader.GetInt64(0);
                                 account.login = reader.GetString(1);
                                 account.password = reader.GetString(2);
                             }
