@@ -20,6 +20,15 @@ namespace NashGramBack
                 return -1;
         }
 
+        public static string? GetUri(long id)
+        {
+            var post = GetPostFromIdPost(id);
+            if (post != null)
+                return post.uri;
+            else
+                return null;
+        }
+
         /// <summary>
         /// Получает Account по id
         /// </summary>        
