@@ -31,13 +31,14 @@ internal class LikeRepository
 
                         while (reader.Read())
                         {
-                            like.id = reader.GetInt64(0);
-                            like.idPost = reader.GetInt64(1);
-                            like.idAccount = reader.GetInt64(2);  
+                            like.Id = reader.GetInt64(0);
+                            like.IdPost = reader.GetInt64(1);
+                            like.IdAccount = reader.GetInt64(2);
                         }
                     }
                 }
             }
+            if (like.IdPost != id) return null;
             return like;
         }
         catch (Exception ex)
@@ -63,13 +64,14 @@ internal class LikeRepository
 
                         while (reader.Read())
                         {
-                            like.id = reader.GetInt64(0);
-                            like.idPost = reader.GetInt64(1);
-                            like.idAccount = reader.GetInt64(2);
+                            like.Id = reader.GetInt64(0);
+                            like.IdPost = reader.GetInt64(1);
+                            like.IdAccount = reader.GetInt64(2);
                         }
                     }
                 }
             }
+            if (like.Id != id) return null;
             return like;
         }
         catch (Exception ex)
@@ -95,13 +97,14 @@ internal class LikeRepository
 
                         while (reader.Read())
                         {
-                            like.id = reader.GetInt64(0);
-                            like.idPost = reader.GetInt64(1);
-                            like.idAccount = reader.GetInt64(2);
+                            like.Id = reader.GetInt64(0);
+                            like.IdPost = reader.GetInt64(1);
+                            like.IdAccount = reader.GetInt64(2);
                         }
                     }
                 }
             }
+            if (like.IdAccount != id) return null;
             return like;
         }
         catch (Exception ex)
