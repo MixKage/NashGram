@@ -12,3 +12,7 @@ INFO: GetAccountFromId: id: 0, login: , password:
 INFO: GetAccountFromId: id: 3, login: login3, password: password3
 INFO: GetAccountFromId: id: 0, login: , password: 
 INFO: GetAccountFromId: id: 3, login: login3, password: password3
+INFO: GetAccountFromId: id: 0, login: , password: 
+INFO: Create account id: 4
+INFO: Create Person id: 4
+INFO: GetAccountFromId: id: 4, login: valerij, password: password

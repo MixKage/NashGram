@@ -13,7 +13,7 @@ namespace NashGramAPI.Repository;
 /// </summary>
 public static class AccountRepository
 {
-    private static string pathDB = System.Reflection.Assembly.GetExecutingAssembly().Location.ToString().Replace("NashGramAPI.dll", "") + @"\sqlite\databaseNashGram.db";
+    private static string pathDB = ModelClass.pathDB;
 
     public static bool UpdateLogin(ModelClass.AccountUpdateInput input)
     {

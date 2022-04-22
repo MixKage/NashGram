@@ -11,53 +11,53 @@ namespace NashGramAPI.Controllers
     public class AccountController : ControllerBase
     {
 
-        //[HttpGet(Name = "GetCreateAccount1")]
-        //public IActionResult CreateAccount1([FromBody] AccountCreateInput input)
-        //{
-        //    var result = Repository.AccountRepository.CreateAccount(input);
-        //    return result == null ? Conflict(result) : Ok(result);
-        //}
+        [HttpPut("/CreateAccount")]
+        public IActionResult CreateAccount([FromBody] AccountCreateInput input)
+        {
+            var result = Repository.AccountRepository.CreateAccount(input);
+            return result == null ? Conflict(result) : Ok(result);
+        }
 
-        //[HttpGet(Name = "GetUpdateLogin1")]
-        //public IActionResult UpdateLogin1([FromBody] AccountUpdateInput input)
-        //{
-        //    var result = Repository.AccountRepository.UpdateLogin(input);
-        //    return result == false ? Conflict() : Ok();
-        //}
+        [HttpPut("/UpdateLogin")]
+        public IActionResult UpdateLogin([FromBody] AccountUpdateInput input)
+        {
+            var result = Repository.AccountRepository.UpdateLogin(input);
+            return result == false ? Conflict() : Ok();
+        }
 
-        //[HttpGet(Name = "GetUpdatePassword1")]
-        //public IActionResult UpdatePassword1([FromBody] AccountUpdateInput input)
-        //{
-        //    var result = Repository.AccountRepository.UpdatePassword(input);
-        //    return result == false ? Conflict() : Ok();
-        //}
+        [HttpPut("/UpdatePassword")]
+        public IActionResult UpdatePassword([FromBody] AccountUpdateInput input)
+        {
+            var result = Repository.AccountRepository.UpdatePassword(input);
+            return result == false ? Conflict() : Ok();
+        }
 
-        //[HttpGet(Name = "GetAccountFromId1")]
-        //public IActionResult GetAccountFromId1(long id)
-        //{
-        //    var result = Repository.AccountRepository.GetAccountFromID(id);
-        //    return result == null ? Conflict(result) : Ok(result);
-        //}
+        [HttpGet("/GetAccountFromId")]
+        public IActionResult GetAccountFromId(long id)
+        {
+            var result = Repository.AccountRepository.GetAccountFromID(id);
+            return result == null ? Conflict(result) : Ok(result);
+        }
 
-        [HttpGet(Name = "/Login")]
+        [HttpGet("/GetLogin")]
         public IActionResult GetLogin(long id)
         {
             var result = Repository.AccountRepository.GetLogin(id);
             return result == null ? Conflict(result) : Ok(result);
         }
 
-        [HttpGet("/Password")]
+        [HttpGet("/GetPassword")]
         public IActionResult GetPassword(long id)
         {
             var result = Repository.AccountRepository.GetPassword(id);
             return result == null ? Conflict(result) : Ok(result);
         }        
 
-        [HttpDelete(Name = "DeleteAccountFromID")]
+        [HttpDelete("/DeleteAccountFromID")]
         public IActionResult DeleteAccountFromID(long id)
         {
             var result = Repository.AccountRepository.DeleteAccountFromID(id);
-            return result == false ? Conflict(result) : Ok(result);
+            return result == false ? Conflict() : Ok();
         }
     }
 }
