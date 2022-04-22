@@ -66,6 +66,7 @@ public static class PostRepository
 
                         while (reader.Read())
                         {
+                            post.Id = reader.GetInt64(0);
                             post.Author = reader.GetInt64(1);
                             post.Uri = reader.GetString(2);
                             post.Descryption = reader.GetString(3);
@@ -74,6 +75,7 @@ public static class PostRepository
                     }
                 }
             }
+            if (post.Id != id) return null;
             return post;
         }
         catch (Exception ex)

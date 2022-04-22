@@ -140,7 +140,7 @@ public static class AccountRepository
                        number
                    )
                    VALUES (
-                       '{newId}','NULL','NULL','NULL','NULL','NULL','NULL');", connection))
+                       '{newId}','NULL','NULL','NULL','0','0','NULL');", connection))
                 {
                     cmd.ExecuteNonQuery();
                     Log.AddLog($"Create Person id: {newId}", false);

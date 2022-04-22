@@ -11,39 +11,53 @@ namespace NashGramAPI.Controllers
     public class PersonController : ControllerBase
     {
 
-        [HttpGet("/GetAuthorFromId")]
-        public IActionResult GetAuthor(long input)
+        [HttpGet("/GetEmailFromId")]
+        public IActionResult GetEmailFromId(long input)
         {
-            var result = Repository.PostRepository.GetAuthor(input);
+            var result = Repository.PersonRepository.GetEmailFromId(input);
             return result == null ? Conflict(result) : Ok(result);
         }
 
-        [HttpGet("/GetUriFromId")]
-        public IActionResult GetUri(long input)
+        [HttpGet("/GetNameFromId")]
+        public IActionResult GetNameFromId(long input)
         {
-            var result = Repository.PostRepository.GetUri(input);
+            var result = Repository.PersonRepository.GetNameFromId(input);
             return result == null ? Conflict() : Ok();
         }
 
-        [HttpGet("/GetDescryptionFromId")]
-        public IActionResult GetDescryption(long input)
+        [HttpGet("/GetStatusFromId")]
+        public IActionResult GetStatusFromId(long input)
         {
-            var result = Repository.PostRepository.GetDescryption(input);
+            var result = Repository.PersonRepository.GetStatusFromId(input);
             return result == null ? Conflict() : Ok();
         }
 
-        [HttpGet("/GetTagFromId")]
-        public IActionResult GetTag(long id)
+        [HttpGet("/GetCountryFromId")]
+        public IActionResult GetCountryFromId(long id)
         {
-            var result = Repository.PostRepository.GetTag(id);
+            var result = Repository.PersonRepository.GetCountryFromId(id);
             return result == null ? Conflict(result) : Ok(result);
         }
 
-        [HttpGet("/GetPostFromIdPost")]
-        public IActionResult GetPostFromIdPost(long id)
+        [HttpGet("/GetAgeFromId")]
+        public IActionResult GetAgeFromId(long id)
         {
-            var result = Repository.PostRepository.GetPostFromIdPost(id);
+            var result = Repository.PersonRepository.GetAgeFromId(id);
             return result == null ? Conflict(result) : Ok(result);
+        }
+
+        [HttpGet("/GetNumberFromId")]
+        public IActionResult GetNumberFromId(long id)
+        {
+            var result = Repository.PersonRepository.GetNumberFromId(id);
+            return result == null ? Conflict(result) : Ok(result);
+        }
+
+        [HttpGet("/GetPersonFromID")]
+        public IActionResult GetPersonFromID(long id)
+        {
+            var result = Repository.PersonRepository.GetPersonFromID(id);
+            return result == null ? Conflict() : Ok(result);
         }
     }
 }
