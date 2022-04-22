@@ -25,7 +25,7 @@ public static class AccountRepository
             {
                 connection.Open();
                 using (var cmd = new SQLiteCommand($@"UPDATE Account
-                        SET login = '{login}',                        
+                        SET login = '{login}'                        
                         WHERE id_account = '{id}'", connection))
                 {
                     cmd.ExecuteNonQuery();
@@ -36,7 +36,7 @@ public static class AccountRepository
         }
         catch (Exception ex)
         {
-            Log.AddLog($"Update Failed login id: {id}| " + ex.Message, true);
+            Log.AddLog($"Update Failed login id: {id} | " + ex.Message, true);
             return false;
         }
     }
@@ -51,7 +51,7 @@ public static class AccountRepository
             {
                 connection.Open();
                 using (var cmd = new SQLiteCommand($@"UPDATE Account
-                        SET password = '{password}',                        
+                        SET password = '{password}'                        
                         WHERE id_account = '{id}'", connection))
                 {
                     cmd.ExecuteNonQuery();
@@ -62,7 +62,7 @@ public static class AccountRepository
         }
         catch (Exception ex)
         {
-            Log.AddLog($"Update Failed password id: {id}| " + ex.Message, true);
+            Log.AddLog($"Update Failed password id: {id} | " + ex.Message, true);
             return false;
         }
     }
@@ -125,7 +125,7 @@ public static class AccountRepository
             }
 
             if (newId == 0) { return null; }
-            Log.AddLog($"Create account id: {newId}", false);
+            Log.AddLog($"Create account id: {newId}, login {login}, password {password}", false);
             //Создание Person
             using (var connection = new SQLiteConnection(@$"Data Source={pathDB};Version=3;"))
             {
