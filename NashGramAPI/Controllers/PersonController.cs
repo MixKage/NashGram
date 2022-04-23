@@ -45,6 +45,12 @@ namespace NashGramAPI.Controllers
             return result == false ? Conflict() : Ok();
         }
 
+        [HttpPut("/UpdateNumberFromId")]
+        public IActionResult UpdateNumberFromId([FromBody] AccountUpdateInput input)
+        {
+            var result = Repository.PersonRepository.UpdateInfoFromId(input, 5);
+            return result == false ? Conflict() : Ok();
+        }
 
         [HttpGet("/GetEmailFromId")]
         public IActionResult GetEmailFromId(long input)
