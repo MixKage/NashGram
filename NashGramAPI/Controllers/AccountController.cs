@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NashGramAPI.Model;
 using NashGramAPI.Repository;
@@ -6,6 +7,7 @@ using static NashGramAPI.Model.ModelClass;
 
 namespace NashGramAPI.Controllers
 {
+    [Authorize]
     [Route("Account")]
     [ApiController]
     public class AccountController : ControllerBase
