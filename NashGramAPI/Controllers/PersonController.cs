@@ -10,6 +10,13 @@ namespace NashGramAPI.Controllers
     [ApiController]
     public class PersonController : ControllerBase
     {
+        [HttpPut("/UpdateEmailFromId")]
+        public IActionResult UpdateEmailFromId([FromBody] AccountUpdateInput input)
+        {
+            var result = Repository.PersonRepository.UpdateInfoFromId(input, 0);
+            return result == false ? Conflict() : Ok();
+        }
+
 
         [HttpGet("/GetEmailFromId")]
         public IActionResult GetEmailFromId(long input)
