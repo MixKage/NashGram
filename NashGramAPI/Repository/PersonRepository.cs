@@ -65,6 +65,63 @@ public static class PersonRepository
         else
             return null;
     }
+
+    /// <summary>
+    /// Изменяет данные Person в зависимости от полученных данных
+    /// </summary>
+    /// <param name="input">{id, text}</param>
+    /// <param name="mode">0-Email,1-Name,2-Status,3-Country,4-age,5-number</param>
+    /// <returns></returns>
+    public static bool UpdateInfoFromId(ModelClass.AccountUpdateInput input, int mode)
+    {
+        string param = SwitchParam(mode);
+        long _id = input.id;
+        string _input = input.text;
+        int count = 0;
+        try
+        {
+            using (var connection = new SQLiteConnection(@$"Data Source={pathDB};Version=3;"))
+            {
+                connection.Open();
+                using (var cmd = new SQLiteCommand($@"UPDATE Person
+                        SET {param} = '{_input}'
+                        WHERE id_account = '{_id}'", connection))
+                {
+                    count = cmd.ExecuteNonQuery();
+                }
+            }
+            if (count == 0) return false;
+            Log.AddLog($"{param} update: id {_id}, new {param} {_input}", false);
+            return true;
+        }
+        catch (Exception ex)
+        {
+            Log.AddLog($"{param} not update: id {_id}, {param} {_input} | " + ex.Message, true);
+            return false;
+        }
+    }
+
+    private static string SwitchParam(int mode)
+    {
+        switch (mode)
+        {
+            case 0:
+                return "email";
+            case 1:
+                return "name";
+            case 2:
+                return "status";
+            case 3:
+                return "country";
+            case 4:
+                return "age";
+            case 5:
+                return "number";
+            default:
+                return "error";
+        }
+    }
+
     /// <summary>
     /// Получает Person по id
     /// </summary>        
