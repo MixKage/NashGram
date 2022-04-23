@@ -11,7 +11,7 @@ namespace NashGramAPI.Controllers
     public class AccountController : ControllerBase
     {
 
-        [HttpPut("/CreateAccount")]
+        [HttpPost("/CreateAccount")]
         public IActionResult CreateAccount([FromBody] AccountCreateInput input)
         {
             var result = Repository.AccountRepository.CreateAccount(input);

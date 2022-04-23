@@ -208,7 +208,6 @@ public static class AccountRepository
                             account.Login = reader.GetString(1);
                             account.Password = reader.GetString(2);
                         }
-                        Log.AddLog($"GetAccountFromId: id: {account.Id}, login: {account.Login}, password: {account.Password}", false);
                     }
                 }
             }
