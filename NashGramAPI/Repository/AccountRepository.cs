@@ -221,5 +221,40 @@ public static class AccountRepository
         }
     }
 
-
+    /// <summary>
+    /// Получает Account по id
+    /// </summary>        
+    public static List<Account>? GetAllAccount()
+    {
+        try
+        {
+            List<Account> accountList = new List<Account>();
+            Account? account = null;
+            using (var connection = new SQLiteConnection(@$"Data Source={pathDB};Version=3;"))
+            {
+                connection.Open();
+                using (var cmd = new SQLiteCommand($"SELECT * FROM Account;", connection))
+                {
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            account = new Account();
+                            account.Id = reader.GetInt64(0);
+                            account.Login = reader.GetString(1);
+                            account.Password = reader.GetString(2);
+                            accountList.Add(account);
+                        }
+                    }
+                }
+            }
+            if (accountList.Count == 0) return null;
+            else return accountList;
+        }
+        catch (Exception ex)
+        {
+            Log.AddLog($"Accounts not found | " + ex.Message, true);
+            return null;
+        }
+    }
 }

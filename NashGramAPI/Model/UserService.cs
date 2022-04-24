@@ -1,8 +1,13 @@
-﻿namespace NashGramAPI.Model;
+﻿using NashGramAPI.Repository;
+
+namespace NashGramAPI.Model;
+
 public class UserService : IUserService
 {
     public bool ValidateCredentials(string username, string password)
     {
-        return username.Equals("admin") && password.Equals("Pa$$WoRd");
+        List<Account>? accounts = AccountRepository.GetAllAccount();
+        if (accounts is null) return false;
+        return accounts.Exists(x => x.Login.Equals(username) && x.Password.Equals(password));
     }
 }
