@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NashGramAPI.Model;
 using NashGramAPI.Repository;
@@ -11,6 +12,7 @@ namespace NashGramAPI.Controllers
     [ApiController]
     public class PersonController : ControllerBase
     {
+        [Authorize]
         [HttpPut("/UpdateEmailFromId")]
         public IActionResult UpdateEmailFromId([FromBody] AccountUpdateInput input)
         {
@@ -18,6 +20,7 @@ namespace NashGramAPI.Controllers
             return result == false ? Conflict() : Ok();
         }
 
+        [Authorize]
         [HttpPut("/UpdateNameFromId")]
         public IActionResult UpdateNameFromId([FromBody] AccountUpdateInput input)
         {
@@ -25,6 +28,7 @@ namespace NashGramAPI.Controllers
             return result == false ? Conflict() : Ok();
         }
 
+        [Authorize]
         [HttpPut("/UpdateStatusFromId")]
         public IActionResult UpdateStatusFromId([FromBody] AccountUpdateInput input)
         {
@@ -32,6 +36,7 @@ namespace NashGramAPI.Controllers
             return result == false ? Conflict() : Ok();
         }
 
+        [Authorize]
         [HttpPut("/UpdateCountryFromId")]
         public IActionResult UpdateCountryFromId([FromBody] AccountUpdateInput input)
         {
@@ -39,6 +44,7 @@ namespace NashGramAPI.Controllers
             return result == false ? Conflict() : Ok();
         }
 
+        [Authorize]
         [HttpPut("/UpdateAgeFromId")]
         public IActionResult UpdateAgeFromId([FromBody] AccountUpdateInput input)
         {
@@ -46,6 +52,7 @@ namespace NashGramAPI.Controllers
             return result == false ? Conflict() : Ok();
         }
 
+        [Authorize]
         [HttpPut("/UpdateNumberFromId")]
         public IActionResult UpdateNumberFromId([FromBody] AccountUpdateInput input)
         {
@@ -53,6 +60,7 @@ namespace NashGramAPI.Controllers
             return result == false ? Conflict() : Ok();
         }
 
+        [Authorize]
         [HttpGet("/GetEmailFromId")]
         public IActionResult GetEmailFromId(long input)
         {
@@ -60,6 +68,7 @@ namespace NashGramAPI.Controllers
             return result == null ? Conflict(result) : Ok(result);
         }
 
+        [Authorize]
         [HttpGet("/GetNameFromId")]
         public IActionResult GetNameFromId(long input)
         {
@@ -67,6 +76,7 @@ namespace NashGramAPI.Controllers
             return result == null ? Conflict() : Ok();
         }
 
+        [Authorize]
         [HttpGet("/GetStatusFromId")]
         public IActionResult GetStatusFromId(long input)
         {
@@ -74,6 +84,7 @@ namespace NashGramAPI.Controllers
             return result == null ? Conflict() : Ok();
         }
 
+        [Authorize]
         [HttpGet("/GetCountryFromId")]
         public IActionResult GetCountryFromId(long id)
         {
@@ -81,6 +92,7 @@ namespace NashGramAPI.Controllers
             return result == null ? Conflict(result) : Ok(result);
         }
 
+        [Authorize]
         [HttpGet("/GetAgeFromId")]
         public IActionResult GetAgeFromId(long id)
         {
@@ -88,6 +100,7 @@ namespace NashGramAPI.Controllers
             return result == null ? Conflict(result) : Ok(result);
         }
 
+        [Authorize]
         [HttpGet("/GetNumberFromId")]
         public IActionResult GetNumberFromId(long id)
         {
@@ -95,6 +108,7 @@ namespace NashGramAPI.Controllers
             return result == null ? Conflict(result) : Ok(result);
         }
 
+        [Authorize]
         [HttpGet("/GetPersonFromID")]
         public IActionResult GetPersonFromID(long id)
         {

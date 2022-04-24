@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NashGramAPI.Model;
 using NashGramAPI.Repository;
@@ -11,6 +12,7 @@ namespace NashGramAPI.Controllers
     public class PostController : ControllerBase
     {
 
+        [Authorize]
         [HttpGet("/GetAuthorFromId")]
         public IActionResult GetAuthor(long input)
         {
@@ -18,6 +20,7 @@ namespace NashGramAPI.Controllers
             return result == null ? Conflict(result) : Ok(result);
         }
 
+        [Authorize]
         [HttpGet("/GetUriFromId")]
         public IActionResult GetUri(long input)
         {
@@ -25,6 +28,7 @@ namespace NashGramAPI.Controllers
             return result == null ? Conflict() : Ok();
         }
 
+        [Authorize]
         [HttpGet("/GetDescryptionFromId")]
         public IActionResult GetDescryption(long input)
         {
@@ -32,6 +36,7 @@ namespace NashGramAPI.Controllers
             return result == null ? Conflict() : Ok();
         }
 
+        [Authorize]
         [HttpGet("/GetTagFromId")]
         public IActionResult GetTag(long id)
         {
@@ -39,6 +44,7 @@ namespace NashGramAPI.Controllers
             return result == null ? Conflict(result) : Ok(result);
         }
 
+        [Authorize]
         [HttpGet("/GetPostFromIdPost")]
         public IActionResult GetPostFromIdPost(long id)
         {
