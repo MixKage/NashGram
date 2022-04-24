@@ -7,7 +7,6 @@ using static NashGramAPI.Model.ModelClass;
 
 namespace NashGramAPI.Controllers
 {
-    [Authorize]
     [Route("Account")]
     [ApiController]
     public class AccountController : ControllerBase
@@ -20,6 +19,7 @@ namespace NashGramAPI.Controllers
             return result == null ? Conflict(result) : Ok(result);
         }
 
+        [Authorize]
         [HttpPut("/UpdateLogin")]
         public IActionResult UpdateLogin([FromBody] AccountUpdateInput input)
         {
@@ -27,6 +27,7 @@ namespace NashGramAPI.Controllers
             return result == false ? Conflict() : Ok();
         }
 
+        [Authorize]
         [HttpPut("/UpdatePassword")]
         public IActionResult UpdatePassword([FromBody] AccountUpdateInput input)
         {
@@ -34,6 +35,7 @@ namespace NashGramAPI.Controllers
             return result == false ? Conflict() : Ok();
         }
 
+        [Authorize]
         [HttpGet("/GetAccountFromId")]
         public IActionResult GetAccountFromId(long id)
         {
@@ -41,6 +43,7 @@ namespace NashGramAPI.Controllers
             return result == null ? Conflict(result) : Ok(result);
         }
 
+        [Authorize]
         [HttpGet("/GetLogin")]
         public IActionResult GetLogin(long id)
         {
@@ -48,13 +51,15 @@ namespace NashGramAPI.Controllers
             return result == null ? Conflict(result) : Ok(result);
         }
 
+        [Authorize]
         [HttpGet("/GetPassword")]
         public IActionResult GetPassword(long id)
         {
             var result = Repository.AccountRepository.GetPassword(id);
             return result == null ? Conflict(result) : Ok(result);
-        }        
+        }
 
+        [Authorize]
         [HttpDelete("/DeleteAccountFromID")]
         public IActionResult DeleteAccountFromID(long id)
         {

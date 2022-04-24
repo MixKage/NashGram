@@ -5,7 +5,7 @@ using NashGramAPI.Repository;
 using static NashGramAPI.Model.ModelClass;
 
 namespace NashGramAPI.Controllers
-{
+{    
     [Route("Like")]
     [ApiController]
     public class LikeController : ControllerBase
