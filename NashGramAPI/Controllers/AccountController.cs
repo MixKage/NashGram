@@ -16,7 +16,7 @@ namespace NashGramAPI.Controllers
         public IActionResult CreateAccount([FromBody] AccountCreateInput input)
         {
             var result = Repository.AccountRepository.CreateAccount(input);
-            return result == null ? Conflict(result) : Ok(result);
+            return result == null ? Conflict() : Ok(result);
         }
 
         [Authorize]
@@ -40,7 +40,7 @@ namespace NashGramAPI.Controllers
         public IActionResult GetAccountFromId(long id)
         {
             var result = Repository.AccountRepository.GetAccountFromID(id);
-            return result == null ? Conflict(result) : Ok(result);
+            return result == null ? Conflict() : Ok(result);
         }
 
         [Authorize]
@@ -48,7 +48,7 @@ namespace NashGramAPI.Controllers
         public IActionResult GetLogin(long id)
         {
             var result = Repository.AccountRepository.GetLogin(id);
-            return result == null ? Conflict(result) : Ok(result);
+            return result == null ? Conflict() : Ok(result);
         }
 
         [Authorize]
@@ -56,7 +56,7 @@ namespace NashGramAPI.Controllers
         public IActionResult GetPassword(long id)
         {
             var result = Repository.AccountRepository.GetPassword(id);
-            return result == null ? Conflict(result) : Ok(result);
+            return result == null ? Conflict() : Ok(result);
         }
 
         [Authorize]
