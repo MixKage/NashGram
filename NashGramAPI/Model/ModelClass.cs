@@ -13,4 +13,10 @@ public class ModelClass
     [Required] long id,
     [StringLength(50)][Required] string text
 );
+    public record PostCreate(
+    [Required] long idAuthor,
+    [Required] byte[] uri,
+    [StringLength(500)] string descryption,
+    [StringLength(50)] string tag
+);
 }

@@ -21,7 +21,7 @@ public static class PostRepository
             return null;
     }
 
-    public static string? GetUri(long id)
+    public static byte[]? GetUri(long id)
     {
         var post = GetPostFromIdPost(id);
         if (post != null)
@@ -47,6 +47,55 @@ public static class PostRepository
         else
             return null;
     }
+
+    /// <summary>
+    /// Получает Post по id
+    /// </summary>        
+    public static long? CreatePost(ModelClass.PostCreate postCreate)
+    {
+        long idAuthor = postCreate.idAuthor;
+        byte[] uri = postCreate.uri;
+        string description = postCreate.descryption;
+        string tag = postCreate.tag;
+
+        long? postId = null;
+        try
+        {            
+            using (var connection = new SQLiteConnection(@$"Data Source={pathDB};Version=3;"))
+            {
+                connection.Open();
+                using (var cmd = new SQLiteCommand($@"INSERT INTO Post (
+                     author,
+                     uri,
+                     descryption,
+                     tag
+                 )
+                 VALUES (                    
+                     '{idAuthor}',
+                     '{uri}',
+                     '{description}',
+                     '{tag}'
+                 )
+                RETURNING id_post
+", connection))
+                {
+                    using (var reader = cmd.ExecuteReader())
+                    {                 
+                        while (reader.Read())
+                        {
+                            postId = reader.GetInt64(0);
+                        }
+                    }
+                }
+            }
+            return postId;
+        }
+        catch (Exception ex)
+        {
+            Log.AddLog($"Post no create: {idAuthor} | " + ex.Message, true);
+            return null;
+        }
+    }
     /// <summary>
     /// Получает Post по id
     /// </summary>        
@@ -68,7 +117,7 @@ public static class PostRepository
                         {
                             post.Id = reader.GetInt64(0);
                             post.Author = reader.GetInt64(1);
-                            post.Uri = reader.GetString(2);
+                            post.Uri = reader.GetBlob(2, true);
                             post.Descryption = reader.GetString(3);
                             post.Tag = reader.GetString(4);
                         }

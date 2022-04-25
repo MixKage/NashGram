@@ -11,6 +11,13 @@ namespace NashGramAPI.Controllers
     [ApiController]
     public class PostController : ControllerBase
     {
+        [Authorize]
+        [HttpPost("/CreatePost")]
+        public IActionResult CreatePost(ModelClass.PostCreate input)
+        {
+            var result = Repository.PostRepository.CreatePost(input);
+            return result == null ? Conflict(result) : Ok(result);
+        }
 
         [Authorize]
         [HttpGet("/GetAuthorFromId")]
