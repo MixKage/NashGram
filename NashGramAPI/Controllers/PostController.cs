@@ -24,7 +24,7 @@ namespace NashGramAPI.Controllers
         public IActionResult GetAuthor(long input)
         {
             var result = Repository.PostRepository.GetAuthor(input);
-            return result == null ? Conflict(result) : Ok(result);
+            return result == null ? Conflict() : Ok(result);
         }
 
         [Authorize]
@@ -32,7 +32,7 @@ namespace NashGramAPI.Controllers
         public IActionResult GetUri(long input)
         {
             var result = Repository.PostRepository.GetUri(input);
-            return result == null ? Conflict() : Ok();
+            return result == null ? Conflict() : Ok(result);
         }
 
         [Authorize]
@@ -40,7 +40,7 @@ namespace NashGramAPI.Controllers
         public IActionResult GetDescryption(long input)
         {
             var result = Repository.PostRepository.GetDescryption(input);
-            return result == null ? Conflict() : Ok();
+            return result == null ? Conflict() : Ok(result);
         }
 
         [Authorize]
@@ -48,7 +48,7 @@ namespace NashGramAPI.Controllers
         public IActionResult GetTag(long id)
         {
             var result = Repository.PostRepository.GetTag(id);
-            return result == null ? Conflict(result) : Ok(result);
+            return result == null ? Conflict() : Ok(result);
         }
 
         [Authorize]
@@ -56,7 +56,7 @@ namespace NashGramAPI.Controllers
         public IActionResult GetPostFromIdPost(long id)
         {
             var result = Repository.PostRepository.GetPostFromIdPost(id);
-            return result == null ? Conflict(result) : Ok(result);
+            return result == null ? Conflict() : Ok(result);
         }
     }
 }
