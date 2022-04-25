@@ -65,7 +65,7 @@ namespace NashGramAPI.Controllers
         public IActionResult GetEmailFromId(long input)
         {
             var result = Repository.PersonRepository.GetEmailFromId(input);
-            return result == null ? Conflict(result) : Ok(result);
+            return result == null ? Conflict() : Ok(result);
         }
 
         [Authorize]
@@ -73,7 +73,7 @@ namespace NashGramAPI.Controllers
         public IActionResult GetNameFromId(long input)
         {
             var result = Repository.PersonRepository.GetNameFromId(input);
-            return result == null ? Conflict() : Ok();
+            return result == null ? Conflict() : Ok(result);
         }
 
         [Authorize]
@@ -81,7 +81,7 @@ namespace NashGramAPI.Controllers
         public IActionResult GetStatusFromId(long input)
         {
             var result = Repository.PersonRepository.GetStatusFromId(input);
-            return result == null ? Conflict() : Ok();
+            return result == null ? Conflict() : Ok(result);
         }
 
         [Authorize]
@@ -89,7 +89,7 @@ namespace NashGramAPI.Controllers
         public IActionResult GetCountryFromId(long id)
         {
             var result = Repository.PersonRepository.GetCountryFromId(id);
-            return result == null ? Conflict(result) : Ok(result);
+            return result == null ? Conflict() : Ok(result);
         }
 
         [Authorize]
@@ -97,7 +97,7 @@ namespace NashGramAPI.Controllers
         public IActionResult GetAgeFromId(long id)
         {
             var result = Repository.PersonRepository.GetAgeFromId(id);
-            return result == null ? Conflict(result) : Ok(result);
+            return result == null ? Conflict() : Ok(result);
         }
 
         [Authorize]
@@ -105,7 +105,7 @@ namespace NashGramAPI.Controllers
         public IActionResult GetNumberFromId(long id)
         {
             var result = Repository.PersonRepository.GetNumberFromId(id);
-            return result == null ? Conflict(result) : Ok(result);
+            return result == null ? Conflict() : Ok(result);
         }
 
         [Authorize]
