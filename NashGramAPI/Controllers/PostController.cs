@@ -58,5 +58,13 @@ namespace NashGramAPI.Controllers
             var result = Repository.PostRepository.GetPostFromIdPost(id);
             return result == null ? Conflict() : Ok(result);
         }
+
+        [Authorize]
+        [HttpGet("/GetPostsFromIdAccount")]
+        public IActionResult GetPostsFromIdAccount(long id)
+        {
+            var result = Repository.PostRepository.GetPostsFromIdAccount(id);
+            return result == null ? Conflict() : Ok(result);
+        }
     }
 }

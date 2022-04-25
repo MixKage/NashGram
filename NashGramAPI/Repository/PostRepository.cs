@@ -25,7 +25,8 @@ public static class PostRepository
     {
         var post = GetPostFromIdPost(id);
         if (post != null)
-            return Convert.ToHexString(post.Uri);
+            return post.Uri;
+            //return Convert.ToBase64String(post.Uri);
         else
             return null;
     }
@@ -54,14 +55,13 @@ public static class PostRepository
     public static long? CreatePost(ModelClass.PostCreate postCreate)
     {
         long idAuthor = postCreate.idAuthor;
-        byte[]? uri = null;
+        string uri = postCreate.uri;
         string description = postCreate.descryption;
         string tag = postCreate.tag;
 
         long? postId = null;
         try
-        {
-            uri = Convert.FromHexString(postCreate.uri);
+        {            
             using (var connection = new SQLiteConnection(@$"Data Source={pathDB};Version=3;"))
             {
                 connection.Open();
@@ -99,6 +99,46 @@ public static class PostRepository
         }
     }
     /// <summary>
+    /// Получает все посты аккаунта
+    /// </summary>
+    public static List<Post>? GetPostsFromIdAccount(long id)
+    {
+        List<Post> posts;
+        try
+        {
+            posts = new List<Post>();
+            Post? post = null;
+            using (var connection = new SQLiteConnection(@$"Data Source={pathDB};Version=3;"))
+            {
+                connection.Open();
+                using (var cmd = new SQLiteCommand($"SELECT * FROM Post WHERE author = {id};", connection))
+                {
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            post = new Post();
+                            post.Id = reader.GetInt64(0);
+                            post.Author = reader.GetInt64(1);                            
+                            post.Uri = reader.GetString(2);
+                            post.Descryption = reader.GetString(3);
+                            post.Tag = reader.GetString(4);
+                            posts.Add(post);
+                        }
+                    }
+                }
+            }
+            if (posts.Count == 0) return null;
+            return posts;
+        }
+        catch (Exception ex)
+        {
+            Log.AddLog($"Posts not found from IdAccount: {id} | " + ex.Message, true);
+            return null;
+        }
+    }
+
+    /// <summary>
     /// Получает Post по id
     /// </summary>        
     public static Post? GetPostFromIdPost(long id)
@@ -119,7 +159,7 @@ public static class PostRepository
                         {
                             post.Id = reader.GetInt64(0);
                             post.Author = reader.GetInt64(1);
-                            post.Uri = (byte[])reader["uri"];
+                            post.Uri = reader.GetString(2);
                             post.Descryption = reader.GetString(3);
                             post.Tag = reader.GetString(4);
                         }

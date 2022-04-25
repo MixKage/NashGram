@@ -10,7 +10,7 @@ public class Post
 {
     public long Id { get; set; }
     public long Author { get; set; }
-    public byte[] Uri { get; set; }
+    public string Uri { get; set; }
     public string? Descryption { get; set; }
     public string? Tag { get; set; }
 }
