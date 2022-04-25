@@ -15,7 +15,7 @@ public class ModelClass
 );
     public record PostCreate(
     [Required] long idAuthor,
-    [Required] byte[] uri,
+    [Required] string uri,
     [StringLength(500)] string descryption,
     [StringLength(50)] string tag
 );

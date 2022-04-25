@@ -21,11 +21,11 @@ public static class PostRepository
             return null;
     }
 
-    public static byte[]? GetUri(long id)
+    public static string? GetUri(long id)
     {
         var post = GetPostFromIdPost(id);
         if (post != null)
-            return post.Uri;
+            return Convert.ToHexString(post.Uri);
         else
             return null;
     }
@@ -54,7 +54,7 @@ public static class PostRepository
     public static long? CreatePost(ModelClass.PostCreate postCreate)
     {
         long idAuthor = postCreate.idAuthor;
-        byte[] uri = postCreate.uri;
+        byte[] uri = Convert.FromHexString(postCreate.uri);
         string description = postCreate.descryption;
         string tag = postCreate.tag;
 
@@ -117,7 +117,7 @@ public static class PostRepository
                         {
                             post.Id = reader.GetInt64(0);
                             post.Author = reader.GetInt64(1);
-                            post.Uri = reader.GetBlob(2, true);
+                            post.Uri = (byte[])reader["uri"];
                             post.Descryption = reader.GetString(3);
                             post.Tag = reader.GetString(4);
                         }
