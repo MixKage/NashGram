@@ -199,11 +199,10 @@ public static class AccountRepository
                 using (var cmd = new SQLiteCommand($"SELECT * FROM Account WHERE id_account = {id};", connection))
                 {
                     using (var reader = cmd.ExecuteReader())
-                    {
-                        account = new Account();
-
+                    { 
                         while (reader.Read())
                         {
+                            account = new Account();
                             account.Id = reader.GetInt64(0);
                             account.Login = reader.GetString(1);
                             account.Password = reader.GetString(2);
@@ -211,7 +210,7 @@ public static class AccountRepository
                     }
                 }
             }
-            if (id == 0) return null;
+            if (account is null) return null;
             else return account;
         }
         catch (Exception ex)
