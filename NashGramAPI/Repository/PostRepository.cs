@@ -81,7 +81,7 @@ public static class PostRepository
 ", connection))
                 {
                     using (var reader = cmd.ExecuteReader())
-                    {                 
+                    {
                         while (reader.Read())
                         {
                             postId = reader.GetInt64(0);
@@ -89,6 +89,7 @@ public static class PostRepository
                     }
                 }
             }
+            Log.AddLog($"Post create: id {postId}, idAuthor {idAuthor}", false);
             return postId;
         }
         catch (Exception ex)
