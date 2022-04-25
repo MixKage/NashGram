@@ -54,13 +54,14 @@ public static class PostRepository
     public static long? CreatePost(ModelClass.PostCreate postCreate)
     {
         long idAuthor = postCreate.idAuthor;
-        byte[] uri = Convert.FromHexString(postCreate.uri);
+        byte[]? uri = null;
         string description = postCreate.descryption;
         string tag = postCreate.tag;
 
         long? postId = null;
         try
-        {            
+        {
+            uri = Convert.FromHexString(postCreate.uri);
             using (var connection = new SQLiteConnection(@$"Data Source={pathDB};Version=3;"))
             {
                 connection.Open();

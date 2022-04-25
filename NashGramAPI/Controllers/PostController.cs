@@ -16,7 +16,7 @@ namespace NashGramAPI.Controllers
         public IActionResult CreatePost(ModelClass.PostCreate input)
         {
             var result = Repository.PostRepository.CreatePost(input);
-            return result == null ? Conflict() : Ok();
+            return result == null ? Conflict() : Ok(result);
         }
 
         [Authorize]
