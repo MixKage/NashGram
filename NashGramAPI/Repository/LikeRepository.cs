@@ -157,6 +157,7 @@ internal class LikeRepository
                 }
             }
             if (id == null) { Log.AddLog($"Like not create from id_account: {input.id_account}, id_post: {input.id_post}", true); return null; }
+            Log.AddLog($"Like create from id_account: {input.id_account}, id_post: {input.id_post}", false);
             return id;
         }
         catch (Exception ex)
@@ -181,7 +182,7 @@ internal class LikeRepository
                 }
             }
             if (count == 0) { Log.AddLog($"Likes not delete from Id: {id}", true); return false; }
-            Log.AddLog($"Likes delete from Id: {id}", true);
+            Log.AddLog($"Likes delete from Id: {id}", false);
             return true;
         }
         catch (Exception ex)
