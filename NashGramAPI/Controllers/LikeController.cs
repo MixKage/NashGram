@@ -12,10 +12,10 @@ namespace NashGramAPI.Controllers
     public class LikeController : ControllerBase
     {
         [Authorize]
-        [HttpGet("/GetLikeFromIdPost")]
+        [HttpGet("/GetLikesFromIdPost")]
         public IActionResult GetLikeFromIdPost(long id)
         {
-            var result = Repository.LikeRepository.GetLikeFromIdPost(id);
+            var result = Repository.LikeRepository.GetLikesFromIdPost(id);
             return result == null ? Conflict() : Ok(result);
         }
 
