@@ -180,12 +180,13 @@ internal class LikeRepository
                     count = cmd.ExecuteNonQuery();
                 }
             }
-            if (count == 0) { Log.AddLog($"Likes not delete from IdPost: {id}", true); return false; }
+            if (count == 0) { Log.AddLog($"Likes not delete from Id: {id}", true); return false; }
+            Log.AddLog($"Likes delete from Id: {id}", true);
             return true;
         }
         catch (Exception ex)
         {
-            Log.AddLog($"Like not delete from IdPost: {id} | " + ex.Message, true);
+            Log.AddLog($"Like not delete from Id: {id} | " + ex.Message, true);
             return false;
         }
     }
