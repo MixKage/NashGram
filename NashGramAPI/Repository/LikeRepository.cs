@@ -124,7 +124,7 @@ internal class LikeRepository
             using (var connection = new SQLiteConnection(@$"Data Source={pathDB};Version=3;"))
             {
                 connection.Open();
-                using (var cmd = new SQLiteCommand($@"INSERT INTO Account (
+                using (var cmd = new SQLiteCommand($@"INSERT INTO Like (
                         id_post,
                         id_account
                     )
