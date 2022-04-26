@@ -120,7 +120,20 @@ internal class LikeRepository
     {
         long? id = null;
         try
-        {            
+        {
+            List<Like>? likes = GetLikesFromIdPost(input.id_post);
+            if (likes != null)
+            {
+                foreach (var like in likes)
+                {
+                    if(like.IdAccount == input.id_account)
+                    {
+                        Log.AddLog($"Like not create from id_account: {input.id_account}, id_post: {input.id_post} (LIKE EXIST)", true);
+                        return null;
+                    }
+                }
+            }
+
             using (var connection = new SQLiteConnection(@$"Data Source={pathDB};Version=3;"))
             {
                 connection.Open();
