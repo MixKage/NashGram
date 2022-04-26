@@ -171,8 +171,36 @@ public static class PostRepository
         }
         catch (Exception ex)
         {
-            Log.AddLog($"Account not found from ID: {id} | " + ex.Message, true);
+            Log.AddLog($"Post not found from ID: {id} | " + ex.Message, true);
             return null;
+        }
+    }
+
+    /// <summary>
+    /// Получает Post по id
+    /// </summary>        
+    public static bool DeletePostFromIdPost(long id)
+    {
+        int count = 0;
+        try
+        {
+            
+            using (var connection = new SQLiteConnection(@$"Data Source={pathDB};Version=3;"))
+            {
+                connection.Open();
+                using (var cmd = new SQLiteCommand(@$"DELETE FROM Post
+                    WHERE id_post = '{id}'; ", connection))
+                {
+                    count = cmd.ExecuteNonQuery();
+                }
+            }
+            if (count == 0) return false;
+            return true;
+        }
+        catch (Exception ex)
+        {
+            Log.AddLog($"Post not delete from ID post: {id} | " + ex.Message, true);
+            return false;
         }
     }
 }
