@@ -39,12 +39,12 @@ internal class LikeRepository
                     }
                 }
             }
-            if (likes.Count == 0) { Log.AddLog($"Likes not found from ID: {id}", true); return null; }
+            if (likes.Count == 0) { Log.AddLog($"Likes not found from IdPost: {id}", true); return null; }
             return likes;
         }
         catch (Exception ex)
         {
-            Log.AddLog($"Like not found from ID: {id} | " + ex.Message, true);
+            Log.AddLog($"Like not found from IdPost: {id} | " + ex.Message, true);
             return null;
         }
     }
@@ -82,35 +82,36 @@ internal class LikeRepository
         }
     }
 
-    public static Like? GetLikesFromIdAccount(long id)
+    public static List<Like>? GetLikesFromIdAccount(long id)
     {
+        List<Like> likes;
         try
         {
-            Like? like = null;
+            likes = new List<Like>();
             using (var connection = new SQLiteConnection(@$"Data Source={pathDB};Version=3;"))
             {
                 connection.Open();
-                using (var cmd = new SQLiteCommand($"SELECT * FROM Like WHERE id_account = {id};", connection))
+                using (var cmd = new SQLiteCommand($"SELECT * FROM Like WHERE id_post = {id};", connection))
                 {
                     using (var reader = cmd.ExecuteReader())
                     {
-                        like = new Like();
-
                         while (reader.Read())
                         {
+                            Like like = new Like();
                             like.Id = reader.GetInt64(0);
                             like.IdPost = reader.GetInt64(1);
                             like.IdAccount = reader.GetInt64(2);
+                            likes.Add(like);
                         }
                     }
                 }
             }
-            if (like.IdAccount != id) return null;
-            return like;
+            if (likes.Count == 0) { Log.AddLog($"Likes not found from IdAccount: {id}", true); return null; }
+            return likes;
         }
         catch (Exception ex)
         {
-            Log.AddLog($"Like not found from ID: {id} | " + ex.Message, true);
+            Log.AddLog($"Like not found from IdAccount: {id} | " + ex.Message, true);
             return null;
         }
     }

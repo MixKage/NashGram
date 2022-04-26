@@ -13,7 +13,7 @@ namespace NashGramAPI.Controllers
     {
         [Authorize]
         [HttpGet("/GetLikesFromIdPost")]
-        public IActionResult GetLikeFromIdPost(long id)
+        public IActionResult GetLikesFromIdPost(long id)
         {
             var result = Repository.LikeRepository.GetLikesFromIdPost(id);
             return result == null ? Conflict() : Ok(result);
@@ -28,10 +28,10 @@ namespace NashGramAPI.Controllers
         }
 
         [Authorize]
-        [HttpGet("/GetLikeFromIdAccount")]
-        public IActionResult GetLikeFromIdAccount(long id)
+        [HttpGet("/GetLikesFromIdAccount")]
+        public IActionResult GetLikesFromIdAccount(long id)
         {
-            var result = Repository.LikeRepository.GetLikeFromIdAccount(id);
+            var result = Repository.LikeRepository.GetLikesFromIdAccount(id);
             return result == null ? Conflict() : Ok(result);
         }
     }
