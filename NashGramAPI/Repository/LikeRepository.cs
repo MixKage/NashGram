@@ -116,36 +116,37 @@ internal class LikeRepository
         }
     }
 
-    //public static Like? GetLikeFromIdAccount(long id)
-    //{
-    //    try
-    //    {
-    //        Like? like = null;
-    //        using (var connection = new SQLiteConnection(@$"Data Source={pathDB};Version=3;"))
-    //        {
-    //            connection.Open();
-    //            using (var cmd = new SQLiteCommand($"SELECT * FROM Like WHERE id_account = {id};", connection))
-    //            {
-    //                using (var reader = cmd.ExecuteReader())
-    //                {
-    //                    like = new Like();
-
-    //                    while (reader.Read())
-    //                    {
-    //                        like.Id = reader.GetInt64(0);
-    //                        like.IdPost = reader.GetInt64(1);
-    //                        like.IdAccount = reader.GetInt64(2);
-    //                    }
-    //                }
-    //            }
-    //        }
-    //        if (like.IdAccount != id) return null;
-    //        return like;
-    //    }
-    //    catch (Exception ex)
-    //    {
-    //        Log.AddLog($"Like not found from ID: {id} | " + ex.Message, true);
-    //        return null;
-    //    }
-    //}
+    public static bool CreateLikeFromIdAccountIdPost(ModelClass.CreateLike input)
+    {
+        long id = 0;
+        try
+        {            
+            using (var connection = new SQLiteConnection(@$"Data Source={pathDB};Version=3;"))
+            {
+                connection.Open();
+                using (var cmd = new SQLiteCommand($@"INSERT INTO Account (
+                        id_post,
+                        id_account
+                    )
+                    VALUES (                        
+                        '{input.id_post}',
+                        '{input.id_account}'
+                    )
+                    RETURNING id;", connection))
+                {
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        id = reader.GetInt64(0);
+                    }
+                }
+            }
+            if (id == 0) { Log.AddLog($"Like not create from id_account: {input.id_account}, id_post: {input.id_post}", true); return false; }
+            return true;
+        }
+        catch (Exception ex)
+        {
+            Log.AddLog($"Like not create from id_account: {input.id_account}, id_post: {input.id_post} | " + ex.Message, true);
+            return false;
+        }
+    }
 }

@@ -12,6 +12,13 @@ namespace NashGramAPI.Controllers
     public class LikeController : ControllerBase
     {
         [Authorize]
+        [HttpPost("/CreateLike")]
+        public IActionResult CreateLike([FromBody] ModelClass.CreateLike input)
+        {
+            var result = Repository.LikeRepository.CreateLikeFromIdAccountIdPost(input);
+            return result == false ? Conflict() : Ok(result);
+        }
+
         [HttpGet("/GetLikesFromIdPost")]
         public IActionResult GetLikesFromIdPost(long id)
         {
@@ -19,7 +26,6 @@ namespace NashGramAPI.Controllers
             return result == null ? Conflict() : Ok(result);
         }
 
-        [Authorize]
         [HttpGet("/GetLikeFromId")]
         public IActionResult GetLikeFromId(long id)
         {
@@ -27,7 +33,6 @@ namespace NashGramAPI.Controllers
             return result == null ? Conflict() : Ok(result);
         }
 
-        [Authorize]
         [HttpGet("/GetLikesFromIdAccount")]
         public IActionResult GetLikesFromIdAccount(long id)
         {
