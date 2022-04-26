@@ -12,6 +12,14 @@ namespace NashGramAPI.Controllers
     public class PostController : ControllerBase
     {
         [Authorize]
+        [HttpPost("/UpdateImageFromIdPost")]
+        public IActionResult UpdateImageFromIdPost([FromBody] ModelClass.UpdateInput updateInput)
+        {
+            var result = Repository.PostRepository.UpdateInfoFromIdPost(updateInput, 0);
+            return result == false ? Conflict() : Ok();
+        }
+
+        [Authorize]
         [HttpPost("/CreatePost")]
         public IActionResult CreatePost(ModelClass.PostCreate input)
         {
