@@ -20,6 +20,14 @@ namespace NashGramAPI.Controllers
         }
 
         [Authorize]
+        [HttpPost("/UpdateDescryptionFromIdPost")]
+        public IActionResult UpdateDescryptionFromIdPost([FromBody] ModelClass.UpdateInput updateInput)
+        {
+            var result = Repository.PostRepository.UpdateInfoFromIdPost(updateInput, 1);
+            return result == false ? Conflict() : Ok();
+        }
+
+        [Authorize]
         [HttpPost("/CreatePost")]
         public IActionResult CreatePost(ModelClass.PostCreate input)
         {
