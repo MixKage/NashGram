@@ -215,6 +215,42 @@ public static class PostRepository
         }
     }
 
+    public static bool UpdateInfoFromIdPost(ModelClass.UpdateInput input, int param)
+    {
+        string _param = SwitchParam(param);
+        long id = input.id;
+        string info = input.text;
+
+        int count = 0;
+        try
+        {
+            using (var connection = new SQLiteConnection(@$"Data Source={pathDB};Version=3;"))
+            {
+                connection.Open();
+                using (var cmd = new SQLiteCommand($@"UPDATE Post
+                        SET {_param} = '{info}'                        
+                        WHERE id_post = '{id}'", connection))
+                {
+                    count = cmd.ExecuteNonQuery();
+                }
+            }
+
+            if (count == 0)
+            {
+                Log.AddLog($"Update Failed {_param} id: {id}, {_param}: {info}", true);
+                return false;
+            }
+
+            Log.AddLog($"Update {_param} id: {id}, {_param}: {info}", false);
+            return true;
+        }
+        catch (Exception ex)
+        {
+            Log.AddLog($"Update Failed {_param} id: {id}, {_param}: {info} | " + ex.Message, true);
+            return false;
+        }
+    }
+
     /// <summary>
     /// Удаляет Post по id
     /// </summary>        
@@ -240,6 +276,20 @@ public static class PostRepository
         {
             Log.AddLog($"Post not delete from ID post: {id} | " + ex.Message, true);
             return false;
+        }
+    }
+    private static string SwitchParam(int mode)
+    {
+        switch (mode)
+        {
+            case 0:
+                return "image";
+            case 1:
+                return "descryption";
+            case 2:
+                return "tag";
+            default:
+                return "error";
         }
     }
 }
