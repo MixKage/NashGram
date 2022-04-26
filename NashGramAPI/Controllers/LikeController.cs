@@ -16,7 +16,7 @@ namespace NashGramAPI.Controllers
         public IActionResult CreateLike([FromBody] ModelClass.CreateLike input)
         {
             var result = Repository.LikeRepository.CreateLikeFromIdAccountIdPost(input);
-            return result == false ? Conflict() : Ok(result);
+            return result == null ? Conflict() : Ok(result);
         }
 
         [HttpGet("/GetLikesFromIdPost")]

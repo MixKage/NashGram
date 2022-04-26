@@ -116,9 +116,9 @@ internal class LikeRepository
         }
     }
 
-    public static bool CreateLikeFromIdAccountIdPost(ModelClass.CreateLike input)
+    public static long? CreateLikeFromIdAccountIdPost(ModelClass.CreateLike input)
     {
-        long id = 0;
+        long? id = null;
         try
         {            
             using (var connection = new SQLiteConnection(@$"Data Source={pathDB};Version=3;"))
@@ -132,21 +132,24 @@ internal class LikeRepository
                         '{input.id_post}',
                         '{input.id_account}'
                     )
-                    RETURNING id;", connection))
+                    RETURNING id", connection))
                 {
                     using (var reader = cmd.ExecuteReader())
                     {
-                        id = reader.GetInt64(0);
+                        while (reader.Read())
+                        {
+                            id = reader.GetInt64(0);
+                        }
                     }
                 }
             }
-            if (id == 0) { Log.AddLog($"Like not create from id_account: {input.id_account}, id_post: {input.id_post}", true); return false; }
-            return true;
+            if (id == null) { Log.AddLog($"Like not create from id_account: {input.id_account}, id_post: {input.id_post}", true); return null; }
+            return id;
         }
         catch (Exception ex)
         {
             Log.AddLog($"Like not create from id_account: {input.id_account}, id_post: {input.id_post} | " + ex.Message, true);
-            return false;
+            return null;
         }
     }
 }
