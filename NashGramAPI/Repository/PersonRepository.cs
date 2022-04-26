@@ -72,7 +72,7 @@ public static class PersonRepository
     /// <param name="input">{id, text}</param>
     /// <param name="mode">0-Email,1-Name,2-Status,3-Country,4-age,5-number</param>
     /// <returns></returns>
-    public static bool UpdateInfoFromId(ModelClass.AccountUpdateInput input, int mode)
+    public static bool UpdateInfoFromId(ModelClass.UpdateInput input, int mode)
     {
         string param = SwitchParam(mode);
         long _id = input.id;

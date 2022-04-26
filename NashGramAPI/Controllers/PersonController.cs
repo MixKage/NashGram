@@ -14,7 +14,7 @@ namespace NashGramAPI.Controllers
     {
         [Authorize]
         [HttpPut("/UpdateEmailFromId")]
-        public IActionResult UpdateEmailFromId([FromBody] AccountUpdateInput input)
+        public IActionResult UpdateEmailFromId([FromBody] UpdateInput input)
         {
             var result = Repository.PersonRepository.UpdateInfoFromId(input, 0);
             return result == false ? Conflict() : Ok();
@@ -22,7 +22,7 @@ namespace NashGramAPI.Controllers
 
         [Authorize]
         [HttpPut("/UpdateNameFromId")]
-        public IActionResult UpdateNameFromId([FromBody] AccountUpdateInput input)
+        public IActionResult UpdateNameFromId([FromBody] UpdateInput input)
         {
             var result = Repository.PersonRepository.UpdateInfoFromId(input, 1);
             return result == false ? Conflict() : Ok();
@@ -30,7 +30,7 @@ namespace NashGramAPI.Controllers
 
         [Authorize]
         [HttpPut("/UpdateStatusFromId")]
-        public IActionResult UpdateStatusFromId([FromBody] AccountUpdateInput input)
+        public IActionResult UpdateStatusFromId([FromBody] UpdateInput input)
         {
             var result = Repository.PersonRepository.UpdateInfoFromId(input, 2);
             return result == false ? Conflict() : Ok();
@@ -38,7 +38,7 @@ namespace NashGramAPI.Controllers
 
         [Authorize]
         [HttpPut("/UpdateCountryFromId")]
-        public IActionResult UpdateCountryFromId([FromBody] AccountUpdateInput input)
+        public IActionResult UpdateCountryFromId([FromBody] UpdateInput input)
         {
             var result = Repository.PersonRepository.UpdateInfoFromId(input, 3);
             return result == false ? Conflict() : Ok();
@@ -46,7 +46,7 @@ namespace NashGramAPI.Controllers
 
         [Authorize]
         [HttpPut("/UpdateAgeFromId")]
-        public IActionResult UpdateAgeFromId([FromBody] AccountUpdateInput input)
+        public IActionResult UpdateAgeFromId([FromBody] UpdateInput input)
         {
             var result = Repository.PersonRepository.UpdateInfoFromId(input, 4);
             return result == false ? Conflict() : Ok();
@@ -54,7 +54,7 @@ namespace NashGramAPI.Controllers
 
         [Authorize]
         [HttpPut("/UpdateNumberFromId")]
-        public IActionResult UpdateNumberFromId([FromBody] AccountUpdateInput input)
+        public IActionResult UpdateNumberFromId([FromBody] UpdateInput input)
         {
             var result = Repository.PersonRepository.UpdateInfoFromId(input, 5);
             return result == false ? Conflict() : Ok();

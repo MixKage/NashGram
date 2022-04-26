@@ -15,7 +15,7 @@ public static class AccountRepository
 {
     private static string pathDB = ModelClass.pathDB;
 
-    public static bool UpdateLogin(ModelClass.AccountUpdateInput input)
+    public static bool UpdateLogin(ModelClass.UpdateInput input)
     {
         long id = input.id;
         string login = input.text;
@@ -41,7 +41,7 @@ public static class AccountRepository
         }
     }
 
-    public static bool UpdatePassword(ModelClass.AccountUpdateInput input)
+    public static bool UpdatePassword(ModelClass.UpdateInput input)
     {
         long id = input.id;
         string password = input.text;

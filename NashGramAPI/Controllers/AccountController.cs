@@ -21,7 +21,7 @@ namespace NashGramAPI.Controllers
 
         [Authorize]
         [HttpPut("/UpdateLogin")]
-        public IActionResult UpdateLogin([FromBody] AccountUpdateInput input)
+        public IActionResult UpdateLogin([FromBody] UpdateInput input)
         {
             var result = Repository.AccountRepository.UpdateLogin(input);
             return result == false ? Conflict() : Ok();
@@ -29,7 +29,7 @@ namespace NashGramAPI.Controllers
 
         [Authorize]
         [HttpPut("/UpdatePassword")]
-        public IActionResult UpdatePassword([FromBody] AccountUpdateInput input)
+        public IActionResult UpdatePassword([FromBody] UpdateInput input)
         {
             var result = Repository.AccountRepository.UpdatePassword(input);
             return result == false ? Conflict() : Ok();
