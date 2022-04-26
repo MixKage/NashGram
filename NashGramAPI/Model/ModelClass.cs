@@ -9,13 +9,13 @@ public class ModelClass
     [StringLength(50)][Required] string login,
     [StringLength(50)][Required] string password
 );
-    public record AccountUpdateInput(
+    public record UpdateInput(
     [Required] long id,
-    [StringLength(50)][Required] string text
+    [Required] string text
 );
     public record PostCreate(
     [Required] long idAuthor,
-    [Required] string uri,
+    [Required] string image,
     [StringLength(500)] string descryption,
     [StringLength(50)] string tag
 );

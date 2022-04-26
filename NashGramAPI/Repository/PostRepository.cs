@@ -21,12 +21,12 @@ public static class PostRepository
             return null;
     }
 
-    public static string? GetUri(long id)
+    public static string? GetImage(long id)
     {
         var post = GetPostFromIdPost(id);
         if (post != null)
-            return post.Uri;
-        //return Convert.ToBase64String(post.Uri);
+            return post.Image;
+        //return Convert.ToBase64String(post.image);
         else
             return null;
     }
@@ -55,7 +55,7 @@ public static class PostRepository
     public static long? CreatePost(ModelClass.PostCreate postCreate)
     {
         long idAuthor = postCreate.idAuthor;
-        string uri = postCreate.uri;
+        string image = postCreate.image;
         string description = postCreate.descryption;
         string tag = postCreate.tag;
 
@@ -67,13 +67,13 @@ public static class PostRepository
                 connection.Open();
                 using (var cmd = new SQLiteCommand($@"INSERT INTO Post (
                      author,
-                     uri,
+                     image,
                      descryption,
                      tag
                  )
                  VALUES (                    
                      '{idAuthor}',
-                     '{uri}',
+                     '{image}',
                      '{description}',
                      '{tag}'
                  )
@@ -120,7 +120,7 @@ public static class PostRepository
                             post = new Post();
                             post.Id = reader.GetInt64(0);
                             post.Author = reader.GetInt64(1);
-                            post.Uri = reader.GetString(2);
+                            post.Image = reader.GetString(2);
                             post.Descryption = reader.GetString(3);
                             post.Tag = reader.GetString(4);
                             posts.Add(post);
@@ -159,7 +159,7 @@ public static class PostRepository
                         {
                             post.Id = reader.GetInt64(0);
                             post.Author = reader.GetInt64(1);
-                            post.Uri = reader.GetString(2);
+                            post.Image = reader.GetString(2);
                             post.Descryption = reader.GetString(3);
                             post.Tag = reader.GetString(4);
                         }
@@ -197,7 +197,7 @@ public static class PostRepository
                             Post post = new Post();
                             post.Id = reader.GetInt64(0);
                             post.Author = reader.GetInt64(1);
-                            post.Uri = reader.GetString(2);
+                            post.Image = reader.GetString(2);
                             post.Descryption = reader.GetString(3);
                             post.Tag = reader.GetString(4);
                             posts.Add(post);
