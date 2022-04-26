@@ -37,7 +37,7 @@ namespace NashGramAPI.Controllers
 
         [Authorize]
         [HttpPost("/CreatePost")]
-        public IActionResult CreatePost(ModelClass.PostCreate input)
+        public IActionResult CreatePost([FromBody] ModelClass.PostCreate input)
         {
             var result = Repository.PostRepository.CreatePost(input);
             return result == null ? Conflict() : Ok(result);
@@ -52,10 +52,10 @@ namespace NashGramAPI.Controllers
         }
 
         [Authorize]
-        [HttpGet("/GetUriFromId")]
-        public IActionResult GetUri(long input)
+        [HttpGet("/GetImageFromId")]
+        public IActionResult GetImage(long input)
         {
-            var result = Repository.PostRepository.GetUri(input);
+            var result = Repository.PostRepository.GetImage(input);
             return result == null ? Conflict() : Ok(result);
         }
 
