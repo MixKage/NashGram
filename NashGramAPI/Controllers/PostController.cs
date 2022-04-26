@@ -28,6 +28,14 @@ namespace NashGramAPI.Controllers
         }
 
         [Authorize]
+        [HttpPost("/UpdateTagFromIdPost")]
+        public IActionResult UpdateTagFromIdPost([FromBody] ModelClass.UpdateInput updateInput)
+        {
+            var result = Repository.PostRepository.UpdateInfoFromIdPost(updateInput, 2);
+            return result == false ? Conflict() : Ok();
+        }
+
+        [Authorize]
         [HttpPost("/CreatePost")]
         public IActionResult CreatePost(ModelClass.PostCreate input)
         {
