@@ -66,6 +66,13 @@ namespace NashGramAPI.Controllers
             var result = Repository.PostRepository.GetPostsFromIdAccount(id);
             return result == null ? Conflict() : Ok(result);
         }
+        
+        [HttpGet("/GetAllPosts")]
+        public IActionResult GetAllPosts()
+        {
+            var result = Repository.PostRepository.GetAllPosts();
+            return result == null ? Conflict() : Ok(result);
+        }
 
         [Authorize]
         [HttpDelete("/DeletePostsFromIdPost")]
