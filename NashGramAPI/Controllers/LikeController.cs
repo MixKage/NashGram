@@ -39,5 +39,13 @@ namespace NashGramAPI.Controllers
             var result = Repository.LikeRepository.GetLikesFromIdAccount(id);
             return result == null ? Conflict() : Ok(result);
         }
+
+        [Authorize]
+        [HttpDelete("/DeleteLikeFromId")]
+        public IActionResult DeleteLikeFromId(long id)
+        {
+            var result = Repository.LikeRepository.DeleteLikeFromId(id);
+            return result == false ? Conflict() : Ok();
+        }
     }
 }

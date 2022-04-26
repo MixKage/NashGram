@@ -165,4 +165,28 @@ internal class LikeRepository
             return null;
         }
     }
+
+    public static bool DeleteLikeFromId(long id)
+    {
+        int count = 0;
+        try
+        {            
+            using (var connection = new SQLiteConnection(@$"Data Source={pathDB};Version=3;"))
+            {
+                connection.Open();
+                using (var cmd = new SQLiteCommand($@"DELETE FROM Like
+                        WHERE id = '{id}';", connection))
+                {
+                    count = cmd.ExecuteNonQuery();
+                }
+            }
+            if (count == 0) { Log.AddLog($"Likes not delete from IdPost: {id}", true); return false; }
+            return true;
+        }
+        catch (Exception ex)
+        {
+            Log.AddLog($"Like not delete from IdPost: {id} | " + ex.Message, true);
+            return false;
+        }
+    }
 }
