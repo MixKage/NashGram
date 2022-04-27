@@ -49,9 +49,13 @@ namespace NashGramAPI.Controllers
         }
 
         [Authorize]
-        [HttpPut("/UpdateCountryFromId")]
-        public IActionResult UpdateCountryFromId([FromBody] UpdateInput input)
+        [HttpPut("/UpdateCountry")]
+        public IActionResult UpdateCountry(string textInfo)
         {
+            long? id = API.BasicAuthenticationHandler.GetIdFromLogin(Request.Headers["Authorization"]);
+            if (id == null) return NotFound();
+            ModelClass.UpdateInput input = new UpdateInput((long)id, textInfo);
+
             var result = Repository.PersonRepository.UpdateInfoFromId(input, 3);
             return result == false ? Conflict() : Ok();
         }
