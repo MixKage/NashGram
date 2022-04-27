@@ -61,6 +61,15 @@ namespace NashGramAPI.Controllers
         }
 
         [Authorize]
+        [HttpGet("/GetEmail")]
+        public IActionResult GetEmail()
+        {
+            long? id = API.BasicAuthenticationHandler.GetIdFromLogin(Request.Headers["Authorization"]);
+            if (id == null) return NotFound();
+            var result = Repository.PersonRepository.GetEmailFromId((long)id);
+            return result == null ? Conflict() : Ok(result);
+        }
+
         [HttpGet("/GetEmailFromId")]
         public IActionResult GetEmailFromId(long input)
         {
