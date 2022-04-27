@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Options;
 using NashGramAPI.Model;
+using System.Data.SQLite;
 using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Text;
@@ -54,4 +55,38 @@ public class BasicAuthenticationHandler : AuthenticationHandler<AuthenticationSc
         return AuthenticateResult.Success(ticket);
     }
 
+    public static long? GetIdFromLogin(string input)
+    {
+        string pathDB = ModelClass.pathDB;
+        long? id = null;
+        
+        var authHeader = System.Net.Http.Headers.AuthenticationHeaderValue.Parse(input);
+        var credentials = Encoding.UTF8.GetString(Convert.FromBase64String(authHeader.Parameter)).Split(':');
+        string login = credentials.FirstOrDefault();
+
+        try
+        {
+            using (var connection = new SQLiteConnection(@$"Data Source={pathDB};Version=3;"))
+            {
+                connection.Open();
+                using (var cmd = new SQLiteCommand($@"SELECT id_account FROM Account WHERE login = '{login}';", connection))
+                {
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            id = reader.GetInt64(0);
+                        }
+                    }
+                }
+            }
+            if (id == null) { Log.AddLog($"Account not found login: {login}", true); return null; }
+            return id;
+        }
+        catch (Exception ex)
+        {
+            Log.AddLog($"Account not found login: {login} | " + ex.Message, true);
+            return null;
+        }        
+    }
 }
