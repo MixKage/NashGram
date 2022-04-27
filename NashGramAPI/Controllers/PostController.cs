@@ -90,7 +90,18 @@ namespace NashGramAPI.Controllers
             var result = Repository.PostRepository.GetPostsFromIdAccount(id);
             return result == null ? Conflict() : Ok(result);
         }
-        
+
+        [Authorize]
+        [HttpGet("/GetAllMyPosts")]
+        public IActionResult GetAllMyPosts()
+        {
+            long? id = API.BasicAuthenticationHandler.GetIdFromLogin(Request.Headers["Authorization"]);
+            if (id == null) return NotFound();            
+
+            var result = Repository.PostRepository.GetPostsFromIdAccount((long)id);
+            return result == null ? Conflict() : Ok(result);
+        }
+
         [HttpGet("/GetAllPosts")]
         public IActionResult GetAllPosts()
         {
