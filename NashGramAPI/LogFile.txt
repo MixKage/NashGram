@@ -1,0 +1,12 @@
+INFO: Create account id: 1, login 428821350e9691491f616b754cd8315fb86d797ab35d843479e732ef90665324, password 5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8
+INFO: Create Person id: 1
+ERROR: GetAllPostsByTag failed tag: tag
+ERROR: Account not found login: login
+INFO: UpdateLogin id: 1, newLogin: login
+INFO: Create account id: 2, login 473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8, password 473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8
+INFO: Create Person id: 2
+ERROR: constraint failed
+UNIQUE constraint failed: Account.login
+ERROR: Likes not found from IdAccount: 2
+ERROR: Likes not found from IdAccount: 2
+ERROR: Account delete id: 1

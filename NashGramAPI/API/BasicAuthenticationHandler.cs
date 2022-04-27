@@ -62,7 +62,7 @@ public class BasicAuthenticationHandler : AuthenticationHandler<AuthenticationSc
         
         var authHeader = System.Net.Http.Headers.AuthenticationHeaderValue.Parse(input);
         var credentials = Encoding.UTF8.GetString(Convert.FromBase64String(authHeader.Parameter)).Split(':');
-        string login = credentials.FirstOrDefault();
+        string login = sqlite.Encryption.Encr(credentials.FirstOrDefault());
 
         try
         {

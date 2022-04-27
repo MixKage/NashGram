@@ -18,7 +18,7 @@ public static class AccountRepository
     public static bool UpdateLogin(ModelClass.UpdateInput input)
     {
         long id = input.id;
-        string login = input.text;
+        string login = sqlite.Encryption.Encr(input.text);
         try
         {
             using (var connection = new SQLiteConnection(@$"Data Source={pathDB};Version=3;"))
@@ -44,7 +44,7 @@ public static class AccountRepository
     public static bool UpdatePassword(ModelClass.UpdateInput input)
     {
         long id = input.id;
-        string password = input.text;
+        string password = sqlite.Encryption.Encr(input.text);
         try
         {
             using (var connection = new SQLiteConnection(@$"Data Source={pathDB};Version=3;"))
@@ -55,7 +55,7 @@ public static class AccountRepository
                         WHERE id_account = '{id}'", connection))
                 {
                     cmd.ExecuteNonQuery();
-                    Log.AddLog($"UpdateLogin id: {id}, newLogin: {password}", false);
+                    Log.AddLog($"UpdatePassword id: {id}, newPassword: {password}", false);
                 }
             }
             return true;
@@ -149,11 +149,8 @@ public static class AccountRepository
         }
         catch (Exception ex)
         {
-            if (ex.Message.Contains("UNIQUE constraint failed: Account.login"))
-            {
-                Log.AddLog(ex.Message, true);
-                return null;
-            }
+            Log.AddLog(ex.Message, true);
+            return null;
         }
         return newId;
     }
