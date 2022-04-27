@@ -33,8 +33,12 @@ namespace NashGramAPI.Controllers
 
         [Authorize]
         [HttpPut("/UpdatePassword")]
-        public IActionResult UpdatePassword([FromBody] UpdateInput input)
+        public IActionResult UpdatePassword(string textInfo)
         {
+            long? id = API.BasicAuthenticationHandler.GetIdFromLogin(Request.Headers["Authorization"]);
+            if (id == null) return NotFound();
+            ModelClass.UpdateInput input = new UpdateInput((long)id, textInfo);
+
             var result = Repository.AccountRepository.UpdatePassword(input);
             return result == false ? Conflict() : Ok();
         }
