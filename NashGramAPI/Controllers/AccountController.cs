@@ -21,8 +21,12 @@ namespace NashGramAPI.Controllers
 
         [Authorize]
         [HttpPut("/UpdateLogin")]
-        public IActionResult UpdateLogin([FromBody] UpdateInput input)
+        public IActionResult UpdateLogin(string textInfo)
         {
+            long? id = API.BasicAuthenticationHandler.GetIdFromLogin(Request.Headers["Authorization"]);
+            if (id == null) return NotFound();
+            ModelClass.UpdateInput input = new UpdateInput((long)id, textInfo);
+
             var result = Repository.AccountRepository.UpdateLogin(input);
             return result == false ? Conflict() : Ok();
         }
