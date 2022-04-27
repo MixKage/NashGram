@@ -32,6 +32,17 @@ namespace NashGramAPI.Controllers
             var result = Repository.LikeRepository.GetLikeFromId(id);
             return result == null ? Conflict() : Ok(result);
         }
+        
+        [Authorize]
+        [HttpGet("/GetLikesAccount")]
+        public IActionResult GetLikesAccount()
+        {
+            long? id = API.BasicAuthenticationHandler.GetIdFromLogin(Request.Headers["Authorization"]);
+            if (id == null) return NotFound();            
+
+            var result = Repository.LikeRepository.GetLikesFromIdAccount((long)id);
+            return result == null ? Conflict() : Ok(result);
+        }
 
         [HttpGet("/GetLikesFromIdAccount")]
         public IActionResult GetLikesFromIdAccount(long id)
