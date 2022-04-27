@@ -170,6 +170,15 @@ namespace NashGramAPI.Controllers
         }
 
         [Authorize]
+        [HttpGet("/GetNumber")]
+        public IActionResult GetNumber()
+        {
+            long? id = API.BasicAuthenticationHandler.GetIdFromLogin(Request.Headers["Authorization"]);
+            if (id == null) return NotFound();
+            var result = Repository.PersonRepository.GetNumberFromId((long)id);
+            return result == null ? Conflict() : Ok(result);
+        }
+        
         [HttpGet("/GetNumberFromId")]
         public IActionResult GetNumberFromId(long id)
         {
