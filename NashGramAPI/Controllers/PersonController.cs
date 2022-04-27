@@ -25,9 +25,13 @@ namespace NashGramAPI.Controllers
         }
 
         [Authorize]
-        [HttpPut("/UpdateNameFromId")]
-        public IActionResult UpdateNameFromId([FromBody] UpdateInput input)
+        [HttpPut("/UpdateName")]
+        public IActionResult UpdateName(string textInfo)
         {
+            long? id = API.BasicAuthenticationHandler.GetIdFromLogin(Request.Headers["Authorization"]);
+            if (id == null) return NotFound();
+            ModelClass.UpdateInput input = new UpdateInput((long)id, textInfo);
+
             var result = Repository.PersonRepository.UpdateInfoFromId(input, 1);
             return result == false ? Conflict() : Ok();
         }
