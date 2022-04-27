@@ -136,6 +136,15 @@ namespace NashGramAPI.Controllers
         }
 
         [Authorize]
+        [HttpGet("/GetCountry")]
+        public IActionResult GetCountry()
+        {
+            long? id = API.BasicAuthenticationHandler.GetIdFromLogin(Request.Headers["Authorization"]);
+            if (id == null) return NotFound();
+            var result = Repository.PersonRepository.GetCountryFromId((long)id);
+            return result == null ? Conflict() : Ok(result);
+        }
+        
         [HttpGet("/GetCountryFromId")]
         public IActionResult GetCountryFromId(long id)
         {
