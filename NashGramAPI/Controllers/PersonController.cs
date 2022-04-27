@@ -102,6 +102,15 @@ namespace NashGramAPI.Controllers
         }
 
         [Authorize]
+        [HttpGet("/GetName")]
+        public IActionResult GetName()
+        {
+            long? id = API.BasicAuthenticationHandler.GetIdFromLogin(Request.Headers["Authorization"]);
+            if (id == null) return NotFound();
+            var result = Repository.PersonRepository.GetNameFromId((long)id);
+            return result == null ? Conflict() : Ok(result);
+        }
+        
         [HttpGet("/GetNameFromId")]
         public IActionResult GetNameFromId(long input)
         {
