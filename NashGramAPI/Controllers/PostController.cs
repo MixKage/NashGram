@@ -39,7 +39,11 @@ namespace NashGramAPI.Controllers
         [HttpPost("/CreatePost")]
         public IActionResult CreatePost([FromBody] ModelClass.PostCreate input)
         {
-            var result = Repository.PostRepository.CreatePost(input);
+            long? id = API.BasicAuthenticationHandler.GetIdFromLogin(Request.Headers["Authorization"]);
+            if (id == null) return NotFound();
+            ModelClass.PostCreate _input = new PostCreate(input.image, input.descryption, input.tag, (long)id);
+
+            var result = Repository.PostRepository.CreatePost(_input);
             return result == null ? Conflict() : Ok(result);
         }
 
