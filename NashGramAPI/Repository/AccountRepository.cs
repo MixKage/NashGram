@@ -95,8 +95,8 @@ public static class AccountRepository
     /// </summary>        
     public static long? CreateAccount(ModelClass.AccountCreateInput input)
     {
-        string login = input.login;
-        string password = input.password;
+        string login = sqlite.Encryption.Encr(input.login);
+        string password = sqlite.Encryption.Encr(input.password);
         long? newId = null;
         try
         {

@@ -17,7 +17,7 @@ public class ModelClass
     [Required] string image,
     [StringLength(500)] string descryption,
     [StringLength(50)] string tag,
-    long id
+    long idAuthor
 );
     public record CreateLike(    
     [Required] long id_post,
