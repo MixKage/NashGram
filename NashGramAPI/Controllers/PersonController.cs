@@ -153,6 +153,15 @@ namespace NashGramAPI.Controllers
         }
 
         [Authorize]
+        [HttpGet("/GetAge")]
+        public IActionResult GetAge()
+        {
+            long? id = API.BasicAuthenticationHandler.GetIdFromLogin(Request.Headers["Authorization"]);
+            if (id == null) return NotFound();
+            var result = Repository.PersonRepository.GetAgeFromId((long)id);
+            return result == null ? Conflict() : Ok(result);
+        }
+        
         [HttpGet("/GetAgeFromId")]
         public IActionResult GetAgeFromId(long id)
         {
