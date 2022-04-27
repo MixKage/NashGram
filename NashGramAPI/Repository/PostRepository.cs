@@ -215,6 +215,42 @@ public static class PostRepository
         }
     }
 
+    public static List<Post>? GetAllPostsByTag(string tag)
+    {
+        List<Post>? posts;
+        try
+        {
+            posts = new List<Post>();
+            using (var connection = new SQLiteConnection(@$"Data Source={pathDB};Version=3;"))
+            {
+                connection.Open();
+                using (var cmd = new SQLiteCommand($"SELECT * FROM Post WHERE tag = '{tag}';", connection))
+                {
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            Post post = new Post();
+                            post.Id = reader.GetInt64(0);
+                            post.Author = reader.GetInt64(1);
+                            post.Image = reader.GetString(2);
+                            post.Descryption = reader.GetString(3);
+                            post.Tag = reader.GetString(4);
+                            posts.Add(post);
+                        }
+                    }
+                }
+            }
+            if (posts.Count == 0) { Log.AddLog($"GetAllPostsByTag failed tag: {tag}", true); return null; }
+            return posts;
+        }
+        catch (Exception ex)
+        {
+            Log.AddLog($"GetAllPostsByTag failed tag: {tag} | " + ex.Message, true);
+            return null;
+        }
+    }
+
     public static bool UpdateInfoFromIdPost(ModelClass.UpdateInput input, int param)
     {
         string _param = SwitchParam(param);

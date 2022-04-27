@@ -98,6 +98,13 @@ namespace NashGramAPI.Controllers
             return result == null ? Conflict() : Ok(result);
         }
 
+        [HttpGet("/GetAllPostsByTag")]
+        public IActionResult GetAllPosts(string tag)
+        {
+            var result = Repository.PostRepository.GetAllPostsByTag(tag);
+            return result == null ? Conflict() : Ok(result);
+        }
+
         [Authorize]
         [HttpDelete("/DeletePostsFromIdPost")]
         public IActionResult DeletePostsFromIdPost(long id)

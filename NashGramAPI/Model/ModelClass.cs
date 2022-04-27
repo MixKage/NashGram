@@ -13,11 +13,11 @@ public class ModelClass
     [Required] long id,
     [Required] string text
 );
-    public record PostCreate(
-    [Required] long idAuthor,
+    public record PostCreate(    
     [Required] string image,
     [StringLength(500)] string descryption,
-    [StringLength(50)] string tag
+    [StringLength(50)] string tag,
+    long id
 );
     public record CreateLike(    
     [Required] long id_post,
