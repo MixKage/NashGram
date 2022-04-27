@@ -13,9 +13,13 @@ namespace NashGramAPI.Controllers
     public class PersonController : ControllerBase
     {
         [Authorize]
-        [HttpPut("/UpdateEmailFromId")]
-        public IActionResult UpdateEmailFromId([FromBody] UpdateInput input)
+        [HttpPut("/UpdateEmail")]
+        public IActionResult UpdateEmail(string textInfo)
         {
+            long? id = API.BasicAuthenticationHandler.GetIdFromLogin(Request.Headers["Authorization"]);
+            if (id == null) return NotFound();
+            ModelClass.UpdateInput input = new UpdateInput((long)id, textInfo);
+
             var result = Repository.PersonRepository.UpdateInfoFromId(input, 0);
             return result == false ? Conflict() : Ok();
         }
