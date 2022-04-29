@@ -20,7 +20,16 @@ public class Startup
     {
 
         services.AddControllers();
-
+        services.AddCors(options =>
+        {
+            options.AddPolicy("AnyOrigin", builder =>
+            {
+                builder
+                    .AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+            });
+        });
         #region Configure Swagger  
         services.AddSwaggerGen(c =>
         {
@@ -71,7 +80,7 @@ public class Startup
         app.UseRouting();
         app.UseAuthentication();
         app.UseAuthorization();
-
+        app.UseCors("AnyOrigin");
         app.UseEndpoints(endpoints =>
         {
             endpoints.MapControllers();

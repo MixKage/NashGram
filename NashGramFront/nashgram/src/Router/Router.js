@@ -1,10 +1,10 @@
 import VueRouter from "vue-router";
-import MainPage from "../pages/MainPage";
-import RegPage from "../pages/RegPage";
-import LogPage from "../pages/LogPage";
+import MainPage from "../Pages/MainPage";
+import RegPage from "../Pages/RegPage";
+import LogPage from "../Pages/LogPage";
 import middlewarePipeline from "./middlewarePipeline";
-import { store } from "../store/store";
-import NotFound from "../pages/NotFound";
+import { store } from "../Store/Store";
+import NotFound from "../Pages/NotFound";
 const router = new VueRouter({
   mode: "history",
   routes: [

@@ -1,56 +1,47 @@
 <template>
   <div id="mpage">
     <Header />
-    <v-btn color="black" @click="dialog = !dialog" small class="add__photo"
+    <v-btn color="black" @click="dialog" small class="add__photo"
       ><v-icon color="white">mdi-plus</v-icon></v-btn
     >
     <PhotoCards v-bind:photos="photos" />
-    <PostForm v-bind:dialog="dialog" />
+    <PostForm v-bind:getposts="getposts" />
   </div>
 </template>
 <script>
 import Header from "../components/Header";
 import PhotoCards from "../components/PhotoCards";
 import PostForm from "../components/PostForm";
+import { HTTP } from "../api/API";
 export default {
   components: {
     Header,
     PhotoCards,
-    PostForm
+    PostForm,
   },
   data() {
     return {
-      dialog: false,
-      photos: [
-        {
-          id: 1,
-          author: 2,
-          uri: "https://c.wallhere.com/photos/fc/9a/1366x768_px_Canada_landscape_mountain_stars_Trees-1080526.jpg!d",
-          description: "Фото леса",
-          tag: "Природа",
-          is_liked: false,
-          likes: 1,
-        },
-        {
-          id: 2,
-          author: 2,
-          uri: "https://c.wallhere.com/photos/fc/9a/1366x768_px_Canada_landscape_mountain_stars_Trees-1080526.jpg!d",
-          description: "Фото леса",
-          tag: "Природа",
-          is_liked: true,
-          likes: 3,
-        },
-        {
-          id: 3,
-          author: 2,
-          uri: "https://c.wallhere.com/photos/fc/9a/1366x768_px_Canada_landscape_mountain_stars_Trees-1080526.jpg!d",
-          description: "Фото леса",
-          tag: "Природа",
-          is_liked: false,
-          likes: 5,
-        },
-      ],
+      photos: [],
     };
+  },
+  methods: {
+    dialog() {
+      this.$store.dispatch("SET_DIALOG", !this.$store.getters.GET_DIALOG);
+    },
+    getposts(){
+      HTTP.get("GetAllPosts")
+          .then((res) => {
+            this.$store.dispatch("SET_POSTS", res.data);
+            this.photos = this.$store.getters.GET_POSTS;
+          })
+          .catch((err) => {
+            console.log(err);
+            this.err = true;
+          });
+    }
+  },
+  mounted() {
+    this.getposts()
   },
 };
 </script>

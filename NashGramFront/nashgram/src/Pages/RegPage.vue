@@ -3,10 +3,9 @@
     <v-card class="regpage__form">
       <h1>NashGram</h1>
       <v-card-title>Регистрация</v-card-title>
-      <v-form class="postform" ref="form" v-model="valid" lazy-validation>
+      <v-form class="postform" ref="form" v-model="valid" lazy-validation @submit="register">
         <v-text-field
-          v-model="name"
-          :counter="50"
+          v-model="login"
           :rules="nameRules"
           label="Логин"
           required
@@ -15,7 +14,6 @@
 
         <v-text-field
           v-model="password"
-          :counter="8"
           :rules="passwordRules"
           label="Пароль"
           required
@@ -24,7 +22,7 @@
       </v-form>
       <v-card-actions class="regpage__buttons">
         <v-spacer></v-spacer>
-        <v-btn color="green darken-1" text> Зарегистрироваться </v-btn>
+        <v-btn color="green darken-1" text @click="register"> Зарегистрироваться </v-btn>
         <v-btn color="error" class="mr-4" @click="reset">
           Сбросить заполнение
         </v-btn>
@@ -38,10 +36,12 @@
 </template>
 
 <script>
+import { HTTP } from "../api/API";
+
 export default {
   data: () => ({
     valid: true,
-    name: "",
+    login: "",
     password: "",
     nameRules: [
       (v) => !!v || "Логин необходим",
@@ -60,10 +60,19 @@ export default {
     reset() {
       this.$refs.form.reset();
     },
-  },
-  props: {
-    dialog: {
-      required: true,
+    register() {
+      HTTP.post("CreateAccount", {
+        login: `${this.login}`,
+        password: `${this.password}`,
+      })
+        .then((res) => {
+          console.log(res.data);
+          this.$router.push("/login");
+        })
+        .catch((err) => {
+          console.log(err);
+          this.err = true;
+        });
     },
   },
 };

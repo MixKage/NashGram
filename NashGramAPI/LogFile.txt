@@ -10,3 +10,64 @@ UNIQUE constraint failed: Account.login
 ERROR: Likes not found from IdAccount: 2
 ERROR: Likes not found from IdAccount: 2
 ERROR: Account delete id: 1
+INFO: Create account id: 1, login 9dc415325a95c6e2558bf141a8772a175de49b08f0a027c8720ad942d6ec63f7, password a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3
+INFO: Create Person id: 1
+INFO: Post create: id 1, idAuthor 1
+ERROR: constraint failed
+UNIQUE constraint failed: Account.login
+INFO: Create account id: 2, login 6795cdff29e286bca4bfbeaed377541776c6a0122a7cdf875ced38bbb0f5a15c, password a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3
+INFO: Create Person id: 2
+INFO: Create account id: 3, login 704a9eb0f11d1841fef3f648bcfffcedd281545b6120dd43d4abf0f15042bb36, password a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3
+INFO: Create Person id: 3
+INFO: Post create: id 2, idAuthor 3
+INFO: Post create: id 3, idAuthor 3
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 2
+ERROR: Likes not found from IdPost: 1
+ERROR: Likes not found from IdPost: 2
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 1
+ERROR: Likes not found from IdPost: 0
+ERROR: Likes not found from IdPost: 0
+INFO: Like create from id_account: 3, id_post: 0
+ERROR: Likes not found from IdPost: 2
+ERROR: Likes not found from IdPost: 1
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 2
+ERROR: Likes not found from IdPost: 3
+ERROR: Like not found from IdPost: 2 | The process cannot access the file 'E:\Programms\NashGram-1\NashGramAPI\LogFile.txt' because it is being used by another process.
+ERROR: Likes not found from IdPost: 1
+INFO: Like create from id_account: 3, id_post: 1
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 2
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 2
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 2
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 2
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 2
+ERROR: Likes not found from IdPost: 2
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 2
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 2
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 2
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 2
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 2
+INFO: Like create from id_account: 3, id_post: 2
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 3
+INFO: Like create from id_account: 3, id_post: 3
+INFO: Post create: id 4, idAuthor 3
+ERROR: Likes not found from IdPost: 4
+ERROR: Likes not found from IdPost: 4
+INFO: Like create from id_account: 3, id_post: 4

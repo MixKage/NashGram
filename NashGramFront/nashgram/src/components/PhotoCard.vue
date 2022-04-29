@@ -1,16 +1,18 @@
 <template>
   <div id="card">
     <v-card>
-      <v-img height="200px" v-bind:src="photo.uri"></v-img>
+      <v-img height="200px" v-bind:src="`${photo.image}`"></v-img>
       <div class="card__container">
         <div id="card__sec_container">
           <v-card-title>#{{ photo.tag }}</v-card-title>
 
           <div class="card__like_container">
-            <v-btn class="card__like" icon small
+            <v-btn class="card__like" icon small @click="handleLike"
               ><v-icon> mdi-heart </v-icon>
             </v-btn>
-            <v-card-text class="card__like_text">{{ photo.likes }}</v-card-text>
+            <v-card-text class="card__like_text">{{
+              this.likeCount
+            }}</v-card-text>
           </div>
         </div>
 
@@ -21,18 +23,24 @@
             </v-btn>
           </template>
           <v-card>
-            <v-img height="300px" v-bind:src="photo.uri"></v-img>
+            <v-img height="300px" v-bind:src="`${photo.image}`"></v-img>
             <div class="card__sec_container">
               <v-card-title>#{{ photo.tag }}</v-card-title>
 
               <div class="card__like_container card__like_seccontainer">
-                <v-btn class="card__like card__seclike" icon small
-                ><v-icon> mdi-heart </v-icon>
+                <v-btn
+                  class="card__like card__seclike"
+                  icon
+                  small
+                  @click="handleLike"
+                  ><v-icon> mdi-heart </v-icon>
                 </v-btn>
-                <v-card-text class="card__like_sectext">{{ photo.likes }}</v-card-text>
+                <v-card-text class="card__like_sectext">{{
+                  this.likeCount
+                }}</v-card-text>
               </div>
             </div>
-            <v-card-subtitle>Автор:{{photo.author}}</v-card-subtitle>
+            <v-card-subtitle>Автор:{{ this.author }}</v-card-subtitle>
             <v-card-text>
               {{ photo.description }}
             </v-card-text>
@@ -41,9 +49,7 @@
 
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="primary" text @click="dialog = false">
-                Ок
-              </v-btn>
+              <v-btn color="primary" text @click="dialog = false"> Ок </v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
@@ -53,10 +59,16 @@
 </template>
 
 <script>
+import { HTTP } from "../api/API";
+
 export default {
   data() {
     return {
       dialog: false,
+      author: "",
+      likes: [],
+      likeCount: 0,
+      isLiked: false,
     };
   },
   props: {
@@ -64,9 +76,88 @@ export default {
       type: Object,
       required: true,
     },
-    i: {
-      required: true,
+  },
+  methods: {
+    putlike() {
+      const token = localStorage.getItem("token");
+      HTTP.post(
+        "CreateLike",
+        {
+          id_post: this.photo.id,
+          id_account: this.$store.getters.GET_CURRUSER.id,
+        },
+        {
+          headers: {
+            Authorization: `Basic ${token}`,
+          },
+        }
+      )
+        .then(() => {
+          this.updlikes();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
+    unputlike(id) {
+      const token = localStorage.getItem("token");
+      HTTP.delete("DeleteLikeFromId", {
+        headers: {
+          Authorization: `Basic ${token}`,
+        },
+        params: {
+          id: id,
+        },
+      })
+        .then(() => {
+          this.updlikes();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    handleLike() {
+      if (this.isLiked) {
+        this.unputlike(0);
+      } else {
+        this.putlike();
+      }
+    },
+    updlikes() {
+      const token = localStorage.getItem("token");
+      HTTP.get("GetLikesFromIdPost", {
+        params: { id: this.photo.id },
+        headers: {
+          Authorization: `Basic ${token}`,
+        },
+      })
+        .then((res) => {
+          this.likes = res.data;
+          this.likes.forEach((e) => {
+            this.isLiked = e.author === this.$store.getters.GET_CURRUSER.id;
+            this.likeCount = res.data.length;
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+  },
+  mounted() {
+    this.updlikes();
+    const token = localStorage.getItem("token");
+    HTTP.get("GetLogin", {
+      params: { id: this.photo.author },
+      headers: {
+        Authorization: `Basic ${token}`,
+      },
+    })
+      .then((res) => {
+        this.author = res.data;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   },
 };
 </script>
@@ -80,8 +171,7 @@ export default {
   display: flex;
   flex-direction: column;
 }
-.card__sec_container
-{
+.card__sec_container {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -104,12 +194,11 @@ export default {
   justify-content: center;
   align-items: center;
 }
-.card__like_sectext
-{
+.card__like_sectext {
   margin: auto 10px;
   padding: 0;
 }
-.card__seclike{
+.card__seclike {
   margin: auto;
 }
 </style>
