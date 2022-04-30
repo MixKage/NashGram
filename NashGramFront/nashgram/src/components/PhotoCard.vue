@@ -141,6 +141,17 @@ export default {
           });
         })
         .catch((err) => {
+          console.log(err.status);
+        });
+      HTTP.get("GetLikesFromIdPost", { params: { id: this.photo.id } })
+        .then((res) => {
+          res.data.forEach((e) => {
+            if (e.idAccount === this.$store.getters.GET_CURRUSER.id) {
+              this.likeId = e.id;
+            }
+          });
+        })
+        .catch((err) => {
           console.log(err);
         });
     },
@@ -156,17 +167,6 @@ export default {
     })
       .then((res) => {
         this.author = res.data;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    HTTP.get("GetLikesFromIdPost", { params: { id: this.photo.id } })
-      .then((res) => {
-        res.data.forEach((e) => {
-          if (e.idAccount === this.$store.getters.GET_CURRUSER.id) {
-            this.likeId = e.id;
-          }
-        });
       })
       .catch((err) => {
         console.log(err);
