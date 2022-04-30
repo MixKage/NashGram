@@ -13,10 +13,7 @@
         ></v-text-field>
         <v-text-field
           v-model="description"
-          :counter="500"
-          :rules="descRules"
           label="Описание"
-          required
           @change="validate"
         ></v-text-field>
       </v-form>
@@ -57,10 +54,6 @@ export default {
     nameRules: [
       (v) => !!v || "Тег необходим",
       (v) => (v && v.length <= 10) || "Тег должен быть меньше  10 символов",
-    ],
-    descRules: [
-      (v) =>
-        (v && v.length <= 500) || "Описание должно быть меньше 500 символов",
     ],
     select: null,
     checkbox: false,

@@ -1,7 +1,12 @@
 <template>
   <div id="mpage">
     <Header />
-    <v-btn color="black" @click="dialog" small class="add__photo"
+    <v-btn
+      v-if="this.$store.getters.GET_AUTH"
+      color="black"
+      @click="dialog"
+      small
+      class="add__photo"
       ><v-icon color="white">mdi-plus</v-icon></v-btn
     >
     <PhotoCards v-bind:photos="photos" />
@@ -28,20 +33,20 @@ export default {
     dialog() {
       this.$store.dispatch("SET_DIALOG", !this.$store.getters.GET_DIALOG);
     },
-    getposts(){
+    getposts() {
       HTTP.get("GetAllPosts")
-          .then((res) => {
-            this.$store.dispatch("SET_POSTS", res.data);
-            this.photos = this.$store.getters.GET_POSTS;
-          })
-          .catch((err) => {
-            console.log(err);
-            this.err = true;
-          });
-    }
+        .then((res) => {
+          this.$store.dispatch("SET_POSTS", res.data);
+          this.photos = this.$store.getters.GET_POSTS;
+        })
+        .catch((err) => {
+          console.log(err);
+          this.err = true;
+        });
+    },
   },
   mounted() {
-    this.getposts()
+    this.getposts();
   },
 };
 </script>

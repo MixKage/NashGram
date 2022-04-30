@@ -5,13 +5,15 @@ import LogPage from "../Pages/LogPage";
 import middlewarePipeline from "./middlewarePipeline";
 import { store } from "../Store/Store";
 import NotFound from "../Pages/NotFound";
+import PerInfo from "../Pages/PerInfo";
 const router = new VueRouter({
   mode: "history",
   routes: [
     { path: "/", name: "MainPage", component: MainPage },
     { path: "/register", component: RegPage },
     { path: "/login", component: LogPage },
-    { path: "*", component:NotFound}
+    { path: "/perinfo", component: PerInfo },
+    { path: "*", component: NotFound },
   ],
 });
 router.beforeEach((to, from, next) => {

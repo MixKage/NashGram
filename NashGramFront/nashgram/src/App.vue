@@ -15,7 +15,7 @@ export default {
   components: {},
 
   data: () => ({
-    posts: [],
+
   }),
   created() {
     const token = localStorage.getItem("token");

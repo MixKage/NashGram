@@ -71,3 +71,36 @@ INFO: Post create: id 4, idAuthor 3
 ERROR: Likes not found from IdPost: 4
 ERROR: Likes not found from IdPost: 4
 INFO: Like create from id_account: 3, id_post: 4
+INFO: Create account id: 1, login 9dc415325a95c6e2558bf141a8772a175de49b08f0a027c8720ad942d6ec63f7, password a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3
+INFO: Create Person id: 1
+INFO: Post create: id 1, idAuthor 1
+ERROR: Likes not found from IdPost: 1
+ERROR: Likes not found from IdPost: 1
+INFO: Like create from id_account: 1, id_post: 1
+ERROR: Like not create from id_account: 1, id_post: 1 (LIKE EXIST)
+ERROR: Like not create from id_account: 1, id_post: 1 (LIKE EXIST)
+ERROR: Like not create from id_account: 1, id_post: 1 (LIKE EXIST)
+ERROR: Like not create from id_account: 1, id_post: 1 (LIKE EXIST)
+INFO: Likes delete from Id: 1
+ERROR: Likes not found from IdPost: 1
+INFO: Create account id: 2, login 6795cdff29e286bca4bfbeaed377541776c6a0122a7cdf875ced38bbb0f5a15c, password a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3
+ERROR: constraint failed
+UNIQUE constraint failed: Person.email
+ERROR: constraint failed
+UNIQUE constraint failed: Account.login
+INFO: Create account id: 3, login 46232f3c6c8902069e32332dd2acafc02cf1b9fad9d9de5d2ee6080a12a2c38b, password a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3
+ERROR: constraint failed
+UNIQUE constraint failed: Person.email
+INFO: Create account id: 4, login 473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8, password 473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8
+ERROR: constraint failed
+UNIQUE constraint failed: Person.email
+ERROR: constraint failed
+UNIQUE constraint failed: Account.login
+ERROR: constraint failed
+UNIQUE constraint failed: Account.login
+INFO: Create account id: 5, login 93fedde43203e0a76172135221b8636313635d7afff96a490ae9066330505d47, password 93fedde43203e0a76172135221b8636313635d7afff96a490ae9066330505d47
+ERROR: constraint failed
+UNIQUE constraint failed: Person.email
+INFO: Create account id: 6, login 536df0f4aa869afe50ddc5bfff3d88a93ac166232488dade2e022407feb5116f, password 536df0f4aa869afe50ddc5bfff3d88a93ac166232488dade2e022407feb5116f
+ERROR: constraint failed
+UNIQUE constraint failed: Person.email

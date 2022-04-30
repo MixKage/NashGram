@@ -68,7 +68,8 @@ export default {
       author: "",
       likes: [],
       likeCount: 0,
-      isLiked: false,
+      isLiked: { liked: false },
+      likeId: 0,
     };
   },
   props: {
@@ -99,14 +100,14 @@ export default {
           console.log(err);
         });
     },
-    unputlike(id) {
+    unputlike() {
       const token = localStorage.getItem("token");
       HTTP.delete("DeleteLikeFromId", {
         headers: {
           Authorization: `Basic ${token}`,
         },
         params: {
-          id: id,
+          id: this.likeId,
         },
       })
         .then(() => {
@@ -117,13 +118,13 @@ export default {
         });
     },
     handleLike() {
-      if (this.isLiked) {
-        this.unputlike(0);
+      if (this.isLiked.liked) {
+        this.unputlike();
       } else {
         this.putlike();
       }
     },
-    updlikes() {
+    async updlikes() {
       const token = localStorage.getItem("token");
       HTTP.get("GetLikesFromIdPost", {
         params: { id: this.photo.id },
@@ -134,7 +135,8 @@ export default {
         .then((res) => {
           this.likes = res.data;
           this.likes.forEach((e) => {
-            this.isLiked = e.author === this.$store.getters.GET_CURRUSER.id;
+            this.isLiked.liked =
+              e.idAccount === this.$store.getters.GET_CURRUSER.id;
             this.likeCount = res.data.length;
           });
         })
@@ -143,8 +145,8 @@ export default {
         });
     },
   },
-  mounted() {
-    this.updlikes();
+  async created() {
+    await this.updlikes();
     const token = localStorage.getItem("token");
     HTTP.get("GetLogin", {
       params: { id: this.photo.author },
@@ -154,6 +156,17 @@ export default {
     })
       .then((res) => {
         this.author = res.data;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    HTTP.get("GetLikesFromIdPost", { params: { id: this.photo.id } })
+      .then((res) => {
+        res.data.forEach((e) => {
+          if (e.idAccount === this.$store.getters.GET_CURRUSER.id) {
+            this.likeId = e.id;
+          }
+        });
       })
       .catch((err) => {
         console.log(err);

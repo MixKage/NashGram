@@ -3,7 +3,13 @@
     <v-card class="logpage__form">
       <h1>NashGram</h1>
       <v-card-title>Вход</v-card-title>
-      <v-form class="postform" ref="form" v-model="valid" lazy-validation @submit="login">
+      <v-form
+        class="postform"
+        ref="form"
+        v-model="valid"
+        lazy-validation
+        @submit="login"
+      >
         <v-text-field
           v-model="username"
           :rules="nameRules"
@@ -73,7 +79,7 @@ export default {
         },
       })
         .then(() => {
-          this.$router.push('/');
+          this.$router.push("/perinfo");
           this.$store.dispatch("SET_AUTH", true);
           console.log(this.$store.getters.GET_AUTH);
           localStorage.setItem("token", token);
