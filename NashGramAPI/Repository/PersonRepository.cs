@@ -157,8 +157,43 @@ public static class PersonRepository
         }
         catch (Exception ex)
         {
-            Log.AddLog($"Account not found from ID: {id} | " + ex.Message, true);
+            Log.AddLog($"Person not found from ID: {id} | " + ex.Message, true);
             return null;
+        }
+    }
+
+    public static bool UpdatePersonFromId(ModelClass.UpdatePerson input)
+    {
+        int count = 0;
+        try
+        {
+            using (var connection = new SQLiteConnection(@$"Data Source={pathDB};Version=3;"))
+            {
+                connection.Open();
+                using (var cmd = new SQLiteCommand($@"UPDATE Person
+                    SET email = '{input.Email}',
+                    name = '{input.Name}',
+                    status = '{input.Status}',
+                    country = '{input.Country}',
+                    age = '{input.Age}',
+                    number = '{input.Number}'
+                    WHERE id_account = '{input.Id}';", connection))
+                {
+                    count = cmd.ExecuteNonQuery();
+                }
+            }
+            if (count == 0) { Log.AddLog($"Person not found from ID: {input.Id}", true); return false; }
+            Log.AddLog($@"Person update from ID: {input.Id} | Update info: name = '{input.Name}',
+                    status = '{input.Status}',
+                    country = '{input.Country}',
+                    age = '{input.Age}',
+                    number = '{input.Number}'", false);
+            return true;
+        }
+        catch (Exception ex)
+        {
+            Log.AddLog($"Person not found from ID: {input.Id} | " + ex.Message, true);
+            return false;
         }
     }
 

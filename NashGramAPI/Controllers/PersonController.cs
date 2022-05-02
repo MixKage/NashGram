@@ -85,6 +85,14 @@ namespace NashGramAPI.Controllers
         }
 
         [Authorize]
+        [HttpPut("/UpdatePerson")]
+        public IActionResult UpdatePerson([FromBody] UpdatePerson input)
+        {           
+            var result = Repository.PersonRepository.UpdatePersonFromId(input);
+            return result == false ? Conflict() : Ok();
+        }
+
+        [Authorize]
         [HttpGet("/GetEmail")]
         public IActionResult GetEmail()
         {

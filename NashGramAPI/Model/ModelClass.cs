@@ -23,4 +23,13 @@ public class ModelClass
     [Required] long id_post,
     [Required] long id_account
 );
+    public record UpdatePerson(
+    [Required] long Id,
+    [Required] string? Email,
+    [Required] string? Name,
+    [Required] string? Status, 
+    [Required] long Country,
+    [Required] long Age,
+    [Required] string? Number
+);
 }
