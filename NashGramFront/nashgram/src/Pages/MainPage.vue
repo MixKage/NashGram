@@ -18,8 +18,10 @@ import Header from "../components/Header";
 import PhotoCards from "../components/PhotoCards";
 import PostForm from "../components/PostForm";
 import { HTTP } from "../api/API";
+
 export default {
   components: {
+
     Header,
     PhotoCards,
     PostForm,

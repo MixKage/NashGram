@@ -78,9 +78,10 @@ export default {
           Authorization: `Basic ${token}`,
         },
       })
-        .then(() => {
+        .then((res) => {
           this.$router.push("/perinfo");
           this.$store.dispatch("SET_AUTH", true);
+          this.$store.dispatch("SET_CURRUSER", res.data);
           console.log(this.$store.getters.GET_AUTH);
           localStorage.setItem("token", token);
           console.log(localStorage.getItem("token"));
@@ -95,6 +96,7 @@ export default {
           this.err = true;
         });
     },
+
   },
 };
 </script>

@@ -1,7 +1,7 @@
 <template>
-  <div class="perinfopage">
+  <v-dialog class="perinfopage__dialog" ov v-model="perDialog">
     <v-card class="perinfopage__form">
-      <v-card-title>Заполните персональные данные пожалуйста</v-card-title>
+      <v-card-title>Ваши персональные данные</v-card-title>
       <v-form
         class="postform"
         ref="form"
@@ -35,7 +35,7 @@
           label="Статус"
           @change="validate"
         ></v-text-field>
-        <v-card-text class="text-h6">Выберете страну</v-card-text>
+        <v-card-text class="text-h6">Страна</v-card-text>
         <v-select
           v-model="country"
           :items="countries"
@@ -45,25 +45,27 @@
           prepend-icon="mdi-map"
           single-line
         ></v-select>
-        <v-card-text class="text-h6">Выберете дату рождения</v-card-text>
+        <v-card-text class="text-h5">Возраст:{{ this.age }}</v-card-text>
+        <v-card-text class="text-h6"
+          >Для изменения возраста выберете новую дату рождения</v-card-text
+        >
         <v-date-picker
           @change="calculateAge"
           v-model="date_of_bir"
         ></v-date-picker>
-        <v-card-text class="text-h5">Возраст:{{ this.age }}</v-card-text>
       </v-form>
       <v-card-text>*-обязательные поля</v-card-text>
       <v-card-actions class="perinfopage__buttons">
         <v-spacer></v-spacer>
-        <v-btn color="error" class="mr-4" @click="reset">
-          Сбросить заполнение
-        </v-btn>
         <v-btn color="green darken-1" text @click="change" v-if="valid">
-          Заполнить
+          Изменить
+        </v-btn>
+        <v-btn color="green darken-1" text @click="closedialog">
+          Ок
         </v-btn>
       </v-card-actions>
     </v-card>
-  </div>
+  </v-dialog>
 </template>
 
 <script>
@@ -71,6 +73,7 @@ import { HTTP } from "../api/API";
 
 export default {
   data: () => ({
+    perDialog: false,
     valid: false,
     name: "",
     email: "",
@@ -127,13 +130,17 @@ export default {
         }
       )
         .then(() => {
-          this.$router.push("/");
+          this.closedialog();
+          this.getName();
         })
         .catch((err) => {
           console.log(err);
+          this.$store.dispatch("SET_ERRDIALOG", true);
         });
     },
-
+    closedialog() {
+      this.$store.dispatch("SET_PERDIALOG", !this.$store.getters.GET_PERDIALOG);
+    },
     calculateAge() {
       this.age =
         Number(
@@ -150,42 +157,63 @@ export default {
         });
     },
     async setData() {
-      this.name = `User:${this.$store.getters.GET_CURRUSER.id}`;
-      this.email = `User${this.$store.getters.GET_CURRUSER.id}@mail.temp`;
-      this.countryNumber = require("iso-3166-1").whereCountry(
-        `${this.country}`
-      ).numeric;
-      this.status = `Пусто`;
-      this.age = 0;
-      this.number = "8005553535";
+      const token = localStorage.getItem("token");
+      console.log(token);
+      HTTP.get("GetPerson", {
+        headers: {
+          Authorization: `Basic ${token}`,
+        },
+      })
+        .then((res) => {
+          this.age=res.data.age;
+          this.countryNumber=res.data.country;
+          this.email=res.data.email;
+          this.name=res.data.name;
+          this.number=res.data.number;
+          this.status=res.data.status;
+          this.country = require('iso-3166-1').whereNumeric(this.countryNumber).country;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+  },
+  props: {
+    getName: {
+      required: true,
     },
   },
   watch: {
-    "$store.state.curruser": {
+    "$store.state.perDialog": {
       handler: function () {
-        this.setData();
+        this.perDialog = this.$store.getters.GET_PERDIALOG;
       },
       immediate: true, // provides initial (not changed yet) state
     },
   },
   mounted() {
     this.setCountries();
+    this.setData();
   },
 };
 </script>
-
 <style scoped>
-.perinfopage__form {
+.perinfopage__dialog {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 60%;
-  margin: 20% auto;
+  width: 70%;
   text-align: center;
 }
-.perinfopage__buttons {
+.perinfopage__form{
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.postform {
+  padding: 50px;
 }
 </style>

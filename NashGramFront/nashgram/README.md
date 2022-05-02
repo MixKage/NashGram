@@ -1,21 +1,21 @@
 # nashgram
 
-## Project setup
+## 1 Установить необходимые модули
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### 2 Запуск дебага
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
+### Сборка сайта
 ```
 npm run build
 ```
 
-### Lints and fixes files
+### Линт и починка
 ```
 npm run lint
 ```

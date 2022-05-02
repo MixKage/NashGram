@@ -10,6 +10,7 @@ export const store = new Vuex.Store({
     posts: [],
     dialog: false,
     errDialog: false,
+    perDialog: false,
   },
   getters: {
     GET_AUTH(state) {
@@ -20,6 +21,9 @@ export const store = new Vuex.Store({
     },
     GET_ERRDIALOG(state) {
       return state.errDialog;
+    },
+    GET_PERDIALOG(state) {
+      return state.perDialog;
     },
     GET_POSTS(state) {
       return state.posts;
@@ -39,6 +43,9 @@ export const store = new Vuex.Store({
     SET_ERRDIALOG(state, payload) {
       state.errDialog = payload;
     },
+    SET_PERDIALOG(state, payload) {
+      state.perDialog = payload;
+    },
     SET_POSTS(state, payload) {
       state.posts = payload;
     },
@@ -55,6 +62,9 @@ export const store = new Vuex.Store({
     },
     SET_ERRDIALOG(ctx, payload) {
       ctx.commit("SET_ERRDIALOG", payload);
+    },
+    SET_PERDIALOG(ctx, payload) {
+      ctx.commit("SET_PERDIALOG", payload);
     },
     SET_POSTS(ctx, paload) {
       ctx.commit("SET_POSTS", paload);
