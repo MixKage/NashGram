@@ -39,7 +39,7 @@ internal class LikeRepository
                     }
                 }
             }
-            if (likes.Count == 0) { Log.AddLog($"Likes not found from IdPost: {id}", true); return null; }
+            if (likes.Count == 0) { Log.AddLog($"Likes not found from IdPost: {id}", true); return likes; }
             return likes;
         }
         catch (Exception ex)
