@@ -117,7 +117,7 @@ export default {
           console.log(err);
         });
     },
-    handleLike() {
+    async handleLike() {
       if (this.isLiked.liked) {
         this.unputlike();
       } else {
@@ -134,25 +134,25 @@ export default {
       })
         .then((res) => {
           this.likes = res.data;
+          this.likeCount=this.likes.length;
+          console.log(this.likes);
+          console.log(this.likeCount);
+          if (this.likeCount>0){
           this.likes.forEach((e) => {
+            if(e.idAccount === this.$store.getters.GET_CURRUSER.id){
             this.isLiked.liked =
               e.idAccount === this.$store.getters.GET_CURRUSER.id;
-            this.likeCount = res.data.length;
-          });
+             this.likeId=e.id; }
+            else{
+              this.isLiked.liked=false;
+            }
+          })}else{
+              this.isLiked.liked=false;
+          };
+          
         })
         .catch((err) => {
           console.log(err.status);
-        });
-      HTTP.get("GetLikesFromIdPost", { params: { id: this.photo.id } })
-        .then((res) => {
-          res.data.forEach((e) => {
-            if (e.idAccount === this.$store.getters.GET_CURRUSER.id) {
-              this.likeId = e.id;
-            }
-          });
-        })
-        .catch((err) => {
-          console.log(err);
         });
     },
   },
