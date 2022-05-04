@@ -66,6 +66,15 @@ public static class PersonRepository
             return null;
     }
 
+    public static string? GetAvatarFromId(long id)
+    {
+        var person = GetPersonFromID(id);
+        if (person != null)
+            return person.Avatar;
+        else
+            return null;
+    }
+
     /// <summary>
     /// Изменяет данные Person в зависимости от полученных данных
     /// </summary>
@@ -150,6 +159,7 @@ public static class PersonRepository
                             person.Country = reader.GetInt64(4);
                             person.Age = reader.GetInt64(5);
                             person.Number = reader.GetString(6);
+                            person.Avatar = reader.GetString(7);
                         }
                     }
                 }

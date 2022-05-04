@@ -15,4 +15,6 @@ public class Person
     public long Country { get; set; }
     public long Age { get; set; }
     public string? Number { get; set; }
+
+    public string? Avatar { get; set; }
 }

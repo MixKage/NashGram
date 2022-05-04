@@ -207,6 +207,14 @@ namespace NashGramAPI.Controllers
         }
 
         [Authorize]
+        [HttpGet("/GetAvatarFromId")]
+        public IActionResult GetAvatarFromId(long id)
+        {
+            var result = Repository.PersonRepository.GetAvatarFromId(id);
+            return result == null ? Conflict() : Ok(result);
+        }
+
+        [Authorize]
         [HttpGet("/GetPerson")]
         public IActionResult GetPerson()
         {

@@ -104,3 +104,6 @@ UNIQUE constraint failed: Person.email
 INFO: Create account id: 6, login 536df0f4aa869afe50ddc5bfff3d88a93ac166232488dade2e022407feb5116f, password 536df0f4aa869afe50ddc5bfff3d88a93ac166232488dade2e022407feb5116f
 ERROR: constraint failed
 UNIQUE constraint failed: Person.email
+INFO: Create account id: 1, login 6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b, password 6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b
+INFO: Create Person id: 1
+INFO: avatar update: id 1, new avatar 1
