@@ -137,10 +137,11 @@ public static class AccountRepository
                        status,
                        country,
                        age,
-                       number
+                       number,
+                       avatar
                    )
                    VALUES (
-                       '{newId}','NULL','name{newId}','NULL','0','0','NULL');", connection))
+                       '{newId}','NULL','name{newId}','NULL','0','0','NULL','NULL');", connection))
                 {
                     cmd.ExecuteNonQuery();
                     Log.AddLog($"Create Person id: {newId}", false);

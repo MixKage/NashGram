@@ -85,9 +85,21 @@ namespace NashGramAPI.Controllers
         }
 
         [Authorize]
+        [HttpPut("/UpdateAvatar")]
+        public IActionResult UpdateAvatar(string textInfo)
+        {
+            long? id = API.BasicAuthenticationHandler.GetIdFromLogin(Request.Headers["Authorization"]);
+            if (id == null) return NotFound();
+            ModelClass.UpdateInput input = new UpdateInput((long)id, textInfo);
+
+            var result = Repository.PersonRepository.UpdateInfoFromId(input, 6);
+            return result == false ? Conflict() : Ok();
+        }
+
+        [Authorize]
         [HttpPut("/UpdatePerson")]
         public IActionResult UpdatePerson([FromBody] UpdatePerson input)
-        {           
+        {
             var result = Repository.PersonRepository.UpdatePersonFromId(input);
             return result == false ? Conflict() : Ok();
         }
@@ -118,7 +130,7 @@ namespace NashGramAPI.Controllers
             var result = Repository.PersonRepository.GetNameFromId((long)id);
             return result == null ? Conflict() : Ok(result);
         }
-        
+
         [HttpGet("/GetNameFromId")]
         public IActionResult GetNameFromId(long input)
         {
@@ -135,7 +147,7 @@ namespace NashGramAPI.Controllers
             var result = Repository.PersonRepository.GetStatusFromId((long)id);
             return result == null ? Conflict() : Ok(result);
         }
-        
+
         [HttpGet("/GetStatusFromId")]
         public IActionResult GetStatusFromId(long input)
         {
@@ -152,7 +164,7 @@ namespace NashGramAPI.Controllers
             var result = Repository.PersonRepository.GetCountryFromId((long)id);
             return result == null ? Conflict() : Ok(result);
         }
-        
+
         [HttpGet("/GetCountryFromId")]
         public IActionResult GetCountryFromId(long id)
         {
@@ -169,7 +181,7 @@ namespace NashGramAPI.Controllers
             var result = Repository.PersonRepository.GetAgeFromId((long)id);
             return result == null ? Conflict() : Ok(result);
         }
-        
+
         [HttpGet("/GetAgeFromId")]
         public IActionResult GetAgeFromId(long id)
         {
@@ -186,7 +198,7 @@ namespace NashGramAPI.Controllers
             var result = Repository.PersonRepository.GetNumberFromId((long)id);
             return result == null ? Conflict() : Ok(result);
         }
-        
+
         [HttpGet("/GetNumberFromId")]
         public IActionResult GetNumberFromId(long id)
         {
@@ -203,7 +215,7 @@ namespace NashGramAPI.Controllers
             var result = Repository.PersonRepository.GetPersonFromID((long)id);
             return result == null ? Conflict() : Ok(result);
         }
-        
+
         [HttpGet("/GetPersonFromID")]
         public IActionResult GetPersonFromID(long id)
         {

@@ -117,6 +117,8 @@ public static class PersonRepository
                 return "age";
             case 5:
                 return "number";
+            case 6:
+                return "avatar";
             default:
                 return "error";
         }
