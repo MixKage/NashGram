@@ -206,7 +206,6 @@ namespace NashGramAPI.Controllers
             return result == null ? Conflict() : Ok(result);
         }
 
-        [Authorize]
         [HttpGet("/GetAvatarFromId")]
         public IActionResult GetAvatarFromId(long id)
         {
