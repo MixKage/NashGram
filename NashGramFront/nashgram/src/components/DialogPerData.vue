@@ -1,5 +1,5 @@
 <template>
-  <v-dialog class="perinfopage__dialog" ov v-model="perDialog">
+  <v-dialog persistent class="perinfopage__dialog" v-model="perDialog">
     <v-card class="perinfopage__form">
       <v-card-title>Ваши персональные данные</v-card-title>
       <v-form
@@ -56,13 +56,12 @@
       </v-form>
       <v-card-text>*-обязательные поля</v-card-text>
       <v-card-actions class="perinfopage__buttons">
+        <v-btn color="error" @click="handleLogOut" class="mr-4"> Выйти </v-btn>
         <v-spacer></v-spacer>
         <v-btn color="green darken-1" text @click="change" v-if="valid">
           Изменить
         </v-btn>
-        <v-btn color="green darken-1" text @click="closedialog">
-          Ок
-        </v-btn>
+        <v-btn color="green darken-1" text @click="closedialog"> Ок </v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -139,7 +138,7 @@ export default {
         });
     },
     closedialog() {
-      this.$store.dispatch("SET_PERDIALOG", !this.$store.getters.GET_PERDIALOG);
+      this.$store.dispatch("SET_PERDIALOG", false);
     },
     calculateAge() {
       this.age =
@@ -156,6 +155,10 @@ export default {
           this.countries.push(e.country);
         });
     },
+    handleLogOut() {
+      localStorage.setItem("token", "");
+      this.$router.push("/login");
+    },
     async setData() {
       const token = localStorage.getItem("token");
       console.log(token);
@@ -165,13 +168,15 @@ export default {
         },
       })
         .then((res) => {
-          this.age=res.data.age;
-          this.countryNumber=res.data.country;
-          this.email=res.data.email;
-          this.name=res.data.name;
-          this.number=res.data.number;
-          this.status=res.data.status;
-          this.country = require('iso-3166-1').whereNumeric(this.countryNumber).country;
+          this.age = res.data.age;
+          this.countryNumber = res.data.country;
+          this.email = res.data.email;
+          this.name = res.data.name;
+          this.number = res.data.number;
+          this.status = res.data.status;
+          this.country = require("iso-3166-1").whereNumeric(
+            this.countryNumber
+          ).country;
         })
         .catch((err) => {
           console.log(err);
@@ -206,7 +211,7 @@ export default {
   width: 70%;
   text-align: center;
 }
-.perinfopage__form{
+.perinfopage__form {
   display: flex;
   flex-direction: column;
   justify-content: center;

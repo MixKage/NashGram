@@ -88,7 +88,6 @@ export default {
         })
         .catch((err) => {
           console.log(`${this.username}:${this.password}`);
-
           this.$store.dispatch("SET_AUTH", false);
           console.log(this.$store.getters.GET_AUTH);
           localStorage.setItem("token", "");

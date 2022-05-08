@@ -104,6 +104,337 @@ UNIQUE constraint failed: Person.email
 INFO: Create account id: 6, login 536df0f4aa869afe50ddc5bfff3d88a93ac166232488dade2e022407feb5116f, password 536df0f4aa869afe50ddc5bfff3d88a93ac166232488dade2e022407feb5116f
 ERROR: constraint failed
 UNIQUE constraint failed: Person.email
+INFO: Create account id: 1, login 473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8, password 473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8
+INFO: Create Person id: 1
+INFO: Create account id: 2, login 9dc415325a95c6e2558bf141a8772a175de49b08f0a027c8720ad942d6ec63f7, password a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3
+INFO: Create Person id: 2
+INFO: Post create: id 1, idAuthor 2
+ERROR: Likes not found from IdPost: 1
+ERROR: Likes not found from IdPost: 1
+ERROR: Likes not found from IdPost: 1
+INFO: Like create from id_account: 2, id_post: 1
+INFO: Likes delete from Id: 1
+ERROR: Likes not found from IdPost: 1
+ERROR: Likes not found from IdPost: 1
+INFO: Like create from id_account: 1, id_post: 1
+INFO: Like create from id_account: 2, id_post: 1
+INFO: Likes delete from Id: 3
+INFO: Like create from id_account: 2, id_post: 1
+ERROR: Likes not delete from Id: 0
+INFO: Likes delete from Id: 4
+INFO: Like create from id_account: 2, id_post: 1
+ERROR: Likes not delete from Id: 4
+INFO: Likes delete from Id: 5
+INFO: Like create from id_account: 2, id_post: 1
+ERROR: Likes not delete from Id: 5
+INFO: Likes delete from Id: 6
+INFO: Like create from id_account: 2, id_post: 1
+INFO: Likes delete from Id: 7
+INFO: Like create from id_account: 2, id_post: 1
+INFO: Likes delete from Id: 8
+ERROR: constraint failed
+UNIQUE constraint failed: Account.login
+INFO: Create account id: 3, login 473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8, password 473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8
+INFO: Create Person id: 3
+INFO: Create account id: 4, login 473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8, password 473287f8298dba7163a897908958f7c0eae733e25d2e027992ea2edc9bed2fa8
+INFO: Create Person id: 4
+ERROR: Person not found from ID: 0
+INFO: Person update from ID: 4 | Update info: name = 'string',
+                    status = 'string',
+                    country = '0',
+                    age = '0',
+                    number = 'string'
+ERROR: Person not found from ID: 4 | constraint failed
+CHECK constraint failed: length(number) <= 10
+INFO: Person update from ID: 4 | Update info: name = 'string',
+                    status = 'string',
+                    country = '0',
+                    age = '0',
+                    number = 'string'
+ERROR: Person not found from ID: 4 | constraint failed
+CHECK constraint failed: length(number) <= 10
+ERROR: Person not found from ID: 4
+INFO: Create account id: 5, login 9dc415325a95c6e2558bf141a8772a175de49b08f0a027c8720ad942d6ec63f7, password a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3
+INFO: Create Person id: 5
+ERROR: Person not found from ID: 5 | constraint failed
+CHECK constraint failed: length(number) <= 10
+ERROR: Person not found from ID: 5 | constraint failed
+CHECK constraint failed: length(number) <= 10
+ERROR: Person not found from ID: 5 | constraint failed
+CHECK constraint failed: length(number) <= 10
+INFO: Person update from ID: 5 | Update info: name = 'string',
+                    status = 'string',
+                    country = '0',
+                    age = '0',
+                    number = 'string'
+INFO: Person update from ID: 5 | Update info: name = 'string',
+                    status = 'string',
+                    country = '0',
+                    age = '0',
+                    number = 'string'
+ERROR: Person not found from ID: 5 | constraint failed
+CHECK constraint failed: length(number) <= 10
+ERROR: Person not found from ID: 0
+ERROR: Person not found from ID: 5 | constraint failed
+CHECK constraint failed: length(number) <= 10
+ERROR: Person not found from ID: 5 | constraint failed
+CHECK constraint failed: length(number) <= 10
+ERROR: Person not found from ID: 5 | constraint failed
+CHECK constraint failed: length(number) <= 10
+INFO: Create account id: 6, login 9dc415325a95c6e2558bf141a8772a175de49b08f0a027c8720ad942d6ec63f7, password a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3
+INFO: Create Person id: 6
+ERROR: Person not found from ID: 6 | constraint failed
+CHECK constraint failed: length(number) <= 10
+INFO: Person update from ID: 6 | Update info: name = 'string',
+                    status = 'string',
+                    country = '0',
+                    age = '0',
+                    number = 'string'
+INFO: Person update from ID: 6 | Update info: name = 'User:6',
+                    status = 'Пусто',
+                    country = '643',
+                    age = '0',
+                    number = '8005553535'
+INFO: Person update from ID: 6 | Update info: name = 'MedveD',
+                    status = 'Пустотело',
+                    country = '643',
+                    age = '20',
+                    number = '8005553535'
+INFO: Person update from ID: 6 | Update info: name = 'MedveDich',
+                    status = 'Пустотело',
+                    country = '643',
+                    age = '20',
+                    number = '8005553535'
+INFO: Person update from ID: 6 | Update info: name = 'MedveD',
+                    status = 'Пустотело',
+                    country = '643',
+                    age = '20',
+                    number = '8005553535'
+INFO: Post create: id 2, idAuthor 6
+ERROR: Likes not found from IdPost: 2
+ERROR: Like not found from IdPost: 2 | The process cannot access the file 'E:\Programms\NashGram-1\NashGramAPI\LogFile.txt' because it is being used by another process.
+ERROR: Likes not found from IdPost: 2
+ERROR: Likes not found from IdPost: 2
+ERROR: Likes not found from IdPost: 2
+ERROR: Likes not found from IdPost: 2
+ERROR: Likes not found from IdPost: 2
+ERROR: Likes not found from IdPost: 2
+ERROR: Likes not found from IdPost: 2
+ERROR: Likes not found from IdPost: 2
+ERROR: Likes not found from IdPost: 2
+ERROR: Likes not found from IdPost: 2
+INFO: Post create: id 3, idAuthor 6
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 2
+ERROR: Likes not found from IdPost: 2
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 2
+ERROR: Likes not found from IdPost: 2
+ERROR: Likes not found from IdPost: 2
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 2
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 2
+ERROR: Likes not found from IdPost: 2
+ERROR: Likes not found from IdPost: 2
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 2
+ERROR: Likes not found from IdPost: 2
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 2
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 2
+ERROR: Likes not found from IdPost: 2
+ERROR: Likes not found from IdPost: 2
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 2
+ERROR: Likes not found from IdPost: 2
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 2
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 2
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 2
+ERROR: Likes not found from IdPost: 2
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 2
+ERROR: Likes not found from IdPost: 2
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 2
+ERROR: Like not found from IdPost: 3 | The process cannot access the file 'E:\Programms\NashGram-1\NashGramAPI\LogFile.txt' because it is being used by another process.
+ERROR: Likes not found from IdPost: 2
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 2
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 2
+ERROR: Likes not found from IdPost: 2
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 2
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 2
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 2
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 2
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 3
+ERROR: Like not found from IdPost: 3 | The process cannot access the file 'E:\Programms\NashGram-1\NashGramAPI\LogFile.txt' because it is being used by another process.
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 3
+INFO: Person update from ID: 6 | Update info: name = 'User:6',
+                    status = 'Пусто',
+                    country = '643',
+                    age = '20',
+                    number = '8005553535'
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 3
+INFO: Person update from ID: 6 | Update info: name = 'MedveD',
+                    status = 'Пусто',
+                    country = '643',
+                    age = '20',
+                    number = '8005553535'
+INFO: Person update from ID: 6 | Update info: name = 'MedveD',
+                    status = 'Пусто',
+                    country = '643',
+                    age = '20',
+                    number = '8005553535'
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 3
+INFO: Person update from ID: 6 | Update info: name = 'MedveD',
+                    status = 'Пусто',
+                    country = '643',
+                    age = '20',
+                    number = '8005553535'
+INFO: Person update from ID: 6 | Update info: name = 'MedveD',
+                    status = 'Пусто',
+                    country = '643',
+                    age = '20',
+                    number = '8005553535'
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 3
+INFO: Person update from ID: 6 | Update info: name = 'MedveD',
+                    status = 'Пусто',
+                    country = '643',
+                    age = '20',
+                    number = '8005553535'
+INFO: Person update from ID: 6 | Update info: name = 'MedveD',
+                    status = 'Пусто',
+                    country = '705',
+                    age = '20',
+                    number = '8005553535'
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 3
+INFO: Like create from id_account: 6, id_post: 3
+INFO: Likes delete from Id: 9
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not delete from Id: 9
+ERROR: Likes not delete from Id: 9
+ERROR: Likes not delete from Id: 9
+ERROR: Likes not delete from Id: 9
+ERROR: Likes not delete from Id: 9
+ERROR: Likes not delete from Id: 9
+ERROR: Likes not delete from Id: 9
+ERROR: Likes not delete from Id: 9
+ERROR: Likes not delete from Id: 9
+ERROR: Likes not delete from Id: 9
+ERROR: Likes not delete from Id: 9
+ERROR: Likes not delete from Id: 9
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 3
+INFO: Like create from id_account: 6, id_post: 3
+INFO: Likes delete from Id: 10
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not delete from Id: 10
 INFO: Create account id: 1, login 6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b, password 6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b
 INFO: Create Person id: 1
 INFO: avatar update: id 1, new avatar 1
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 3
+INFO: Like create from id_account: 6, id_post: 3
+INFO: Likes delete from Id: 11
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not delete from Id: 11
+ERROR: Likes not delete from Id: 11
+ERROR: Likes not delete from Id: 11
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not found from IdPost: 3
+INFO: Like create from id_account: 6, id_post: 3
+INFO: Likes delete from Id: 12
+ERROR: Likes not found from IdPost: 3
+ERROR: Likes not delete from Id: 12
+ERROR: Likes not delete from Id: 12
+ERROR: Likes not delete from Id: 12
+ERROR: Likes not delete from Id: 12
+ERROR: Likes not delete from Id: 12
+ERROR: Likes not delete from Id: 12
+ERROR: Likes not found from IdPost: 3
+ERROR: Person not found from ID: 6 | Index was outside the bounds of the array.
+ERROR: Person not found from ID: 6 | Index was outside the bounds of the array.
+ERROR: Likes not found from IdPost: 3
+ERROR: Person not found from ID: 6 | Index was outside the bounds of the array.
+ERROR: Person not found from ID: 6 | Index was outside the bounds of the array.
+ERROR: Person not found from ID: 6 | Index was outside the bounds of the array.
+ERROR: Person not found from ID: 6 | Index was outside the bounds of the array.
+ERROR: Person not found from ID: 6 | Index was outside the bounds of the array.
+ERROR: constraint failed
+UNIQUE constraint failed: Account.login
+ERROR: constraint failed
+UNIQUE constraint failed: Account.login
+ERROR: constraint failed
+UNIQUE constraint failed: Account.login
+ERROR: Person not found from ID: 6 | Index was outside the bounds of the array.
+ERROR: Person not found from ID: 6 | Index was outside the bounds of the array.
+INFO: Create account id: 7, login 086c233dbec7da117d00cde6616df3aaa3a422d700a9f7e87161f5feb432312b, password a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3
+ERROR: SQL logic error
+table Person has no column named avatar
+ERROR: constraint failed
+UNIQUE constraint failed: Account.login
+INFO: Create account id: 8, login 9dc415325a95c6e2558bf141a8772a175de49b08f0a027c8720ad942d6ec63f7, password a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3
+ERROR: SQL logic error
+table Person has no column named avatar

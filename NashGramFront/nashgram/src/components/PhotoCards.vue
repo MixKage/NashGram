@@ -2,7 +2,7 @@
   <div id="cards" class="cards">
     <v-row>
       <v-col v-for="photo in photos" :key="photo.id" cols="12" sm="4">
-        <CardsItem v-bind:photo="photo" />
+        <CardsItem v-bind:getposts="getposts" v-bind:photo="photo" />
       </v-col>
     </v-row>
   </div>
@@ -16,6 +16,9 @@ export default {
   },
   props: {
     photos: {
+      required: true,
+    },
+    getposts: {
       required: true,
     },
   },

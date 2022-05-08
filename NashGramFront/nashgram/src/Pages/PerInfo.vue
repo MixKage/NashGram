@@ -44,6 +44,7 @@
           hide-details
           prepend-icon="mdi-map"
           single-line
+          @change="handleCountry"
         ></v-select>
         <v-card-text class="text-h6">Выберете дату рождения</v-card-text>
         <v-date-picker
@@ -54,11 +55,16 @@
       </v-form>
       <v-card-text>*-обязательные поля</v-card-text>
       <v-card-actions class="perinfopage__buttons">
-        <v-spacer></v-spacer>
-        <v-btn color="error" class="mr-4" @click="reset">
+        <v-btn color="error" class="ma-auto" @click="reset">
           Сбросить заполнение
         </v-btn>
-        <v-btn color="green darken-1" text @click="change" v-if="valid">
+        <v-btn
+          color="green darken-1"
+          class="ma-auto"
+          text
+          @click="change"
+          v-if="valid"
+        >
           Заполнить
         </v-btn>
       </v-card-actions>
@@ -106,6 +112,11 @@ export default {
       this.status = ``;
       this.age = 0;
       this.number = "";
+    },
+    handleCountry() {
+      this.countryNumber = require("iso-3166-1").whereCountry(
+        `${this.country}`
+      ).numeric;
     },
     change() {
       const token = localStorage.getItem("token");
@@ -159,6 +170,21 @@ export default {
       this.age = 0;
       this.number = "8005553535";
     },
+    async setActualData() {
+      console.log(this.$store.getters.GET_CURRUSER);
+      console.log(
+        require("iso-3166-1").whereNumeric(this.countryNumber).country
+      );
+      this.name = this.$store.getters.GET_CURRUSER.name;
+      this.email = this.$store.getters.GET_CURRUSER.email;
+      this.countryNumber = this.$store.getters.GET_CURRUSER.country;
+      this.country = require("iso-3166-1").whereNumeric(
+        this.countryNumber
+      ).country;
+      this.status = this.$store.getters.GET_CURRUSER.status;
+      this.age = this.$store.getters.GET_CURRUSER.age;
+      this.number = this.$store.getters.GET_CURRUSER.number;
+    },
   },
   watch: {
     "$store.state.curruser": {
@@ -170,6 +196,7 @@ export default {
   },
   mounted() {
     this.setCountries();
+    this.setActualData();
   },
 };
 </script>

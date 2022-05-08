@@ -82,6 +82,7 @@ export default {
       }
     },
     post() {
+      if (this.tag === ''){this.tag="Фото"}
       const token = localStorage.getItem("token");
       console.log(token);
       HTTP.post(

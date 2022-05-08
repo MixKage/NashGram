@@ -27,7 +27,10 @@
             <div class="card__sec_container">
               <v-card-title>#{{ photo.tag }}</v-card-title>
 
-              <div class="card__like_container card__like_seccontainer">
+              <div
+                v-if="this.isAuth"
+                class="card__like_container card__like_seccontainer"
+              >
                 <v-btn
                   class="card__like card__seclike"
                   icon
@@ -48,8 +51,34 @@
             <v-divider></v-divider>
 
             <v-card-actions>
+              <v-btn
+                v-if="this.isAuthor"
+                color="error"
+                @click="handleDelete"
+                class="mr-4"
+              >
+                Удалить
+              </v-btn>
               <v-spacer></v-spacer>
               <v-btn color="primary" text @click="dialog = false"> Ок </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+        <v-dialog v-model="logDialog" persistent max-width="290">
+          <v-card>
+            <v-card-title class="text-h5"> Вы не вошли. </v-card-title>
+            <v-card-text
+              >Пожалуйтса войдите или если впервые тут, то зарегистрируйтесь и
+              войдите.</v-card-text
+            >
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="green darken-1" text @click="this.handleNotLog">
+                Войти
+              </v-btn>
+              <v-btn color="green darken-1" text @click="closeNotLogDialog">
+                Ок
+              </v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
@@ -65,10 +94,13 @@ export default {
   data() {
     return {
       dialog: false,
+      logDialog: false,
       author: "",
+      isAuth: false,
       likes: [],
       likeCount: 0,
       isLiked: { liked: false },
+      isAuthor: false,
       likeId: 0,
     };
   },
@@ -77,28 +109,45 @@ export default {
       type: Object,
       required: true,
     },
+    getposts: {
+      required: true,
+    },
   },
   methods: {
+    closeNotLogDialog() {
+      this.logDialog = false;
+    },
+    handleNotLog() {
+      this.logDialog = false;
+      this.$router.push("/login");
+    },
+    notLogin() {
+      this.logDialog = true;
+    },
     putlike() {
-      const token = localStorage.getItem("token");
-      HTTP.post(
-        "CreateLike",
-        {
-          id_post: this.photo.id,
-          id_account: this.$store.getters.GET_CURRUSER.id,
-        },
-        {
-          headers: {
-            Authorization: `Basic ${token}`,
+      if (this.isAuth) {
+        const token = localStorage.getItem("token");
+        HTTP.post(
+          "CreateLike",
+          {
+            id_post: this.photo.id,
+            id_account: this.$store.getters.GET_CURRUSER.id,
           },
-        }
-      )
-        .then(() => {
-          this.updlikes();
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+          {
+            headers: {
+              Authorization: `Basic ${token}`,
+            },
+          }
+        )
+          .then(() => {
+            this.updlikes();
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } else {
+        this.notLogin();
+      }
     },
     unputlike() {
       const token = localStorage.getItem("token");
@@ -124,6 +173,24 @@ export default {
         this.putlike();
       }
     },
+    handleDelete() {
+      const token = localStorage.getItem("token");
+      HTTP.delete("DeletePostsFromIdPost", {
+        headers: {
+          Authorization: `Basic ${token}`,
+        },
+        params: {
+          id: this.photo.id,
+        },
+      })
+        .then(() => {
+          this.getposts();
+          this.dialog = false;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
     async updlikes() {
       const token = localStorage.getItem("token");
       HTTP.get("GetLikesFromIdPost", {
@@ -134,22 +201,22 @@ export default {
       })
         .then((res) => {
           this.likes = res.data;
-          this.likeCount=this.likes.length;
+          this.likeCount = this.likes.length;
           console.log(this.likes);
           console.log(this.likeCount);
-          if (this.likeCount>0){
-          this.likes.forEach((e) => {
-            if(e.idAccount === this.$store.getters.GET_CURRUSER.id){
-            this.isLiked.liked =
-              e.idAccount === this.$store.getters.GET_CURRUSER.id;
-             this.likeId=e.id; }
-            else{
-              this.isLiked.liked=false;
-            }
-          })}else{
-              this.isLiked.liked=false;
-          };
-          
+          if (this.likeCount > 0) {
+            this.likes.forEach((e) => {
+              if (e.idAccount === this.$store.getters.GET_CURRUSER.id) {
+                this.isLiked.liked =
+                  e.idAccount === this.$store.getters.GET_CURRUSER.id;
+                this.likeId = e.id;
+              } else {
+                this.isLiked.liked = false;
+              }
+            });
+          } else {
+            this.isLiked.liked = false;
+          }
         })
         .catch((err) => {
           console.log(err.status);
@@ -157,10 +224,15 @@ export default {
     },
   },
   async created() {
+    this.isAuth = this.$store.getters.GET_AUTH;
+    console.log(this.isAuth);
+    if (this.photo.author === this.$store.getters.GET_CURRUSER.id) {
+      this.isAuthor = true;
+    }
     await this.updlikes();
     const token = localStorage.getItem("token");
-    HTTP.get("GetLogin", {
-      params: { id: this.photo.author },
+    HTTP.get("GetNameFromId", {
+      params: { input: this.photo.author },
       headers: {
         Authorization: `Basic ${token}`,
       },
@@ -169,6 +241,7 @@ export default {
         this.author = res.data;
       })
       .catch((err) => {
+        console.log(this.photo.author);
         console.log(err);
       });
   },

@@ -9,7 +9,7 @@
       class="add__photo"
       ><v-icon color="white">mdi-plus</v-icon></v-btn
     >
-    <PhotoCards v-bind:photos="photos" />
+    <PhotoCards v-bind:getposts="getposts" v-bind:photos="photos" />
     <PostForm v-bind:getposts="getposts" />
   </div>
 </template>
@@ -21,7 +21,6 @@ import { HTTP } from "../api/API";
 
 export default {
   components: {
-
     Header,
     PhotoCards,
     PostForm,
