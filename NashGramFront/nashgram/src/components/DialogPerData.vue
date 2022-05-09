@@ -56,6 +56,9 @@
       </v-form>
       <v-card-text>*-обязательные поля</v-card-text>
       <v-card-actions class="perinfopage__buttons">
+        <v-btn color="error" @click="handleDelete" class="mr-4">
+          Удалить аккаунт
+        </v-btn>
         <v-btn color="error" @click="handleLogOut" class="mr-4"> Выйти </v-btn>
         <v-spacer></v-spacer>
         <v-btn color="green darken-1" text @click="change" v-if="valid">
@@ -155,6 +158,24 @@ export default {
           this.countries.push(e.country);
         });
     },
+    handleDelete() {
+      const token = localStorage.getItem("token");
+      HTTP.delete("DeleteAccountFromID", {
+        headers: {
+          Authorization: `Basic ${token}`,
+        },
+        params: {
+          id: this.$store.getters.GET_CURRUSER.id,
+        },
+      })
+        .then(() => {
+          this.handleLogOut();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      this.handleLogOut()
+    },
     handleLogOut() {
       localStorage.setItem("token", "");
       this.$router.push("/login");
@@ -185,6 +206,9 @@ export default {
   },
   props: {
     getName: {
+      required: true,
+    },
+    getposts: {
       required: true,
     },
   },

@@ -1,45 +1,68 @@
 <template>
   <div class="logpage">
     <v-card class="logpage__form">
-      <h1>NashGram</h1>
-      <v-card-title>Вход</v-card-title>
-      <v-form
-        class="postform"
-        ref="form"
-        v-model="valid"
-        lazy-validation
-        @submit="login"
-      >
-        <v-text-field
-          v-model="username"
-          :rules="nameRules"
-          label="Логин"
-          required
-          @change="validate"
-        ></v-text-field>
+      <v-carousel class="logpage__carusel" cycle hide-delimiters :show-arrows="false">
+        <v-carousel-item
+          v-for="(item, i) in items"
+          :key="i"
+          :src="item.src"
+          reverse-transition="fade-transition"
+          transition="fade-transition"
+        ></v-carousel-item>
+      </v-carousel>
+      <div class="form">
+        <h1>NashGram</h1>
+        <v-card-title>Вход</v-card-title>
+        <v-form
+          class="postform"
+          ref="form"
+          v-model="valid"
+          lazy-validation
+          @submit="login"
+        >
+          <v-text-field
+            v-model="username"
+            :rules="nameRules"
+            label="Логин"
+            required
+            @change="validate"
+          ></v-text-field>
 
-        <v-text-field
-          v-model="password"
-          :rules="passwordRules"
-          label="Пароль"
-          required
-          @change="validate"
-        ></v-text-field>
-      </v-form>
-      <v-card-actions class="logpage__buttons">
-        <v-spacer></v-spacer>
-        <v-btn color="green darken-1" text @click="login"> Войти </v-btn>
-        <v-btn color="error" class="mr-4" @click="reset">
-          Сбросить заполнение
-        </v-btn>
-        <v-card-text>
-          Впервые тут?
-          <router-link class="link" :to="{ path: '/register' }"
-            >Зарегистрироваться</router-link
-          >
-        </v-card-text>
-      </v-card-actions>
+          <v-text-field
+            v-model="password"
+            :rules="passwordRules"
+            label="Пароль"
+            required
+            @change="validate"
+          ></v-text-field>
+        </v-form>
+        <v-card-actions class="logpage__buttons">
+          <v-btn color="green darken-1" text @click="login"> Войти </v-btn>
+          <v-btn color="error" class="mr-4" @click="reset">
+            Сбросить заполнение
+          </v-btn>
+          <v-card-text>
+            Впервые тут?
+            <router-link class="link" :to="{ path: '/register' }"
+              >Зарегистрироваться</router-link
+            >
+          </v-card-text>
+        </v-card-actions>
+      </div>
     </v-card>
+    <v-dialog v-model="errDialog" persistent max-width="290">
+      <v-card>
+        <v-card-title class="text-h5"> Что-то не так... </v-card-title>
+        <v-card-text
+          >Скорее всего такого аккаунта нет или что-то не так с логином или
+          паролем</v-card-text
+        >
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="green darken-1" text @click="close"> Ок </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -48,6 +71,22 @@ import { HTTP } from "../api/API";
 
 export default {
   data: () => ({
+    items: [
+      {
+        src: "https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg",
+      },
+      {
+        src: "https://cdn.vuetifyjs.com/images/carousel/sky.jpg",
+      },
+      {
+        src: "https://cdn.vuetifyjs.com/images/carousel/bird.jpg",
+      },
+      {
+        src: "https://cdn.vuetifyjs.com/images/carousel/planet.jpg",
+      },
+    ],
+
+    errDialog: false,
     valid: true,
     username: "",
     password: "",
@@ -62,6 +101,9 @@ export default {
   }),
 
   methods: {
+    close() {
+      this.errDialog = false;
+    },
     validate() {
       this.$refs.form.validate();
     },
@@ -92,23 +134,31 @@ export default {
           console.log(this.$store.getters.GET_AUTH);
           localStorage.setItem("token", "");
           console.log(err);
-          this.err = true;
+          this.errDialog = true;
         });
     },
-
   },
 };
 </script>
 
 <style scoped>
-.logpage__form {
+.postform {
+  padding: 10px;
+  margin: 30px auto;
+}
+.logpage {
+  height: 100%;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 60%;
-  margin: 20% auto;
+}
+.logpage__form {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
   text-align: center;
+  width: 90%;
 }
 .logpage__buttons {
   display: flex;

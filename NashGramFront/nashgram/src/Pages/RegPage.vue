@@ -1,37 +1,72 @@
 <template>
   <div class="regpage">
     <v-card class="regpage__form">
-      <h1>NashGram</h1>
-      <v-card-title>Регистрация</v-card-title>
-      <v-form class="postform" ref="form" v-model="valid" lazy-validation @submit="register">
-        <v-text-field
-          v-model="login"
-          :rules="nameRules"
-          label="Логин"
-          required
-          @change="validate"
-        ></v-text-field>
+      <v-carousel
+        class="regpage__carusel"
+        cycle
+        hide-delimiters
+        :show-arrows="false"
+      >
+        <v-carousel-item
+          v-for="(item, i) in items"
+          :key="i"
+          :src="item.src"
+          reverse-transition="fade-transition"
+          transition="fade-transition"
+        ></v-carousel-item>
+      </v-carousel>
+      <div class="form">
+        <h1>NashGram</h1>
+        <v-card-title>Регистрация</v-card-title>
+        <v-form
+          class="postform"
+          ref="form"
+          v-model="valid"
+          lazy-validation
+          @submit="register"
+        >
+          <v-text-field
+            v-model="login"
+            :rules="nameRules"
+            label="Логин"
+            required
+            @change="validate"
+          ></v-text-field>
 
-        <v-text-field
-          v-model="password"
-          :rules="passwordRules"
-          label="Пароль"
-          required
-          @change="validate"
-        ></v-text-field>
-      </v-form>
-      <v-card-actions class="regpage__buttons">
-        <v-spacer></v-spacer>
-        <v-btn color="green darken-1" text @click="register"> Зарегистрироваться </v-btn>
-        <v-btn color="error" class="mr-4" @click="reset">
-          Сбросить заполнение
-        </v-btn>
-        <v-card-text>
-          Зарегистрированы?
-          <router-link class="link" :to="{ path: '/login' }">Войти</router-link>
-        </v-card-text>
-      </v-card-actions>
+          <v-text-field
+            v-model="password"
+            :rules="passwordRules"
+            label="Пароль"
+            required
+            @change="validate"
+          ></v-text-field>
+        </v-form>
+        <v-card-actions class="regpage__buttons">
+          <v-btn color="green darken-1" text @click="register">
+            Зарегистрироваться
+          </v-btn>
+          <v-btn color="error" class="mr-4" @click="reset">
+            Сбросить заполнение
+          </v-btn>
+          <v-card-text>
+            Впервые тут?
+            <router-link class="link" :to="{ path: '/login' }"
+              >Войти</router-link
+            >
+          </v-card-text>
+        </v-card-actions>
+      </div>
     </v-card>
+    <v-dialog v-model="errDialog" persistent max-width="290">
+      <v-card>
+        <v-card-title class="text-h5"> Что-то не так... </v-card-title>
+        <v-card-text>Проблема с сетью или заполнением данных</v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="green darken-1" text @click="close"> Ок </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -40,6 +75,21 @@ import { HTTP } from "../api/API";
 
 export default {
   data: () => ({
+    items: [
+      {
+        src: "https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg",
+      },
+      {
+        src: "https://cdn.vuetifyjs.com/images/carousel/sky.jpg",
+      },
+      {
+        src: "https://cdn.vuetifyjs.com/images/carousel/bird.jpg",
+      },
+      {
+        src: "https://cdn.vuetifyjs.com/images/carousel/planet.jpg",
+      },
+    ],
+    errDialog: false,
     valid: true,
     login: "",
     password: "",
@@ -54,6 +104,9 @@ export default {
   }),
 
   methods: {
+    close() {
+      this.errDialog = false;
+    },
     validate() {
       this.$refs.form.validate();
     },
@@ -71,23 +124,31 @@ export default {
         })
         .catch((err) => {
           console.log(err);
-          this.err = true;
+          this.errDialog = true;
         });
-
     },
   },
 };
 </script>
 
 <style scoped>
-.regpage__form {
+.postform {
+  padding: 10px;
+  margin: 30px auto;
+}
+.regpage {
+  height: 100%;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 60%;
-  margin: 20% auto;
+}
+.regpage__form {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
   text-align: center;
+  width: 90%;
 }
 .regpage__buttons {
   display: flex;
