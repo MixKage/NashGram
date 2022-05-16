@@ -45,7 +45,8 @@
             </div>
             <v-card-subtitle>Автор:{{ this.author }}</v-card-subtitle>
             <v-card-text>
-              {{ photo.description }}
+              Описание:
+              {{ photo.descryption }}
             </v-card-text>
 
             <v-divider></v-divider>
@@ -224,6 +225,7 @@ export default {
     },
   },
   async created() {
+    console.log(this.photo);
     this.isAuth = this.$store.getters.GET_AUTH;
     console.log(this.isAuth);
     if (this.photo.author === this.$store.getters.GET_CURRUSER.id) {
