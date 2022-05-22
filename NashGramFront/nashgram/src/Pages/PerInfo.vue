@@ -55,9 +55,6 @@
       </v-form>
       <v-card-text>*-обязательные поля</v-card-text>
       <v-card-actions class="perinfopage__buttons">
-        <v-btn color="error" class="ma-auto" @click="reset">
-          Сбросить заполнение
-        </v-btn>
         <v-btn
           color="green darken-1"
           class="ma-auto"
@@ -66,6 +63,9 @@
           v-if="valid"
         >
           Заполнить
+        </v-btn>
+        <v-btn color="red darken-1" class="ma-auto" text @click="reset">
+          Сбросить заполнение
         </v-btn>
       </v-card-actions>
     </v-card>
@@ -176,7 +176,7 @@ export default {
         require("iso-3166-1").whereNumeric(this.countryNumber).country
       );
       this.name = this.$store.getters.GET_CURRUSER.name;
-      this.email = this.$store.getters.GET_CURRUSER.email;
+      this.email = `User${this.$store.getters.GET_CURRUSER.id}@mail.temp`;
       this.countryNumber = this.$store.getters.GET_CURRUSER.country;
       this.country = require("iso-3166-1").whereNumeric(
         this.countryNumber

@@ -51,21 +51,28 @@
         >
         <v-date-picker
           @change="calculateAge"
-          v-model="date_of_bir"
+          v-model="date_of_bir_str"
         ></v-date-picker>
       </v-form>
       <v-card-text>*-обязательные поля</v-card-text>
-      <v-card-actions class="perinfopage__buttons">
-        <v-btn color="error" @click="handleDelete" class="mr-4">
+      <v-card-actions id="perinfopage__buttons">
+        <v-btn color="red darken-1" text @click="handleDelete">
           Удалить аккаунт
         </v-btn>
-        <v-btn color="error" @click="handleLogOut" class="mr-4"> Выйти </v-btn>
-        <v-spacer></v-spacer>
+        <v-btn color="red darken-1" text @click="handleLogOut"> Выйти </v-btn>
+
         <v-btn color="green darken-1" text @click="change" v-if="valid">
           Изменить
         </v-btn>
-        <v-btn color="green darken-1" text @click="closedialog"> Ок </v-btn>
       </v-card-actions>
+      <v-btn
+        color="black darken-1"
+        class="perinfopage__dialog-close"
+        icon
+        text
+        @click="closedialog"
+        ><v-icon>mdi-close</v-icon></v-btn
+      >
     </v-card>
   </v-dialog>
 </template>
@@ -83,7 +90,10 @@ export default {
     countries: [],
     countryNumber: 0,
     age: 0,
-    date_of_bir: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
+    today: new Date(Date.now() - new Date().getTimezoneOffset() * 60000),
+    date_of_bir_str: new Date(
+      Date.now() - new Date().getTimezoneOffset() * 60000
+    )
       .toISOString()
       .substr(0, 10),
     status: "",
@@ -144,12 +154,21 @@ export default {
       this.$store.dispatch("SET_PERDIALOG", false);
     },
     calculateAge() {
-      this.age =
-        Number(
-          new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
-            .toISOString()
-            .substr(0, 4)
-        ) - Number(this.date_of_bir.substr(0, 4));
+      const age =
+        this.today.getFullYear() - new Date(this.date_of_bir_str).getFullYear();
+      const month =
+        this.today.getMonth() - new Date(this.date_of_bir_str).getMonth();
+      if (
+        month < 0 ||
+        (month === 0 &&
+          this.today.getDate() < new Date(this.date_of_bir_str).getDate())
+      ) {
+        this.age =
+          this.today.getFullYear() -
+          new Date(this.date_of_bir_str).getFullYear() -
+          1;
+      } else this.age = age;
+      console.log(this.age);
     },
     setCountries() {
       require("iso-3166-1")
@@ -174,7 +193,7 @@ export default {
         .catch((err) => {
           console.log(err);
         });
-      this.handleLogOut()
+      this.handleLogOut();
     },
     handleLogOut() {
       localStorage.setItem("token", "");
@@ -208,9 +227,6 @@ export default {
     getName: {
       required: true,
     },
-    getposts: {
-      required: true,
-    },
   },
   watch: {
     "$store.state.perDialog": {
@@ -227,6 +243,11 @@ export default {
 };
 </script>
 <style scoped>
+.perinfopage__dialog-close {
+  position: fixed;
+  top: 40px;
+  right: 40px;
+}
 .perinfopage__dialog {
   display: flex;
   flex-direction: column;

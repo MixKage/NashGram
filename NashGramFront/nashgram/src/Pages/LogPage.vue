@@ -30,17 +30,22 @@
 
           <v-text-field
             v-model="password"
+            :append-icon="showpass ? 'mdi-eye' : 'mdi-eye-off'"
+            :type="showpass ? 'text' : 'password'"
             :rules="passwordRules"
+            counter
+            @click:append="showpass = !showpass"
             label="Пароль"
             required
             @change="validate"
           ></v-text-field>
         </v-form>
         <v-card-actions class="logpage__buttons">
-          <v-btn color="green darken-1" text @click="login"> Войти </v-btn>
-          <v-btn color="error" class="mr-4" @click="reset">
+          <v-btn color="red darken-1" text @click="reset">
             Сбросить заполнение
           </v-btn>
+          <v-btn color="green darken-1" text @click="login"> Войти </v-btn>
+          <v-spacer></v-spacer>
           <v-card-text>
             Впервые тут?
             <router-link class="link" :to="{ path: '/register' }"
@@ -87,6 +92,7 @@ export default {
     ],
 
     errDialog: false,
+    showpass: false,
     valid: true,
     username: "",
     password: "",

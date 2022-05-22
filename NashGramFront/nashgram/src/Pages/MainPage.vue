@@ -9,7 +9,12 @@
       class="add__photo"
       ><v-icon color="white">mdi-plus</v-icon></v-btn
     >
-    <PhotoCards v-bind:getposts="getposts" v-bind:photos="photos" />
+    <v-text-field
+      class="mpage__search"
+      append-icon="mdi-magnify"
+      v-model="search"
+    ></v-text-field>
+    <PhotoCards v-bind:getposts="getposts" v-bind:photos="filteredList" />
     <PostForm v-bind:getposts="getposts" />
   </div>
 </template>
@@ -27,8 +32,16 @@ export default {
   },
   data() {
     return {
+      search: "",
       photos: [],
     };
+  },
+  computed: {
+    filteredList() {
+      return this.photos.filter((photo) => {
+        return photo.tag.toLowerCase().includes(this.search.toLowerCase());
+      });
+    },
   },
   methods: {
     dialog() {
@@ -53,6 +66,9 @@ export default {
 </script>
 
 <style scoped>
+.mpage__search {
+  padding: 0px 40px;
+}
 .add__photo {
   position: absolute;
   left: 48%;

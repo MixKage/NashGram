@@ -3,36 +3,36 @@
     <v-card>
       <v-card-title class="text-h5"> Хотите запостить фото? </v-card-title>
       <v-form class="postform" ref="form" v-model="valid" lazy-validation>
-        <v-text-field
-          v-model="tag"
-          :counter="10"
-          :rules="nameRules"
-          label="Тэг"
-          required
-          @change="validate"
-        ></v-text-field>
+        <v-text-field v-model="tag" label="Тэг"></v-text-field>
         <v-text-field
           v-model="description"
           label="Описание"
           @change="validate"
         ></v-text-field>
+        <v-file-input
+          class="postform__file-imput"
+          v-model="file"
+          value="1"
+          accept="image/*"
+          label="Фото"
+          @change="handleImage"
+        ></v-file-input>
       </v-form>
-      <v-file-input
-        class="postform__file-imput"
-        v-model="file"
-        value="1"
-        accept="image/*"
-        label="Фото"
-        @change="handleImage"
-      ></v-file-input>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="red darken-1" text @click="close"> Отмена </v-btn>
-        <v-btn color="green darken-1" text @click="post"> Запостить </v-btn>
-        <v-btn color="error" class="mr-4" @click="reset">
+        <v-btn color="red darken-1" text class="mr-4" @click="reset">
           Сбросить заполнение
         </v-btn>
+        <v-btn color="green darken-1" text @click="post"> Запостить </v-btn>
       </v-card-actions>
+      <v-btn
+        color="black darken-1"
+        class="postform__dialog-close"
+        icon
+        text
+        @click="close"
+        ><v-icon>mdi-close</v-icon></v-btn
+      >
     </v-card>
     <ErrorDialog></ErrorDialog>
   </v-dialog>
@@ -51,10 +51,6 @@ export default {
     description: "",
     file: [],
     imgurl: { url: "" },
-    nameRules: [
-      (v) => !!v || "Тег необходим",
-      (v) => (v && v.length <= 10) || "Тег должен быть меньше  10 символов",
-    ],
     select: null,
     checkbox: false,
   }),
@@ -82,7 +78,9 @@ export default {
       }
     },
     post() {
-      if (this.tag === ''){this.tag="Фото"}
+      if (this.tag === "") {
+        this.tag = "Фото";
+      }
       const token = localStorage.getItem("token");
       console.log(token);
       HTTP.post(
@@ -101,6 +99,7 @@ export default {
       )
         .then(() => {
           this.close();
+          this.reset();
           this.getposts();
         })
         .catch(() => {
@@ -118,7 +117,6 @@ export default {
       },
       immediate: true, // provides initial (not changed yet) state
     },
-
   },
   props: {
     getposts: {
@@ -128,6 +126,11 @@ export default {
 };
 </script>
 <style scoped>
+.postform__dialog-close{
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
 .postform {
   padding: 50px;
 }

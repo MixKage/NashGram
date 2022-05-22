@@ -1,14 +1,21 @@
 <template>
   <div id="card">
     <v-card>
-      <v-img height="200px" v-bind:src="`${photo.image}`"></v-img>
+      <v-img
+        height="200px"
+        :aspect-ratio="16 / 9"
+        @click="handlePhotoDialog"
+        class="card__image"
+        v-bind:src="`${photo.image}`"
+      ></v-img>
       <div class="card__container">
         <div id="card__sec_container">
           <v-card-title>#{{ photo.tag }}</v-card-title>
 
           <div class="card__like_container">
             <v-btn class="card__like" icon small @click="handleLike"
-              ><v-icon> mdi-heart </v-icon>
+              ><v-icon v-if="isLiked.liked"> mdi-heart </v-icon>
+              <v-icon v-else> mdi-heart-outline </v-icon>
             </v-btn>
             <v-card-text class="card__like_text">{{
               this.likeCount
@@ -23,7 +30,14 @@
             </v-btn>
           </template>
           <v-card>
-            <v-img height="300px" v-bind:src="`${photo.image}`"></v-img>
+            <v-img
+              max-height="300px"
+              :aspect-ratio="16 / 9"
+              contain
+              @click="handlePhotoDialog"
+              class="card__image"
+              v-bind:src="`${photo.image}`"
+            ></v-img>
             <div class="card__sec_container">
               <v-card-title>#{{ photo.tag }}</v-card-title>
 
@@ -36,7 +50,8 @@
                   icon
                   small
                   @click="handleLike"
-                  ><v-icon> mdi-heart </v-icon>
+                  ><v-icon v-if="isLiked.liked"> mdi-heart </v-icon>
+                  <v-icon v-else> mdi-heart-outline </v-icon>
                 </v-btn>
                 <v-card-text class="card__like_sectext">{{
                   this.likeCount
@@ -45,8 +60,7 @@
             </div>
             <v-card-subtitle>Автор:{{ this.author }}</v-card-subtitle>
             <v-card-text>
-              Описание:
-              {{ photo.descryption }}
+              {{ this.description }}
             </v-card-text>
 
             <v-divider></v-divider>
@@ -57,13 +71,92 @@
                 color="error"
                 @click="handleDelete"
                 class="mr-4"
+                icon
               >
-                Удалить
+                <v-icon>mdi-delete</v-icon>
+              </v-btn>
+              <v-btn
+                v-if="this.isAuthor"
+                color="black"
+                @click="handleChangeDialog"
+                class="mr-4"
+                icon
+              >
+                <v-icon>mdi-pencil</v-icon>
+              </v-btn>
+              <v-btn
+                v-else
+                color="error"
+                @click="handleReportDialog"
+                class="mr-4"
+                icon
+              >
+                <v-icon>mdi-alert</v-icon>
               </v-btn>
               <v-spacer></v-spacer>
               <v-btn color="primary" text @click="dialog = false"> Ок </v-btn>
             </v-card-actions>
           </v-card>
+          <v-dialog v-model="reportDialog" persistent max-width="60%">
+            <v-card>
+              <v-card-title>Репорт на пост</v-card-title>
+              <v-form class="changeform" ref="form" lazy-validation>
+                <v-text-field
+                  v-model="report"
+                  label="Описание репорта"
+                ></v-text-field>
+              </v-form>
+              <v-card-actions>
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn color="red darken-1" text class="mr-4" @click="reset">
+                    Сбросить заполнение
+                  </v-btn>
+                  <v-btn color="green darken-1" text @click="handleReport">
+                    Зарепортить
+                  </v-btn>
+                </v-card-actions>
+              </v-card-actions>
+              <v-btn
+                color="black darken-1"
+                class="changedialog__dialog-close"
+                icon
+                text
+                @click="handleReportDialog"
+                ><v-icon>mdi-close</v-icon></v-btn
+              >
+            </v-card>
+          </v-dialog>
+          <v-dialog v-model="changeDialog" persistent max-width="60%">
+            <v-card>
+              <v-card-title>Изменение поста</v-card-title>
+              <v-form class="changeform" ref="form" lazy-validation>
+                <v-text-field
+                  v-model="newdescription"
+                  label="Описание"
+                ></v-text-field>
+              </v-form>
+              <v-card-actions>
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn color="red darken-1" text class="mr-4" @click="reset">
+                    Сбросить заполнение
+                  </v-btn>
+                  <v-btn color="green darken-1" text @click="handleChange">
+                    Запостить
+                  </v-btn>
+                </v-card-actions>
+              </v-card-actions>
+              <v-btn
+                color="black darken-1"
+                class="changedialog__dialog-close"
+                icon
+                text
+                @click="handleChangeDialog"
+                ><v-icon>mdi-close</v-icon></v-btn
+              >
+            </v-card>
+          </v-dialog>
         </v-dialog>
         <v-dialog v-model="logDialog" persistent max-width="290">
           <v-card>
@@ -83,6 +176,27 @@
             </v-card-actions>
           </v-card>
         </v-dialog>
+        <v-dialog
+          v-model="photoDialog"
+          persistent
+          max-width="70%"
+          :width="this.imageProp.width"
+        >
+          <v-img
+            contain
+            :width="this.imageProp.width"
+            :max-heighth="this.imageProp.height"
+            v-bind:src="`${photo.image}`"
+            ><v-btn
+              class="card__photo-close_button"
+              dark
+              icon
+              text
+              @click="handlePhotoDialog"
+              ><v-icon>mdi-close</v-icon></v-btn
+            ></v-img
+          >
+        </v-dialog>
       </div>
     </v-card>
   </div>
@@ -94,6 +208,9 @@ import { HTTP } from "../api/API";
 export default {
   data() {
     return {
+      reportDialog: false,
+      changeDialog: false,
+      photoDialog: false,
       dialog: false,
       logDialog: false,
       author: "",
@@ -103,6 +220,10 @@ export default {
       isLiked: { liked: false },
       isAuthor: false,
       likeId: 0,
+      report: "",
+      description: "",
+      newdescription: "",
+      imageProp: { height: 0, width: 0 },
     };
   },
   props: {
@@ -114,7 +235,14 @@ export default {
       required: true,
     },
   },
+  computed: {},
   methods: {
+    handleReportDialog() {
+      this.reportDialog = !this.reportDialog;
+    },
+    handlePhotoDialog() {
+      this.photoDialog = !this.photoDialog;
+    },
     closeNotLogDialog() {
       this.logDialog = false;
     },
@@ -150,6 +278,9 @@ export default {
         this.notLogin();
       }
     },
+    reset() {
+      this.$refs.form.reset();
+    },
     unputlike() {
       const token = localStorage.getItem("token");
       HTTP.delete("DeleteLikeFromId", {
@@ -174,6 +305,69 @@ export default {
         this.putlike();
       }
     },
+    getDesc() {
+      const token = localStorage.getItem("token");
+      HTTP.get("GetDescryptionFromId", {
+        params: { input: this.photo.id },
+        headers: {
+          Authorization: `Basic ${token}`,
+        },
+      })
+        .then((res) => {
+          this.photo.descryption = res.data;
+          this.checkDesc();
+        })
+        .catch((err) => {
+          console.log(err.status);
+        });
+    },
+    handleReport() {
+      const token = localStorage.getItem("token");
+      console.log(token);
+      HTTP.post(
+        "CreateReport",
+        {
+          id: `${this.photo.id}`,
+          text: `${this.report}`,
+        },
+        {
+          headers: {
+            Authorization: `Basic ${token}`,
+          },
+        }
+      )
+        .then(() => {
+          this.handleReportDialog();
+        })
+        .catch(() => {
+          this.$store.dispatch("SET_ERRDIALOG", true);
+        });
+    },
+    handleChange() {
+      const token = localStorage.getItem("token");
+      console.log(token);
+      HTTP.post(
+        "UpdateDescryptionFromIdPost",
+        {
+          id: `${this.photo.id}`,
+          text: `${this.newdescription}`,
+        },
+        {
+          headers: {
+            Authorization: `Basic ${token}`,
+          },
+        }
+      )
+        .then(() => {
+          this.getDesc();
+          this.handleChangeDialog();
+          this.reset();
+        })
+        .catch(() => {
+          this.$store.dispatch("SET_ERRDIALOG", true);
+        });
+    },
+
     handleDelete() {
       const token = localStorage.getItem("token");
       HTTP.delete("DeletePostsFromIdPost", {
@@ -203,8 +397,6 @@ export default {
         .then((res) => {
           this.likes = res.data;
           this.likeCount = this.likes.length;
-          console.log(this.likes);
-          console.log(this.likeCount);
           if (this.likeCount > 0) {
             this.likes.forEach((e) => {
               if (e.idAccount === this.$store.getters.GET_CURRUSER.id) {
@@ -223,11 +415,29 @@ export default {
           console.log(err.status);
         });
     },
+    checkDesc() {
+      if (this.photo.descryption === "") {
+        this.description = "";
+      } else {
+        this.description = `Описание:${this.photo.descryption}`;
+      }
+    },
+    handleChangeDialog() {
+      this.changeDialog = !this.changeDialog;
+    },
+    handleImage() {
+      const i = new Image();
+      i.onload = () => {
+        this.imageProp.width = i.width;
+        this.imageProp.height = i.height;
+      };
+      i.src = this.photo.image;
+    },
   },
   async created() {
-    console.log(this.photo);
+    this.handleImage();
+    this.checkDesc();
     this.isAuth = this.$store.getters.GET_AUTH;
-    console.log(this.isAuth);
     if (this.photo.author === this.$store.getters.GET_CURRUSER.id) {
       this.isAuthor = true;
     }
@@ -243,17 +453,38 @@ export default {
         this.author = res.data;
       })
       .catch((err) => {
-        console.log(this.photo.author);
         console.log(err);
       });
   },
 };
 </script>
 <style scoped>
+>>> .v-dialog {
+  overflow-y: visible;
+}
+>>> .v-responsive {
+  overflow: visible;
+}
 #card__sec_container {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+}
+.changeform {
+  padding: 50px;
+}
+.changedialog__dialog-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+.card__photo-close_button {
+  position: relative;
+  top: -30px;
+  left: 100%;
+}
+.card__image:hover {
+  cursor: pointer;
 }
 .card__container {
   display: flex;
