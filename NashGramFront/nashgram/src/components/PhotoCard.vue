@@ -58,14 +58,14 @@
                 }}</v-card-text>
               </div>
             </div>
-            <v-card-subtitle>Автор:{{ this.author }}</v-card-subtitle>
+            <v-card-subtitle>Автор:{{ this.authorInfo.name }}</v-card-subtitle>
             <v-card-text>
               {{ this.description }}
             </v-card-text>
 
             <v-divider></v-divider>
 
-            <v-card-actions>
+            <v-card-actions v-if="this.$store.getters.GET_AUTH">
               <v-btn
                 v-if="this.isAuthor"
                 color="error"
@@ -84,6 +84,7 @@
               >
                 <v-icon>mdi-pencil</v-icon>
               </v-btn>
+
               <v-btn
                 v-else
                 color="error"
@@ -93,6 +94,7 @@
               >
                 <v-icon>mdi-alert</v-icon>
               </v-btn>
+              <v-btn @click="handleAuthorDialog">Об авторе</v-btn>
               <v-spacer></v-spacer>
               <v-btn color="primary" text @click="dialog = false"> Ок </v-btn>
             </v-card-actions>
@@ -127,36 +129,52 @@
               >
             </v-card>
           </v-dialog>
-          <v-dialog v-model="changeDialog" persistent max-width="60%">
-            <v-card>
-              <v-card-title>Изменение поста</v-card-title>
-              <v-form class="changeform" ref="form" lazy-validation>
-                <v-text-field
-                  v-model="newdescription"
-                  label="Описание"
-                ></v-text-field>
-              </v-form>
+        </v-dialog>
+        <v-dialog v-model="changeDialog" persistent max-width="60%">
+          <v-card>
+            <v-card-title>Изменение поста</v-card-title>
+            <v-form class="changeform" ref="form" lazy-validation>
+              <v-text-field
+                v-model="newdescription"
+                label="Описание"
+              ></v-text-field>
+            </v-form>
+            <v-card-actions>
               <v-card-actions>
-                <v-card-actions>
-                  <v-spacer></v-spacer>
-                  <v-btn color="red darken-1" text class="mr-4" @click="reset">
-                    Сбросить заполнение
-                  </v-btn>
-                  <v-btn color="green darken-1" text @click="handleChange">
-                    Запостить
-                  </v-btn>
-                </v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="red darken-1" text class="mr-4" @click="reset">
+                  Сбросить заполнение
+                </v-btn>
+                <v-btn color="green darken-1" text @click="handleChange">
+                  Запостить
+                </v-btn>
               </v-card-actions>
-              <v-btn
-                color="black darken-1"
-                class="changedialog__dialog-close"
-                icon
-                text
-                @click="handleChangeDialog"
-                ><v-icon>mdi-close</v-icon></v-btn
-              >
-            </v-card>
-          </v-dialog>
+            </v-card-actions>
+            <v-btn
+              color="black darken-1"
+              class="changedialog__dialog-close"
+              icon
+              text
+              @click="handleChangeDialog"
+              ><v-icon>mdi-close</v-icon></v-btn
+            >
+          </v-card>
+        </v-dialog>
+        <v-dialog v-model="authorDialog" persistent max-width="20%">
+          <v-card>
+            <v-card-title>Имя:{{ this.authorInfo.name }}</v-card-title>
+            <v-spacer></v-spacer>
+            <v-card-subtitle>Почта:{{ this.authorInfo.email }}</v-card-subtitle>
+            <v-card-text>Статус:{{ this.authorInfo.status }}</v-card-text>
+            <v-btn
+              color="black darken-1"
+              class="author__dialog-close"
+              icon
+              text
+              @click="handleAuthorDialog"
+              ><v-icon>mdi-close</v-icon></v-btn
+            >
+          </v-card>
         </v-dialog>
         <v-dialog v-model="logDialog" persistent max-width="290">
           <v-card>
@@ -179,13 +197,13 @@
         <v-dialog
           v-model="photoDialog"
           persistent
-          max-width="70%"
+          max-width="50%"
           :width="this.imageProp.width"
         >
           <v-img
             contain
             :width="this.imageProp.width"
-            :max-heighth="this.imageProp.height"
+            max-heighth="0.5vh"
             v-bind:src="`${photo.image}`"
             ><v-btn
               class="card__photo-close_button"
@@ -209,6 +227,7 @@ export default {
   data() {
     return {
       reportDialog: false,
+      authorDialog: false,
       changeDialog: false,
       photoDialog: false,
       dialog: false,
@@ -223,6 +242,11 @@ export default {
       report: "",
       description: "",
       newdescription: "",
+      authorInfo: {
+        name: "",
+        email: "",
+        status: "",
+      },
       imageProp: { height: 0, width: 0 },
     };
   },
@@ -240,6 +264,9 @@ export default {
     handleReportDialog() {
       this.reportDialog = !this.reportDialog;
     },
+    handleAuthorDialog() {
+      this.authorDialog = !this.authorDialog;
+    },
     handlePhotoDialog() {
       this.photoDialog = !this.photoDialog;
     },
@@ -252,6 +279,46 @@ export default {
     },
     notLogin() {
       this.logDialog = true;
+    },
+    getAuthorInfo() {
+      const token = localStorage.getItem("token");
+      console.log(this.photo.author);
+      HTTP.get("GetNameFromId", {
+        params: { input: this.photo.author },
+        headers: {
+          Authorization: `Basic ${token}`,
+        },
+      })
+        .then((res) => {
+          this.authorInfo.name = res.data;
+        })
+        .catch((err) => {
+          console.log(err.status);
+        });
+      HTTP.get("GetEmailFromId", {
+        params: { input: this.photo.author },
+        headers: {
+          Authorization: `Basic ${token}`,
+        },
+      })
+        .then((res) => {
+          this.authorInfo.email = res.data;
+        })
+        .catch((err) => {
+          console.log(err.status);
+        });
+      HTTP.get("GetStatusFromId", {
+        params: { input: this.photo.author },
+        headers: {
+          Authorization: `Basic ${token}`,
+        },
+      })
+        .then((res) => {
+          this.authorInfo.status = res.data;
+        })
+        .catch((err) => {
+          console.log(err.status);
+        });
     },
     putlike() {
       if (this.isAuth) {
@@ -435,6 +502,7 @@ export default {
     },
   },
   async created() {
+    this.getAuthorInfo();
     this.handleImage();
     this.checkDesc();
     this.isAuth = this.$store.getters.GET_AUTH;
@@ -442,19 +510,6 @@ export default {
       this.isAuthor = true;
     }
     await this.updlikes();
-    const token = localStorage.getItem("token");
-    HTTP.get("GetNameFromId", {
-      params: { input: this.photo.author },
-      headers: {
-        Authorization: `Basic ${token}`,
-      },
-    })
-      .then((res) => {
-        this.author = res.data;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
   },
 };
 </script>
@@ -472,6 +527,11 @@ export default {
 }
 .changeform {
   padding: 50px;
+}
+.author__dialog-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
 }
 .changedialog__dialog-close {
   position: absolute;

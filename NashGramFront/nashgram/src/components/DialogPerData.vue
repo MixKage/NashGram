@@ -263,6 +263,9 @@ export default {
   align-items: center;
   text-align: center;
 }
+.postform__file-imput {
+  padding: 10px 50px;
+}
 .postform {
   padding: 50px;
 }

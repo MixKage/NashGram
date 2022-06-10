@@ -7,7 +7,7 @@
         <v-btn @click="dialog" text>{{ this.name }}</v-btn></v-toolbar-title
       >
       <v-btn @click="dialog" v-if="this.$store.getters.GET_AUTH" icon>
-        <v-icon>mdi-account-circle</v-icon>
+        <v-icon>mdi-account</v-icon>
       </v-btn>
       <router-link v-else class="link header__link" :to="{ path: '/login' }"
         ><v-btn text class="text-h6">Войти</v-btn></router-link
