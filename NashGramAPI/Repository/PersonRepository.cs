@@ -188,7 +188,8 @@ public static class PersonRepository
                     status = '{input.Status}',
                     country = '{input.Country}',
                     age = '{input.Age}',
-                    number = '{input.Number}'
+                    number = '{input.Number}',
+                    avatar = '{input.Avatar}'
                     WHERE id_account = '{input.Id}';", connection))
                 {
                     count = cmd.ExecuteNonQuery();
@@ -199,7 +200,8 @@ public static class PersonRepository
                     status = '{input.Status}',
                     country = '{input.Country}',
                     age = '{input.Age}',
-                    number = '{input.Number}'", false);
+                    number = '{input.Number}',
+                    avatar = '{input.Avatar}'", false);                    
             return true;
         }
         catch (Exception ex)

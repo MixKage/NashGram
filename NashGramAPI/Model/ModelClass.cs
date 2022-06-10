@@ -30,6 +30,7 @@ public class ModelClass
     [Required] string? Status, 
     [Required] long Country,
     [Required] long Age,
-    [Required] string? Number
+    [Required] string? Number,
+    [Required] string? Avatar
 );
 }
