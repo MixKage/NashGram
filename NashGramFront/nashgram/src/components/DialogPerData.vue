@@ -9,6 +9,14 @@
         lazy-validation
         @submit="change"
       >
+        <v-file-input
+          class="postform__file-imput"
+          v-model="file"
+          value="1"
+          accept="image/*"
+          label="Аватар"
+          @change="handleImage"
+        ></v-file-input>
         <v-text-field
           v-model="name"
           :rules="nameRules"
@@ -84,6 +92,8 @@ export default {
   data: () => ({
     perDialog: false,
     valid: false,
+    file: [],
+    imgurl: { url: "" },
     name: "",
     email: "",
     country: "Russian Federation",
@@ -111,6 +121,21 @@ export default {
   }),
 
   methods: {
+    handleImage() {
+      if (this.file) {
+        const reader = new FileReader();
+        let rawImg;
+        reader.onloadend = () => {
+          rawImg = reader.result;
+          this.imgurl.url = rawImg;
+          console.log(this.imgurl.url);
+        };
+        reader.readAsDataURL(this.file);
+      } else {
+        console.log("No img");
+        this.imgurl.url = "";
+      }
+    },
     validate() {
       this.$refs.form.validate();
     },
@@ -123,7 +148,27 @@ export default {
       this.number = "";
     },
     change() {
+      console.log(this.imgurl.url);
       const token = localStorage.getItem("token");
+      HTTP.put(
+        "UpdateAvatar",
+        {
+          textInfo: this.imgurl.url,
+        },
+        {
+          headers: {
+            Authorization: `Basic ${token}`,
+          },
+        }
+      )
+        .then(() => {
+          this.closedialog();
+          this.getName();
+        })
+        .catch((err) => {
+          console.log(err);
+          this.$store.dispatch("SET_ERRDIALOG", true);
+        });
       HTTP.put(
         "UpdatePerson",
         {
@@ -223,6 +268,7 @@ export default {
         });
     },
   },
+
   props: {
     getName: {
       required: true,

@@ -7,7 +7,12 @@
         <v-btn @click="dialog" text>{{ this.name }}</v-btn></v-toolbar-title
       >
       <v-btn @click="dialog" v-if="this.$store.getters.GET_AUTH" icon>
-        <v-icon>mdi-account</v-icon>
+        <v-img
+          height="30px"
+          :aspect-ratio="16 / 9"
+          class="card__image"
+          v-bind:src="`${this.avatar}`"
+        ></v-img>
       </v-btn>
       <router-link v-else class="link header__link" :to="{ path: '/login' }"
         ><v-btn text class="text-h6">Войти</v-btn></router-link
@@ -24,6 +29,8 @@ export default {
   components: { DialogPerData },
   data: () => ({
     name: "",
+    avatar: "",
+    currUser: null,
   }),
   methods: {
     dialog() {
@@ -38,15 +45,41 @@ export default {
       })
         .then((res) => {
           this.name = res.data;
-          console.log(this.name);
         })
         .catch((err) => {
           console.log(err);
         });
     },
+    getAvatar() {
+      const token = localStorage.getItem("token");
+      HTTP.get("GetAvatarFromId", {
+        params: { id: this.currUser.id },
+        headers: {
+          Authorization: `Basic ${token}`,
+        },
+      })
+        .then((res) => {
+          this.avatar = res.data;
+        })
+        .catch((err) => {
+          console.log(err.status);
+        });
+    },
   },
   mounted() {
+    console.log(this.$store.getters.GET_CURRUSER.id);
     this.getName();
+    this.getAvatar();
+  },
+  watch: {
+    "$store.state.curruser": {
+      handler: function () {
+        this.currUser = this.$store.getters.GET_CURRUSER;
+        console.log(this.currUser);
+        this.getAvatar();
+      },
+      immediate: true, // provides initial (not changed yet) state
+    },
   },
 };
 </script>
