@@ -151,25 +151,6 @@ export default {
       console.log(this.imgurl.url);
       const token = localStorage.getItem("token");
       HTTP.put(
-        "UpdateAvatar",
-        {
-          textInfo: this.imgurl.url,
-        },
-        {
-          headers: {
-            Authorization: `Basic ${token}`,
-          },
-        }
-      )
-        .then(() => {
-          this.closedialog();
-          this.getName();
-        })
-        .catch((err) => {
-          console.log(err);
-          this.$store.dispatch("SET_ERRDIALOG", true);
-        });
-      HTTP.put(
         "UpdatePerson",
         {
           id: this.$store.getters.GET_CURRUSER.id,
@@ -179,6 +160,7 @@ export default {
           country: Number(this.countryNumber),
           age: this.age,
           number: this.number,
+          avatar: this.imgurl.url,
         },
         {
           headers: {

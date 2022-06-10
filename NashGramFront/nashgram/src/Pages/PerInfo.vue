@@ -159,6 +159,7 @@ export default {
           country: Number(this.countryNumber),
           age: this.age,
           number: this.number,
+          avatar: this.imgurl.url,
         },
         {
           headers: {
@@ -213,6 +214,7 @@ export default {
       this.status = this.$store.getters.GET_CURRUSER.status;
       this.age = this.$store.getters.GET_CURRUSER.age;
       this.number = this.$store.getters.GET_CURRUSER.number;
+      this.imgurl.url = this.$store.getters.GET_CURRUSER.avatar;
     },
   },
   watch: {

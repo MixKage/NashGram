@@ -162,12 +162,18 @@
         </v-dialog>
         <v-dialog v-model="authorDialog" persistent max-width="20%">
           <v-card>
+            <v-img
+              height="100px"
+              :aspect-ratio="16 / 9"
+              class="card__image"
+              v-bind:src="`${this.authorInfo.avatar}`"
+            ></v-img>
             <v-card-title>Имя:{{ this.authorInfo.name }}</v-card-title>
             <v-spacer></v-spacer>
             <v-card-subtitle>Почта:{{ this.authorInfo.email }}</v-card-subtitle>
             <v-card-text>Статус:{{ this.authorInfo.status }}</v-card-text>
             <v-btn
-              color="black darken-1"
+              dark
               class="author__dialog-close"
               icon
               text
@@ -246,6 +252,7 @@ export default {
         name: "",
         email: "",
         status: "",
+        avatar: "",
       },
       imageProp: { height: 0, width: 0 },
     };
@@ -314,6 +321,18 @@ export default {
       })
         .then((res) => {
           this.authorInfo.status = res.data;
+        })
+        .catch((err) => {
+          console.log(err.status);
+        });
+      HTTP.get("GetAvatarFromId", {
+        params: { id: this.photo.author },
+        headers: {
+          Authorization: `Basic ${token}`,
+        },
+      })
+        .then((res) => {
+          this.authorInfo.avatar = res.data;
         })
         .catch((err) => {
           console.log(err.status);
@@ -528,8 +547,8 @@ export default {
 }
 .author__dialog-close {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: -30px;
+  right: -30px;
 }
 .changedialog__dialog-close {
   position: absolute;

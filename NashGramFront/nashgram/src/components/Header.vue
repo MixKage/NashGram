@@ -8,7 +8,8 @@
       >
       <v-btn @click="dialog" v-if="this.$store.getters.GET_AUTH" icon>
         <v-img
-          height="30px"
+
+          height="50px"
           :aspect-ratio="16 / 9"
           class="card__image"
           v-bind:src="`${this.avatar}`"
@@ -18,7 +19,7 @@
         ><v-btn text class="text-h6">Войти</v-btn></router-link
       >
     </v-toolbar>
-    <DialogPerData v-bind:getName="getName" />
+    <DialogPerData v-bind:getName="setData" />
   </header>
 </template>
 
@@ -36,47 +37,32 @@ export default {
     dialog() {
       this.$store.dispatch("SET_PERDIALOG", !this.$store.getters.GET_PERDIALOG);
     },
-    getName() {
+    async setData() {
       const token = localStorage.getItem("token");
-      HTTP.get("GetName", {
+      console.log(token);
+      HTTP.get("GetPerson", {
         headers: {
           Authorization: `Basic ${token}`,
         },
       })
         .then((res) => {
-          this.name = res.data;
+          this.name = res.data.name;
+          this.avatar = res.data.avatar;
         })
         .catch((err) => {
           console.log(err);
         });
     },
-    getAvatar() {
-      const token = localStorage.getItem("token");
-      HTTP.get("GetAvatarFromId", {
-        params: { id: this.currUser.id },
-        headers: {
-          Authorization: `Basic ${token}`,
-        },
-      })
-        .then((res) => {
-          this.avatar = res.data;
-        })
-        .catch((err) => {
-          console.log(err.status);
-        });
-    },
   },
   mounted() {
-    console.log(this.$store.getters.GET_CURRUSER.id);
-    this.getName();
-    this.getAvatar();
+    this.setData();
   },
   watch: {
     "$store.state.curruser": {
       handler: function () {
         this.currUser = this.$store.getters.GET_CURRUSER;
-        console.log(this.currUser);
-        this.getAvatar();
+        console.log(this.currUser.id);
+        this.setData();
       },
       immediate: true, // provides initial (not changed yet) state
     },
@@ -87,5 +73,8 @@ export default {
 <style scoped>
 .header__link {
   text-decoration: none;
+}
+.card__image{
+  border-radius: 500px;
 }
 </style>
