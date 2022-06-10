@@ -9,6 +9,14 @@
         lazy-validation
         @submit="change"
       >
+        <v-file-input
+          class="postform__file-imput"
+          v-model="file"
+          value="1"
+          accept="image/*"
+          label="Аватар"
+          @change="handleImage"
+        ></v-file-input>
         <v-text-field
           v-model="name"
           :rules="nameRules"
@@ -16,6 +24,7 @@
           required
           @change="validate"
         ></v-text-field>
+
         <v-text-field
           v-model="email"
           :rules="emailRules"
@@ -75,10 +84,14 @@
 <script>
 import { HTTP } from "../api/API";
 
+import {whereNumeric} from "iso-3166-1";
+
 export default {
   data: () => ({
     valid: false,
     name: "",
+    file: [],
+    imgurl: { url: "" },
     email: "",
     country: "Russian Federation",
     countries: [],
@@ -102,6 +115,21 @@ export default {
   }),
 
   methods: {
+    handleImage() {
+      if (this.file) {
+        const reader = new FileReader();
+        let rawImg;
+        reader.onloadend = () => {
+          rawImg = reader.result;
+          this.imgurl.url = rawImg;
+          console.log(this.imgurl.url);
+        };
+        reader.readAsDataURL(this.file);
+      } else {
+        console.log("No img");
+        this.imgurl.url = "";
+      }
+    },
     validate() {
       this.$refs.form.validate();
     },
@@ -109,6 +137,7 @@ export default {
       this.name = ``;
       this.email = ``;
       this.countryNumber = 0;
+
       this.status = ``;
       this.age = 0;
       this.number = "";
@@ -170,16 +199,16 @@ export default {
       this.age = 0;
       this.number = "8005553535";
     },
-    async setActualData() {
+    setActualData: async function () {
       console.log(this.$store.getters.GET_CURRUSER);
       console.log(
-        require("iso-3166-1").whereNumeric(this.countryNumber).country
+          whereNumeric(this.countryNumber).country
       );
       this.name = this.$store.getters.GET_CURRUSER.name;
       this.email = `User${this.$store.getters.GET_CURRUSER.id}@mail.temp`;
       this.countryNumber = this.$store.getters.GET_CURRUSER.country;
-      this.country = require("iso-3166-1").whereNumeric(
-        this.countryNumber
+      this.country = whereNumeric(
+          this.countryNumber
       ).country;
       this.status = this.$store.getters.GET_CURRUSER.status;
       this.age = this.$store.getters.GET_CURRUSER.age;

@@ -282,7 +282,6 @@ export default {
     },
     getAuthorInfo() {
       const token = localStorage.getItem("token");
-      console.log(this.photo.author);
       HTTP.get("GetNameFromId", {
         params: { input: this.photo.author },
         headers: {
@@ -412,7 +411,6 @@ export default {
     },
     handleChange() {
       const token = localStorage.getItem("token");
-      console.log(token);
       HTTP.post(
         "UpdateDescryptionFromIdPost",
         {

@@ -6,7 +6,7 @@ Vue.use(Vuex);
 export const store = new Vuex.Store({
   state: {
     auth: { loggedIn: false },
-    curruser: [{}],
+    curruser: {},
     posts: [],
     dialog: false,
     errDialog: false,
